@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AML Compliance Assistant</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>"
+    />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="mark" aria-hidden="true">⚖</span>
+        <div>
+          <h1>AML Compliance Assistant</h1>
+          <p class="sub" id="source-line">Loading source regulation…</p>
+        </div>
+      </div>
+      <button id="reset" class="ghost" type="button">New session</button>
+    </header>
+
+    <main id="transcript" class="transcript" aria-live="polite">
+      <section class="welcome">
+        <h2>Grounded in one regulation</h2>
+        <p>
+          Every answer is drawn from the Financial Monitoring Service Decision
+          <strong>№&nbsp;3-21-28/3-6-4/2023</strong> on customer due diligence, verification with
+          new technologies, risk factors and customer risk groups — with clause citations you can
+          click to read the original Azerbaijani text.
+        </p>
+        <p class="hint">Ask in English or Azerbaijani.</p>
+        <div class="examples" id="examples">
+          <button type="button">When can I apply simplified due diligence?</button>
+          <button type="button">
+            A non-resident customer, PEP's spouse, opening an account remotely via a mobile app.
+            How should I rate and onboard them?
+          </button>
+          <button type="button">How often must I review a medium-risk customer?</button>
+          <button type="button">Siyasi nüfuzlu şəxslər üçün hansı tədbirlər tələb olunur?</button>
+          <button type="button">What are the high-risk geographic factors?</button>
+        </div>
+      </section>
+    </main>
+
+    <form id="composer" class="composer">
+      <textarea
+        id="input"
+        rows="1"
+        placeholder="Ask about CDD, risk factors, thresholds, remote onboarding…"
+        autocomplete="off"
+      ></textarea>
+      <button id="send" type="submit" aria-label="Send">Send</button>
+    </form>
+
+    <footer class="disclaimer">
+      Decision support only — not legal advice and not a compliance decision. Escalate suspicious
+      activity, sanctions hits and reporting decisions to your MLRO. All interactions are written to
+      an audit trail.
+    </footer>
+
+    <dialog id="clause-dialog">
+      <div class="dialog-head">
+        <h3 id="clause-title">Clause</h3>
+        <button type="button" id="clause-close" class="ghost">Close</button>
+      </div>
+      <div id="clause-body" class="clause-body"></div>
+    </dialog>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

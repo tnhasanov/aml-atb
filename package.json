@@ -1,0 +1,24 @@
+{
+  "name": "aml-atb",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AML/CFT compliance chatbot - grounded advisory assistant with screening, risk-rating and STR drafting tools",
+  "type": "module",
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node --env-file-if-exists=.env dist/src/index.js",
+    "dev": "tsc --watch",
+    "test": "npm run build && node --test \"dist/test/*.test.js\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.116.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}

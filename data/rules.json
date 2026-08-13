@@ -1,0 +1,2407 @@
+{
+  "document": {
+    "id": "MMX-3-21-28/3-6-4/2023",
+    "issuer_az": "Azərbaycan Respublikası Maliyyə Monitorinqi Xidməti",
+    "issuer_en": "Financial Monitoring Service of the Republic of Azerbaijan",
+    "number": "3-21-28/3-6-4/2023",
+    "date": "2023-02-21",
+    "title_az": "Müştəri uyğunluğu və yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirlərinə, risk faktorlarının müəyyən edilməsinə və müştəri profilinin risk qruplarına aid edilməsinə dair Qaydalar",
+    "title_en": "Rules on customer due diligence and verification measures when applying new technologies, on the determination of risk factors, and on assigning the customer profile to risk groups",
+    "parent_law_az": "“Cinayət yolu ilə əldə edilmiş əmlakın leqallaşdırılmasına və terrorçuluğun maliyyələşdirilməsinə qarşı mübarizə haqqında” Azərbaycan Respublikasının Qanunu (30 dekabr 2022, № 781-VIQ)",
+    "parent_law_en": "Law of the Republic of Azerbaijan on Combating the Legalisation of Criminally Obtained Property and the Financing of Terrorism (30 December 2022, No. 781-VIQ)",
+    "amended_by": [
+      "MMX Decision 3-21-28/3-6-4/2024 of 14 June 2024 (State Register No. 23202406148368)"
+    ]
+  },
+  "parts": [
+    {
+      "id": "1",
+      "title_az": "Ümumi müddəalar",
+      "title_en": "General provisions"
+    },
+    {
+      "id": "2",
+      "title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "title_en": "Identification measures within customer due diligence"
+    },
+    {
+      "id": "3",
+      "title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "title_en": "Determination of risk factors and customer profile risk groups"
+    },
+    {
+      "id": "4",
+      "title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "title_en": "Simplified customer due diligence measures"
+    },
+    {
+      "id": "5",
+      "title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "title_en": "Enhanced customer due diligence measures"
+    },
+    {
+      "id": "6",
+      "title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "title_en": "Verification measures within customer due diligence"
+    },
+    {
+      "id": "7",
+      "title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "title_en": "Verification measures when applying new technologies"
+    },
+    {
+      "id": "8",
+      "title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "title_en": "Ongoing application of customer due diligence measures"
+    }
+  ],
+  "clauses": [
+    {
+      "id": "1.1",
+      "part": "1",
+      "part_title_az": "Ümumi müddəalar",
+      "part_title_en": "General provisions",
+      "depth": 2,
+      "text": "“Müştəri uyğunluğu və yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirlərinə, risk faktorlarının müəyyən edilməsinə və müştəri profilinin risk qruplarına aid edilməsinə dair Qaydalar” (bundan sonra - Qaydalar) “Cinayət yolu ilə əldə edilmiş əmlakın leqallaşdırılmasına və terrorçuluğun maliyyələşdirilməsinə qarşı mübarizə haqqında” Azərbaycan Respublikası Qanununun (bundan sonra - Qanun) 4.12-ci, 4.18-ci və 8.5-ci maddələrinə uyğun olaraq hazırlanmışdır.",
+      "topics": []
+    },
+    {
+      "id": "1.2",
+      "part": "1",
+      "part_title_az": "Ümumi müddəalar",
+      "part_title_en": "General provisions",
+      "depth": 2,
+      "text": "Bu Qaydalar öhdəlik daşıyan şəxslərin tətbiq etməli olduqları müxtəlif səviyyəli müştəri uyğunluğu tədbirlərinə, o cümlədən sadələşdirilmiş və gücləndirilmiş müştəri uyğunluğu tədbirlərinə dair tələbləri, yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirlərinin həyata keçirilməsi qaydasını və müştərilərin, məhsulların, xidmətlərin, əməliyyatların, çatdırılma kanallarının və coğrafi yerləşmənin xüsusiyyətləri baxımından yüksək və aşağı risk faktorlarının müəyyən edilməsi, müştəri profilinin yüksək, orta və ya aşağı risk qrupuna aid edilməsi qaydasını müəyyən edir.",
+      "topics": []
+    },
+    {
+      "id": "1.3",
+      "part": "1",
+      "part_title_az": "Ümumi müddəalar",
+      "part_title_en": "General provisions",
+      "depth": 2,
+      "text": "Bu Qaydalarda nəzərdə tutulmuş müştəri uyğunluğu tədbirləri Qanunun 4.4.5-ci maddəsində nəzərdə tutulmuş müştəri profilinin yaradılması, müştərinin profil məlumatları əsasında əməliyyatlarının təhlili və müştərinin apardığı əməliyyatların profilinə uyğunluğunun təmin edilməsi məqsədi daşıyır.",
+      "topics": []
+    },
+    {
+      "id": "2.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər Qanunun 4.2.1-ci, 4.2.2-ci, 4.2.4-cü və 4.2.5-ci maddələrində nəzərdə tutulmuş hallarda müştəriləri və onların səlahiyyətli nümayəndələrini eyniləşdirmək məqsədilə onlar barədə ən azı aşağıdakı məlumatları müştəridən və ya digər mənbələrdən əldə etməlidirlər:",
+      "topics": []
+    },
+    {
+      "id": "2.1.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 3,
+      "text": "Fiziki şəxslərə münasibətdə:",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "Adı, soyadı, atasının adı (olduğu təqdirdə), ad, soyad və ya atasının adı dəyişdirildikdə əvvəlki ad, soyad və atasının adı, FİN-i, FİN olmadıqda şəxsiyyəti təsdiq edən sənədin nömrəsi, vətəndaşlığı, rezidentliyi, doğum tarixi;",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "Əlaqə məlumatları (qeydiyyatda olduğu və (və ya) faktiki yaşadığı ünvanı, telefon nömrəsi, poçt ünvanı, elektron poçt ünvanı və s.);",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.3",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "iş yeri və vəzifəsi (işəgötürənin adı daxil olmaqla), orta illik əmək haqqının məbləği;",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.4",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "digər gəlir mənbələri (pensiya, sosial müavinat/yardım, sahibkarlıq fəaliyyəti, depozit və ya onun faizləri, dividend ödənişləri, icarə haqqı, renta haqqı, royalti, miras payı və ya digər), bu mənbələr üzrə orta illik gəlirinin ümumi məbləği və dövrülüyü;",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.5",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "hər hansı iş yeri, vəzifəsi və digər gəlir mənbələri olmadığı təqdirdə və ya gəliri ilə əməliyyat aparmaq istədiyi əmlakın məbləği arasında uyğunsuzluq müəyyən edildikdə müştərini maliyyələşdirən (sponsor) şəxs və ya şəxslər (o cümlədən hər hansı iş yeri, vəzifəsi və digər gəlir mənbələri olmayan və ya gəliri ilə əməliyyat məbləği arasında uyğunsuzluq müəyyən edilmiş maliyyələşdirən (sponsor) şəxslərin özlərini maliyyələşdirən (sponsor) şəxs və ya şəxslər) barədə bu Qaydaların 2.1.1.1–2.1.1.5-ci abzaslarında nəzərdə tutulan məlumatlar;",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.6",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "əməliyyatın (əqdin) öz adından, lakin başqa şəxsin xeyrinə və ya tapşırığı ilə həyata keçirildiyi halda, həmin şəxsə dair bu Qaydaların 2.1.1.1–2.1.1.5-ci abzaslarında nəzərdə tutulmuş məlumatlar;",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.7",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "işgüzar münasibətlərin yaradılmasının məqsədi, aparılması nəzərdə tutulan mədaxil əməliyyatlarının ehtimal edilən həcmi, məxaric əməliyyatlarının həcmi və istiqamətləri, son 12 ayda xaricə və xaricdən köçürmələrinə və bu köçürmələrin həcminə dair məlumat, vəsaitlərin mədaxil edilməsinin üsulları, dövrlülüyü, mənbələri, müştəriyə təqdim edilən məhsuldan istifadə ediləcəyi sahələr, platformalar, məhsulun idarə edilməsi üsulu, məhsul üzrə sərəncam vermək hüququna malik olan digər şəxslərin adı, soyadı, atasının adı (olduğu təqdirdə), FİN-i, FİN olmadıqda şəxsiyyəti təsdiq edən sənədin nömrəsi, doğum tarixi, istifadəsi nəzərdə tutulan xidmətlərin siyahısı;",
+      "topics": []
+    },
+    {
+      "id": "2.1.1.8",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "birdəfəlik əməliyyatlar zamanı əməliyyatın növü, təyinatı, istiqaməti, vəsaitin mənbəyi.",
+      "topics": []
+    },
+    {
+      "id": "2.1.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 3,
+      "text": "Siyasi nüfuzlu şəxslərə, onların yaxın qohumları və ya yaxın münasibətdə olduğu şəxslərə münasibətdə bu Qaydaların 2.1.1-ci yarımbəndində qeyd edilmiş məlumatlara əlavə olaraq:",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "siyasi nüfuzlu şəxsin, onların yaxın qohumları və ya yaxın münasibətdə olduğu şəxslərin əməliyyat apardığı əmlakının, habelə ümumilikdə digər sərvətlərinin mənbəyi;",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "siyasi nüfuzlu şəxsin həmin vəzifəyə təyin olunma tarixi;",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.3",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "siyasi nüfuzlu şəxsin yaxın qohumunun siyasi nüfüzlu şəxslə qohumluq əlaqəsi (sonradan qohum olduqda qohum olduğu tarix);",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.4",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "siyasi nüfuzlu şəxsin yaxın münasibətdə olduğu şəxslər olduqda:",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.4.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 5,
+      "text": "siyasi nüfuzlu şəxslə eyni hüquqi şəxs və ya xarici hüquqi təsisatın ortaq benefisiar mülkiyyətçisi olduqda həmin hüquqi şəxs və ya xarici hüquqi təsisatın adı, hüquqi şəxsin VÖEN-i və ya xarici hüquqi təsisatın eyniləşdirmə nömrəsi (legal entity identifier);",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.4.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 5,
+      "text": "siyasi nüfuzlu şəxslə istənilən digər sıx sahibkarlıq münasibətində olan fiziki şəxs olduqda sahibkarlıq münasibətinin nədən ibarət olması;",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.4.3",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 5,
+      "text": "siyasi nüfuzlu şəxslərin faktiki mənfəət əldə etməsi məqsədilə təsis edilmiş hüquqi şəxsin və ya xarici hüquqi təsisatın təsisçisi və ya benefisiar mülkiyyətçisi olan fiziki şəxslər olduqda hüquqi şəxsin və ya xarici hüquqi təsisatın adı və hüquqi şəxsin VÖEN-ni və ya xarici hüquqi təsisatın eyniləşdirmə nömrəsi (legal entity identifier);",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.2.4.4",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 5,
+      "text": "adlarına siyasi nüfuzlu şəxsə faktiki məxsus əmlaka hüquqların rəsmiləşdirildiyi şəxslər olduqda əmlak barədə məlumatlar.",
+      "topics": [
+        "pep"
+      ]
+    },
+    {
+      "id": "2.1.3",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 3,
+      "text": "Fərdi sahibkarlara münasibətdə bu Qaydaların 2.1.1-ci yarımbəndində qeyd edilmiş məlumatlara əlavə olaraq:",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "VÖEN-i;",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "fəaliyyət növləri (faktiki fəaliyyət növü);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.3",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "təqdim etdiyi malların, gördüyü işlərin və ya göstərdiyi xidmətlərin növü;",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.4",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "işçilərinin və mülki hüquqi müqavilələr üzrə işə cəlb edilmiş hüquqi və fiziki şəxslərin sayı (olduğu təqdirdə);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.5",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "aktivlərinin həcmi (mövcud olduğu valyutada);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.6",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "son 12 aylıq dövriyyəsinin aylar üzrə həcmi (olduğu təqdirdə);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.7",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "son təqvim ili üzrə gəlirlərinin həcmi (olduğu təqdirdə);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.8",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "son 12 ayda xaricə və xaricdən köçürmələrinə və bu köçürmələrin məbləğinə dair məlumat (olduğu təqdirdə);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.9",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "əsas müqavilə tərəfdaşlarına dair eyniləşdirmə məlumatları (olduğu təqdirdə);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.10",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "son 12 ay ərzində qalib olduğu dövlət satınalmalarına dair məlumat və bu məqsədlə mövcud əməliyyatların məbləği (olduğu təqdirdə);",
+      "topics": []
+    },
+    {
+      "id": "2.1.3.11",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "nəzərdə tutulan dövlət satınalmalarında iştiraka dair məlumat və ehtimal olunan əməliyyatların məbləği (olduğu təqdirdə).",
+      "topics": []
+    },
+    {
+      "id": "2.1.4",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 3,
+      "text": "Hüquqi şəxslərə münasibətdə:",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "adı, əmtəə nişanı (olduğu təqdirdə), təşkilati-hüquqi forması, hüquqi ünvanı, VÖEN-i, təsis edildiyi (qeydiyyatdan keçdiyi) tarix, cari fəaliyyətinə rəhbərlik edən vəzifəli şəxslərin adı, soyadı, vəzifəsi və doğum tarixi, idarəetmə və nəzarət orqanlarının strukturu;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "fəaliyyət növləri (faktiki fəaliyyət növləri);",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.3",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "təqdim etdiyi malların, gördüyü işlərin və ya göstərdiyi xidmətlərin növü;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.4",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "filial, şöbə və nümayəndəlikləri barədə məlumat;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.5",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "nizamnamə kapitalının məbləği, onun formalaşma mənbəyi və maliyyə vəziyyəti (aktivləri, passivləri, kapitalı və dövlət büdcəsinə borclar və digər icbari ödənişlər);",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.6",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "təsisçilərə dair bu Qaydaların 2.1.1.1-2.1.1.5-ci abzaslarında nəzərdə tutulmuş məlumatlar;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.7",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "benefisiar mülkiyyətçilərə dair bu Qaydaların 2.1.1.1-2.1.1.5-ci abzaslarında nəzərdə tutulmuş məlumatlar;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.8",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "idarəetmə və nəzarət orqanlarında çalışan şəxslərin adı, soyadı, atasının adı (olduğu təqdirdə), doğum tarixi, vəzifəsi;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.9",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "bu Qaydaların 2.1.3.4-2.1.3.11-ci abzaslarında nəzərdə tutulmuş məlumatlar;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.10",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "işgüzar münasibətlərin yaradılmasının məqsədi, aparılması nəzərdə tutulan mədaxil əməliyyatlarının ehtimal edilən həcmi, məxaric əməliyyatlarının həcmi və istiqamətləri, vəsaitlərin mədaxil edilməsinin üsulları, dövrülüyü, mənbələri, müştəriyə təqdim edilən məhsuldan istifadə ediləcəyi sahələr, platformalar, məhsulun idarə edilməsi üsulu, məhsul üzrə sərəncam vermək hüququna malik olan digər şəxslərin adı, soyadı, atasının adı (olduğu təqdirdə), FİN-i, FİN olmadıqda şəxsiyyəti təsdiq edən sənədin nömrəsi, doğum tarixi, istifadəsi nəzərdə tutulan xidmətlərin siyahısı;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.11",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "birdəfəlik əməliyyatlar zamanı əməliyyatın növü, təyinatı, istiqaməti, vəsaitin mənbəyi;",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.12",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "əlaqə məlumatları (faktiki ünvanı, telefon nömrəsi, poçt ünvanı, elektron poçt ünvanı və s.);",
+      "topics": []
+    },
+    {
+      "id": "2.1.4.13",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "xarici dövlətlərdə (ərazilərdə) təsis edilmiş (qeydiyyatdan keçmiş) hüquqi şəxsin eyniləşdirmə nömrəsi (“tax identification number”, “value added tax number” və s.) (olduğu təqdirdə).",
+      "topics": []
+    },
+    {
+      "id": "2.1.5",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 3,
+      "text": "Xarici hüquqi təsisatlara münasibətdə:",
+      "topics": []
+    },
+    {
+      "id": "2.1.5.1",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "xarici hüquqi təsisatın təsis edildiyi dövlət (ərazi) və ünvanı;",
+      "topics": []
+    },
+    {
+      "id": "2.1.5.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "xarici hüquqi təsisatın yaradılma məqsədi, tarixi, növü və idarə edilən aktivləri;",
+      "topics": []
+    },
+    {
+      "id": "2.1.5.3",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "xarici hüquqi təsisatın təsisçisinin, idarəçisinin, təminatçısının (olduğu təqdirdə), benefisiarların və ya benefisiar qrupuna daxil olan fiziki şəxslərin (benefisiar qrupa daxil olan fiziki şəxslər məlum olduğu vaxtdan), xarici hüquqi təsisat üzərində effektiv nəzarəti həyata keçirən hər hansı digər fiziki şəxsin (nəzarət və ya sahiblik zənciri də daxil olmaqla) adı, soyadı, atasının adı (olduğu təqdirdə), doğum tarixi, vəzifəsi;",
+      "topics": []
+    },
+    {
+      "id": "2.1.5.4",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "xarici hüquqi təsisatın eyniləşdirmə nömrəsi (legal entity identifier);",
+      "topics": []
+    },
+    {
+      "id": "2.1.5.5",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "xarici hüquqi təsisatın fəaliyyətinin təsviri;",
+      "topics": []
+    },
+    {
+      "id": "2.1.5.6",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "işgüzar münasibətlərin yaradılmasının məqsədi, aparılması nəzərdə tutulan mədaxil əməliyyatlarının ehtimal edilən həcmi, məxaric əməliyyatlarının həcmi və istiqamətləri, vəsaitlərin mədaxil edilməsinin üsulları, dövrlülüyü, mənbələri, müştəriyə təqdim edilən məhsuldan istifadə ediləcəyi sahələr, platformalar, məhsulun idarə edilməsi üsulu, məhsul üzrə sərəncam vermək hüququna malik olan digər şəxslərin adı, soyadı, atasının adı (olduğu təqdirdə), FİN-i, FİN olmadıqda şəxsiyyəti təsdiq edən sənədin nömrəsi, doğum tarixi, istifadəsi nəzərdə tutulan xidmətlərin siyahısı;",
+      "topics": []
+    },
+    {
+      "id": "2.1.5.7",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 4,
+      "text": "birdəfəlik əməliyyatlar zamanı əməliyyatın növü, təyinatı, istiqaməti, vəsaitin mənbəyi.",
+      "topics": []
+    },
+    {
+      "id": "2.2",
+      "part": "2",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində eyniləşdirmə tədbirləri",
+      "part_title_en": "Identification measures within customer due diligence",
+      "depth": 2,
+      "text": "Xarici dövlətdə (ərazidə) təsis edilən (qeydiyyatdan keçən) hüquqi şəxsin kənar idarəçisi qismində çıxış edən şirkətin xidmət təminatçıları fərdi sahibkar olduqda bu Qaydaların 2.1.3-cü yarımbəndi, hüquqi şəxs olduqda isə bu Qaydaların 2.1.4-cü yarımbəndi tətbiq edilməlidir.",
+      "topics": []
+    },
+    {
+      "id": "3.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Bu Qaydaların 2-ci hissəsi ilə müəyyən edilmiş məlumatlar müştəri profilinə daxil edilir və müştərilərin, məhsulların, xidmətlərin, əməliyyatların, çatdırılma kanallarının və coğrafi yerləşmənin xüsusiyyətləri ilə bağlı risklər əsasında müştəri profili üzrə risk qrupu müəyyən edilir.",
+      "topics": []
+    },
+    {
+      "id": "3.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştərilərin, məhsulların, xidmətlərin, əməliyyatların, çatdırılma kanallarının və coğrafi yerləşmənin xüsusiyyətləri üzrə risklərdə hər hansı dəyişiklikdən asılı olaraq müəyyən edilmiş müştəri profili üzrə risk qrupu dəyişdirilə bilər.",
+      "topics": []
+    },
+    {
+      "id": "3.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Bu Qaydaların 3.1-ci bəndi ilə müəyyən edilmiş risklərə əlavə olaraq öhdəlik daşıyan şəxslər tərəfindən milli, sahəvi və institusional səviyyədə mövcud olan risk qiymətləndirməsinin nəticələri nəzərə alınır.",
+      "topics": []
+    },
+    {
+      "id": "3.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirməsində müştəri riski kateqoriyası üzrə aşağıdakı müştəri növləri aşağı riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "customer",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.4.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "öz əməliyyatları üzrə notariuslar və auditorlar;",
+      "topics": [
+        "customer",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.4.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "Azərbaycan Respublikasının üzv olduğu beynəlxalq təşkilatlar;",
+      "topics": [
+        "customer",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.4.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "kredit təşkilatları istisna olmaqla, səhmləri aşkarlıq və benefisiar mülkiyyətçilərə dair şəffaflıq tələbləri olan fond birjalarında listinq olunan səhmdar cəmiyyətləri;",
+      "topics": [
+        "customer",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.4.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "qanuni gəlir mənbələri ümumi xərclərinə uyğun olan müştərilər;",
+      "topics": [
+        "customer",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.4.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində aşağı riskli hesab edilən digər müştərilər.",
+      "topics": [
+        "customer",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində məhsul (və ya xidmət) riski kateqoriyası üzrə aşağıdakı məhsullar (və ya xidmətlər) aşağı riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "low-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.5.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "fiziki şəxslərə iyirmi min manatdan aşağı məbləğdə verilən kreditlər;",
+      "topics": [
+        "low-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.5.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "pul köçürmələrinin qəbulu məhdudlaşdırılmış bank kartları;",
+      "topics": [
+        "low-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.5.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "müddətli depozitlər;",
+      "topics": [
+        "low-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.5.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində aşağı riskli hesab edilən digər məhsullar (və ya xidmətlər).",
+      "topics": [
+        "low-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.6",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində çatdırılma kanalları risk kateqoriyası üzrə aşağıdakı çatdırılma kanalları aşağı riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "channel",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.6.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "digər məqsədlər üçün istifadə edilməyən əmək haqqı hesabları;",
+      "topics": [
+        "channel",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.6.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "pensiya, təqaüd və sosial müavinət hesabları (nağdsız ödəniş üçün ayrılmış kredit xətti də daxil olmaqla);",
+      "topics": [
+        "channel",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.6.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "qeyri-həyat sığortası üzrə nağdsız ödənişlər (sığorta müqaviləsində sığorta haqqının geri ödənişinin mümkün olduğu hallar istisna olmaqla);",
+      "topics": [
+        "channel",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.6.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "kommunal ödənişlər;",
+      "topics": [
+        "channel",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.6.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "əməliyyatlar üçün üzbəüz texnologiyalardan istifadəni nəzərdə tutan digər kanallar;",
+      "topics": [
+        "channel",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.6.6",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində aşağı riskli hesab edilən digər çatdırılma kanalları.",
+      "topics": [
+        "channel",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.7",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində coğrafi yerləşmə risk kateqoriyası üzrə aşağıdakı dövlətlər (ərazilər) aşağı riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "geography",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.7.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "cinayət yolu ilə əldə edilmiş əmlakın leqallaşdırılmasına və terrorçuluğun maliyyələşdirilməsinə qarşı mübarizə sahəsində etibarlı mənbələr (beynəlxalq təşkilat və qurumlar tərəfindən dərc edilmiş qarşılıqlı qiymətləndirmə və ya təfsilatlı hesabatlar, habelə tərəqqi hesabatları) əsasında müəyyən edilmiş adekvat mübarizə sistemi olan dövlətlər (ərazilər);",
+      "topics": [
+        "geography",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.7.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "etibarlı mənbələr əsasında cinayətkartlıq səviyyəsinin aşağı olduğu təsdiq edilmiş dövlətlər (ərazilər);",
+      "topics": [
+        "geography",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.7.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "etibarlı mənbələr əsasında kommersiya və bank sirri məlumatlarının yüksək şəffaflığının olduğu ölkələr;",
+      "topics": [
+        "geography",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.7.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində aşağı riskli hesab edilən digər dövlətlər (ərazilər).",
+      "topics": [
+        "geography",
+        "low-risk-factor"
+      ]
+    },
+    {
+      "id": "3.8",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində əməliyyat riski kateqoriyası üzrə aşağıdakı əməliyyatlar aşağı riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "low-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.8.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "ay ərzində ölkə daxilində beş min manat və ondan aşağı məbləğdə maliyyə vəsaitlərinin elektron köçürülməsi əməliyyatları;",
+      "topics": [
+        "low-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.8.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "Bu Qaydaların 3.4-3.7-ci bəndlərində qeyd olunmuş müştərilər, məhsullar (və ya xidmətlər), çatdırılma kanalları, dövlətlər (ərazilər) ilə əlaqəli əməliyyatlar;",
+      "topics": [
+        "low-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.8.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində aşağı riskli hesab edilən digər əməliyyatlar.",
+      "topics": [
+        "low-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.9",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində müştəri riski kateqoriyası üzrə müəyyən edilmiş aşağıdakı müştərilər yüksək riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "siyasi nüfuzlu şəxslər, onların yaxın qohumları və ya yaxın münasibətdə olduğu şəxslər;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "işgüzar münasibətlər müştəri tərəfindən qeyri-adi qaydada yaradıldıqda və ya davam etdirildikdə (məs: maliyyə institutu ilə müştəri arasında əhəmiyyətli dərəcədə böyük coğrafi məsafə mövcud olduqda və s.);",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "qeyri-rezident müştərilər;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "şübhəli əməliyyat(lar) həyata keçirmiş müştərilər;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "bu Qaydaların 3.12-ci bəndində nəzərdə tutulmuş yüksək riskli dövlətlər (ərazilər) ilə əlaqəli müştərilər;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.6",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "şəxsi aktiv saxlayıcısı/idarəçisi qismində çıxış edən şəxslər,",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.7",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "xarici hüquqi təsisatlar;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.8",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "hesablarından başqalarının məqsədləri üçün istifadə olunan şəxslər (\"Money mules”);",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.9",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "nominal saxlayıcıya və ya sənədli səhmlərə malik hüquqi şəxslər;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.10",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "nağd vəsaitlərdən və virtual aktivlərdən mütəmadi qaydada istifadə edən (istifadəni nəzərdə tutan) sahibkarlıq fəaliyyəti;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.11",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "hüquqi şəxsin həyata keçirdiyi sahibkarlıq fəaliyyətinə münasibətdə qeyri-adi və həddindən artıq mürəkkəb olan nəzarət və ya sahiblik zənciri;",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.12",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "şel şirkətlər (dövlət qeydiyyatına alınmış fiziki mövcudluğu olmayan hüquqi şəxslər);",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.9.13",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində yüksək riskli hesab edilən digər müştərilər.",
+      "topics": [
+        "customer",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.10",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində məhsul (və ya xidmət) riski kateqoriyası üzrə müəyyən edilmiş aşağıdakı məhsullar (və ya xidmətlər) yüksək riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "yüksək gəlirli fərdi müştərilər üçün maliyyə və qeyri-maliyyə xidmətləri;",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "anonimlik imkanlarına malik məhsullar (və ya xidmətlər);",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "müştərinin adı gizlin saxlanılan nömrəli hesablar;",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "yeni texnologiyaların tətbiqini nəzərdə tutan məhsullar (və ya xidmətlər);",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "xarici hüquqi təsisatların xidmətləri;",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.6",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "aktivlərin idarə edilməsi xidmətləri;",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.7",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "ticarətin maliyyələşdirilməsi xidmətləri;",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.8",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "əvvəlcədən ödənilmiş kartlar;",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.9",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "iri tələbli əmanətlər;",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.10.10",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində yüksək riskli hesab edilən digər məhsullar (və ya xidmətlər).",
+      "topics": [
+        "high-risk-factor",
+        "product"
+      ]
+    },
+    {
+      "id": "3.11",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində çatdırma kanalı kateqoriyası üzrə müəyyən edilmiş aşağıdakı çatdırma kanalları yüksək riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "anonim mədaxil əməliyyatları;",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "elektron, mobil bankçılıq xidmətləri;",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "müxbir hesabından üçüncü şəxslər tərəfindən birbaşa istifadə edilməsi (payable-through account);",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "tranzit hesablar;",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "əməliyyatlar üçün yeni texnologiyalardan (üzbəüz olmayan) istifadə olunması;",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.6",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "xüsusi istifadə hesabları və ya mərkəzləşmiş hesablar (vəsaitləri cəmləşdirmək üçün istifadə edilən hesablar);",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.7",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "bank kartları və onlar ilə əməliyyatlar üçün onlayn qaydada sifariş olunma və mobil tətbiq ilə istifadə edilmə;",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.11.8",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində yüksək riskli hesab edilən digər çatdırılma kanalları.",
+      "topics": [
+        "channel",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində coğrafi yerləşmə risk kateqoriyası üzrə müəyyən edilmiş aşağıdakı dövlətlər (ərazilər) yüksək riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "etibarlı mənbələr (beynəlxalq təşkilat və qurumlar tərəfindən dərc edilmiş qarşılıqlı qiymətləndirmə və ya təfsilatlı hesabatlar, habelə tərəqqi hesabatları) əsasında cinayət yolu ilə əldə edilmiş əmlakın leqallaşdırılmasına və terrorçuluğun maliyyələşdirilməsinə qarşı adekvat mübarizə sisteminin olmadığı müəyyən edilmiş dövlətlər (ərazilər);",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "silahlı separatizmi, ekstremizmi, muzdluluğu və terror fəaliyyətini dəstəkləyən, maliyyə əməliyyatlarının aparılması zamanı eyniləşdirmə məlumat və sənədlərinin açıqlanmasını tələb etməyən və beynəlxalq təşkilatlar tərəfindən barəsində sanksiyalar və ya digər analoji tədbirlər tətbiq edilən dövlətlər (ərazilər);",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "Birləşmiş Millətlər Təşkilatının sanksiya və ya embarqo subyekti olan dövlətlər (ərazilər);",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "etibarlı mənbələr əsasında digər cinayətkarlıq (xüsusilə iqtisadi sahədə cinayətlər üzrə) səviyyəsinin yüksək olduğu təsdiq edilmiş dövlətlər (ərazilər);",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "əmlakın leqallaşdırıldığı müəyyən edilmiş əsas dövlətlər (ərazilər) və ofşor maliyyə mərkəzləri;",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12.6",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "Azərbaycan Respublikasının Maliyyə Monitorinqi Xidməti tərəfindən Qanunun 9.5-ci maddəsinə uyğun olaraq müəyyən edilən yüksək riskli dövlətlər (ərazilər);",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.12.7",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində yüksək riskli hesab edilən digər dövlətlər (ərazilər).",
+      "topics": [
+        "geography",
+        "high-risk-factor"
+      ]
+    },
+    {
+      "id": "3.13",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 2,
+      "text": "Müştəri profili üzrə risk qiymətləndirilməsində əməliyyat riski kateqoriyası üzrə müəyyən edilmiş aşağıdakı əməliyyatlar yüksək riskli olaraq təsnifləşdirilə bilər:",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.13.1",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "Qanunun 11.2-ci maddəsində nəzərdə tutulmuş əməliyyatlar;",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.13.2",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "nağd mədaxil əməliyyatları",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.13.3",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "əlaqəli olmayan və ya naməlum üçüncü şəxslərdən qəbul edilmiş ödənişlər;",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.13.4",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "Müştərinin sahibkarlıq fəaliyyətinə və tarixçəsinə uyğun gəlməyən və ya az izah olunan, izaholunmayan, təkrarlanan və ya qeyri-adi sxemli köçürmə əməliyyatları;",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.13.5",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "etibarlı müqavilə, məhsul və xidmət ilə əlaqədar olmayan köçürmə əməliyyatları;",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.13.6",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "Bu Qaydanın 3.9-3.12-ci bəndlərində qeyd olunmuş müştərilər, məhsullar (və ya xidmətlər), çatdırılma kanalları və dövlətlər (ərazilər) ilə əlaqəli əməliyyatlar;",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "3.13.7",
+      "part": "3",
+      "part_title_az": "Risk faktorlarının müəyyən edilməsi və müştəri profilinin risk qrupları",
+      "part_title_en": "Determination of risk factors and customer profile risk groups",
+      "depth": 3,
+      "text": "risk qiymətləndirməsi nəticəsində yüksək riskli hesab edilən digər əməliyyatlar.",
+      "topics": [
+        "high-risk-factor",
+        "transaction"
+      ]
+    },
+    {
+      "id": "4.1",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 2,
+      "text": "Aşağı risk dərəcələri üçün sadələşdirilmiş müştəri uyğunluğu tədbirləri yalnız Qanunun 4.18-ci maddəsinə uyğun olaraq aşağıdakı hallarda tətbiq edilə bilər:",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.1.1",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 3,
+      "text": "işgüzar münasibətlərin yaradılmasından əvvəl;",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.1.2",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 3,
+      "text": "iyirmi min manat məbləğində və ya bu məbləğdən artıq həyata keçirilməsi gözlənilən hər hansı birdəfəlik əməliyyatdan əvvəl (bu hala, həmçinin limit çərçivəsində həyata keçirilərək bir-biri ilə əlaqəsi olan və ümumi məbləği iyirmi min manatdan artıq olan bir neçə əməliyyat aiddir);",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.1.3",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 3,
+      "text": "maliyyə vəsaitlərinin elektron köçürülməsi və virtual aktivlərlə əməliyyatların aparılmasına dair Azərbaycan Respublikasının Mərkəzi Bankı tərəfindən müəyyən edilmiş qaydalara uyğun olaraq maliyyə vəsaitlərinin birdəfəlik elektron köçürülməsindən və virtual aktivlərlə aparılan birdəfəlik əməliyyatlardan əvvəl.",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.2",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 2,
+      "text": "İşgüzar münasibətlərin yaradılması və ya birdəfəlik əməliyyatların həyata keçirilməsi zamanı tətbiq edilən sadələşdirilmiş müştəri uyğunluğu tədbirləri davamlı müştəri uyğunluğu tədbirləri üçün tətbiq edilə bilməz.",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.3",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər aşağıdakı sadələşdirilmiş müştəri uyğunluğu tədbirlərindən birini və ya bir neçəsini tətbiq edə bilərlər:",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.3.1",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 3,
+      "text": "müştərinin və benefisiar mülkiyyətçinin verifikasiyasının işgüzar münasibətlər yaradıldıqdan sonra həyata keçirilməsi;",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.3.2",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 3,
+      "text": "işgüzar münasibətlər çərçivəsində əməliyyatların illik dövriyyəsi yüz min manatdan aşağı olan hallarda Qanunun 4.5-ci maddəsinə əsasən müştərilərin eyniləşdirmə məlumatlarının yenilənməsinin bu Qaydaların 8.1-ci bəndində nəzərdə tutulandan daha uzun vaxt intervalında həyata keçirilməsi;",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.3.3",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 3,
+      "text": "bu Qaydaların 2.1-ci bəndinə əsasən eyniləşdirmə zamanı tələb olunan işgüzar münasibətlərin məqsədinin və mahiyyətinin bu barədə əlavə məlumat əldə etmədən və ya hər hansı bir araşdırma aparmadan, həyata keçirilən maliyyə əməliyyatının növündən və ya yaradılmış işgüzar münasibətdən irəli gələrək müəyyən edilməsi.",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "4.4",
+      "part": "4",
+      "part_title_az": "Sadələşdirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Simplified customer due diligence measures",
+      "depth": 2,
+      "text": "Gücləndirilmiş müştəri uyğunluğu tədbirlərinin tətbiq edilməsini tələb edən halların mövcud olması sadələşdirilmiş müştəri uyğunluğu tədbirlərinin tətbiq edilməsini istisna edir.",
+      "topics": [
+        "sdd"
+      ]
+    },
+    {
+      "id": "5.1",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər mürəkkəb, qeyri-adi olaraq irihəcmli olan, habelə açıq-aşkar iqtisadi və ya qanuni məqsədi olmayan əməliyyatlar üzrə risk dərəcəsi yüksək olan hallarda, habelə müştərilərin, məhsulların, xidmətlərin, əməliyyatların, çatdırılma kanallarının və coğrafi yerləşmənin xüsusiyyətləri ilə bağlı meyarların qiymətləndirilməsi əsasında və risk qiymətləndirmələrinin nəticələrini əsas götürməklə riskin yüksək olduğunu müəyyən etdikdə gücləndirilmiş müştəri uyğunluğu tədbirləri tətbiq etməlidirlər.",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.2",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər FATF-ın çağırış etdiyi dövlətlərdən (ərazilərdən) olan fiziki və hüquqi şəxslər, maliyyə institutları və xarici hüquqi təsisatlar, habelə siyasi nüfuzlu şəxslər, onların yaxın qohumu və ya yaxın münasibətdə olduğu şəxslər ilə işgüzar münasibətlərə və əməliyyatlara (əqdlərə) gücləndirilmiş müştəri uyğunluğu tədbirləri tətbiq etməlidirlər. Gücləndirilmiş müştəri uyğunluğu tədbirləri effektiv və risklərə mütənasib olmalıdır.",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər aşağıdakı gücləndirilmiş müştəri uyğunluğu tədbirlərindən birini və ya bir neçəsini tətbiq edə bilərlər:",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3.1",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 3,
+      "text": "müştəri barədə əlavə məlumatlar və sənədlər (məs: iş yeri və fəaliyyəti, əmlakının həcmi, açıq mənbələrdən əldə edilə bilən məlumatlar, əlavə gəlir mənbələri barədə məlumat və s.) əldə etmək, müştərinin və onun benefisiar mülkiyyətçisinin eyniləşdirmə məlumatlarını daha intensiv olaraq yeniləmək və verifikasiya etmək;",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3.2",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 3,
+      "text": "işgüzar münasibətlərin mahiyyəti barədə əlavə məlumatlar və sənədlər əldə etmək;",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3.3",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 3,
+      "text": "müştərinin vəsaitinin və sərvətlərinin mənbəyi barədə əlavə məlumat və sənədlər əldə etmək;",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3.4",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 3,
+      "text": "aparılmış və ya nəzərdə tutulan əməliyyatın (əqdin) məqsədi barədə əlavə məlumat əldə etmək;",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3.5",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 3,
+      "text": "işgüzar münasibətləri rəhbərliyin razılığı ilə yaratmaq və ya davam etdirmək;",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3.6",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 3,
+      "text": "müştəri profili üzrə nəzarət tədbirlərinin müddətini və dövrülüyünü artırmaqla işgüzar münasibətlərin davamlı monitorinqini həyata keçirmək, eləcə də əməliyyat (əqd) modellərini seçərək əlavə təhlilini həyata keçirmək;",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.3.7",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 3,
+      "text": "ilk ödənişin müştərinin adına olan hesab vasitəsilə oxşar müştəri uyğunluğu tələblərinə malik bankla həyata keçirilməsini tələb etmək.",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "5.4",
+      "part": "5",
+      "part_title_az": "Gücləndirilmiş müştəri uyğunluğu tədbirləri",
+      "part_title_en": "Enhanced customer due diligence measures",
+      "depth": 2,
+      "text": "Bu Qaydaların 5.3-cü bəndi öhdəlik daşıyan şəxslər tərəfindən əlavə gücləndirilmiş müştəri uyğunluğu tədbirlərinin tətbiqini istisna etmir.",
+      "topics": [
+        "edd"
+      ]
+    },
+    {
+      "id": "6.1",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər müştəri profili üzrə risk qiymətləndirməsi həyata keçirməli və müştəri uyğunluğu tədbirləri çərçivəsində əldə edilmiş məlumatları ən azı aşağıdakılar vasitəsilə verifikasiya etməlidirlər:",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.1",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 3,
+      "text": "Fiziki şəxslərə münasibətdə:",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.1.1",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "adı, soyadı, atasının adı (olduğu təqdirdə), doğum tarixi, qeydiyyatda olduğu ünvan, vətəndaşlığı – bu Qaydalara Əlavədə qeyd olunmuş şəxsiyyəti təsdiq edən sənədlərdən biri əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.1.2",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "əməliyyatın (əqdin) səlahiyyətli nümayəndə vasitəsilə həyata keçirildiyi halda həmin şəxsə dair bu Qaydaların 2.1.1.1 – 2.1.1.5-ci abzaslarında nəzərdə tutulmuş məlumatlar – olduğu təqdirdə etibarnamə və ya eyni hüquqlu digər sənəd, şəxsin başqa şəxsin adından əməliyyatın həyata keçirilməsinə dair istənilən digər sənəd (şifahi hallar istisna olmaqla) və bu Qaydaların 6.1.1.3-cü və 6.1.1.4-cü abzaslarında nəzərdə tutulmuş sənədlər əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.1.3",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində iş yeri (işəgötürənin adı daxil olmaqla) və vəzifəsi, orta illik əmək haqqının və digər gəlirlərinin məbləği və mənbəyi barədə məlumatlar - dövlət informasiya sistemindən (dövlət informasiya sistemində olmadığı təqdirdə iş yerindən) vəzifəni təsdiq edən sənəd, yaxud mövcud etibarlı müstəqil mənbələrə istinadən gəlirin məbləğini və mənbəyini təsdiq edən mülki hüquqi müqavilələr, vergi bəyannamələri, məhkəmə qərarları və s. digər sənədlər əsasında.",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.1.4",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində müştərini maliyyələşdirən (sponsor) şəxs (o cümlədən maliyyələşdirən (sponsor) şəxslərin özlərini maliyyələşdirən (sponsor) şəxs) barədə məlumat (müştəri ilə əlaqəsi, iş yeri, vəzifəsi, gəlir mənbələri, dövrülüyü) – olduğu təqdirdə nikah haqqında şəhadətnamə və digər təsdiqedici sənədlər və maliyyələşdirən şəxsə münasibətdə bu Qaydaların 6.1.1.1-ci və 6.1.1.3-cü abzaslarında nəzərdə tutulmuş sənədlər əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 3,
+      "text": "Fərdi sahibkarlara münasibətdə bu Qaydaların 6.1.1.1-6.1.1.3-cü abzaslarında qeyd edilənlərə əlavə olaraq:",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2.1",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "VÖEN-i, fəaliyyət növləri (vergi orqanı tərəfindən müəyyən edilmiş fəaliyyət kodu üzrə və fərdi sahibkarın faktiki fəaliyyət növü) – fiziki şəxsin uçotu haqqında şəhadətnamə və vergi orqanı tərəfindən verilmiş digər sənədlər əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2.2",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində işçilərinin və xidmət müqaviləsi üzrə işə cəlb edilmiş hüquqi və fiziki şəxslərin sayı – müvafiq olaraq dövlət informasiya sistemindən işçilərin sayını təsdiq edən sənəd və mülki müqavilələr əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2.3",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində aktivlərinin həcmi (mövcud olduğu valyuta ekvivalentində) – kredit müqavilələri, mühasibatlıq sistemindən çıxarış və vergi orqanına təqdim edilmiş bəyannamə əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2.4",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində son 12 ayda mənfəətinin həcmi (aylar üzrə) – vergi orqanına təqdim edilmiş vergi hesabatları əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2.5",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində son 12 ayda xaricə və xaricdən köçürmələrinə və bu köçürmələrin məbləğinə dair məlumat – bank hesablarından çıxarışlar əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2.6",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində əsas müqavilə tərəfdaşlarına dair məlumatlar – təqdim edilmiş müqavilələr əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.2.7",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində son 12 ay ərzində qalib olduğu dövlət satınalmalarına dair məlumatlar və mövcud əməliyyatların məbləği – dövlət satınalmalarının vahid internet portalından çıxarış, təqdim edilmiş müqavilələr və bank hesablarından çıxarışlar əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 3,
+      "text": "Hüquqi şəxslərə münasibətdə:",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.1",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "adı, təşkilati-hüquqi forması, hüquqi ünvanı, VÖEN-i, idarəetmə və nəzarət orqanlarının strukturu, təsisçiləri, nizamnamə kapitalı - hüquqi şəxsin nizamnaməsinin və hüquqi şəxslərin dövlət reyestrindən çıxarışın müvafiq qeydiyyat orqanlarının elektron informasiya sistemi vasitəsilə əldə edildiyi hallar istisna olunmaqla əsli və ya notariat qaydasında təsdiq olunmuş surəti əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.2",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "təsisçilər və benefisiar mülkiyyətçilər – bu Qaydaların 6.1.1-ci yarımbəndinə uyğun olaraq əldə edilmiş məlumat və sənədlər əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.3",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "cari fəaliyyətinə rəhbərlik edən vəzifəli şəxslərin, idarəetmə və nəzarət orqanlarında çalışan şəxslərin adı, soyadı, atasının adı (olduğu təqdirdə), doğum tarixi, gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində vəzifəsi – şəxsiyyəti təsdiq edən sənəd, iş yerindən və ya dövlət informasiya sistemindən vəzifəni təsdiq edən sənəd əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.4",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "fəaliyyət növləri (vergi orqanı tərəfindən müəyyən edilmiş fəaliyyət kodları üzrə) – vergi orqanı tərəfindən verilmiş sənədlər əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.5",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində işçilərinin və xidmət müqaviləsi üzrə işə cəlb edilmiş hüquqi və fiziki şəxslərin sayı – müvafiq olaraq dövlət informasiya sistemindən işçilərin sayını təsdiq edən sənəd və mülki müqavilələr əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.6",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "hesab açıldığı təqdirdə, hesab üzərində sərəncam vermək hüququna malik olan şəxslərin adı, soyadı, atasının adı (olduğu təqdirdə), doğum tarixi, gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində vəzifəsi – şəxsiyyəti təsdiq edən sənədlər, iş yerindən və ya dövlət informasiya sistemindən vəzifəni təsdiq edən sənəd, səlahiyyətləri təsdiq edən etibarnamə və ya digər rəsmi sənəd əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.7",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində əməliyyat aparılması (əqd bağlanması) nəzərdə tutulan əmlakın mənbəyi - əmlakın qanuni yolla əldə edilməsini sübut edən istənilən rəsmi sənəd əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.8",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində nizamnamə kapitalının mənbəyi – əmlakın qanuni yolla əldə edilməsini sübut edən istənilən rəsmi sənəd əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.9",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "hüquqi şəxsə münasibətdə bu Qaydaların 6.1.2.3-6.1.2.7-ci abzaslarında nəzərdə tutulmuş məlumatların həmin abzaslarda nəzərdə tutulmuş sənədlər əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.3.10",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində hüquqi şəxsin fəaliyyətinin mövcudluğu - fəaliyyət xüsusiyyətindən asılı olaraq, fəaliyyət göstərdiyi yerə baxış keçirməklə və ya müxtəlif sənədlər əsasında.",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.4",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 3,
+      "text": "Xarici hüquqi təsisatlara münasibətdə:",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.4.1",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "təsis edildiyi dövlət, yaradılma məqsədi, növü, idarə etdiyi aktivlər fəaliyyətinin təsviri – xarici hüquqi təsisatın təsis əqdinin əsli və ya notarial qaydada təsdiq edilmiş surəti əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.4.2",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "xarici hüquqi təsisatın təsisçisinin, idarəçisinin, təminatçısının (olduğu təqdirdə), benefisiarların və ya benefisiar qrupuna daxil olan fiziki şəxslərin (benefisiar qrupuna daxil olan fiziki şəxslər məlum olduğu vaxtdan), xarici hüquqi təsisat üzərində effektiv nəzarəti həyata keçirən hər hansı digər fiziki şəxsin (nəzarət və ya sahiblik zənciri də daxil olmaqla) adı, soyadı, atasının adı (olduğu təqdirdə), doğum tarixi, gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində, vəzifəsi – müvafiq olaraq xarici hüquqi təsisatın təsis əqdinin notarial qaydada təsdiq edilmiş surəti, şəxsiyyəti təsdiq edən sənədlər, etibarlı müstəqil mənbələr üzrə əldə edilmiş iş yerinə dair sənəd və ya iş yerindən arayış əsasında;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.1.4.3",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 4,
+      "text": "hesab açıldığı təqdirdə, hesab üzərində sərəncam vermək hüququna malik olan şəxslərin adı, soyadı, atasının adı (olduğu təqdirdə), doğum tarixi, gücləndirilmiş müştəri uyğunluğu tədbirləri çərçivəsində vəzifəsi – şəxsiyyəti təsdiq edən sənədlər, etibarlı müstəqil mənbələr üzrə əldə edilmiş iş yerinə dair sənəd və ya iş yerindən arayış, səlahiyyətləri təsdiq edən etibarnamə və ya digər rəsmi sənəd əsasında.",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.2",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 2,
+      "text": "Xarici dövlətdə (ərazidə) təsis edilən (qeydiyyatdan keçən) hüquqi şəxsin kənar idarəçisi qismində çıxış edən şirkət xidmət təminatçıları fərdi sahibkar olduqda təqdim edilmiş məlumat və sənədlərin verifikasiyasına münasibətdə bu Qaydaların 6.1.2-ci yarımbəndi, hüquqi şəxs olduqda isə bu Qaydaların 6.1.3-cü yarımbəndi tətbiq edilməlidir.",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.3",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər təqdim olunmuş məlumatların verifikasiyası üçün həqiqiliyi şübhə doğurmayan, müstəqil (məlumat və sənədlərin müştəridən kənar digər mənbələrdən əldə edilməsi) mənbələrdən istifadə edə bilərlər.",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.4",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 2,
+      "text": "Bu Qaydaların 6.1-ci bəndində nəzərdə tutulmuş verifikasiya tədbirləri normal biznes gedişini təmin etmək üçün aşağıdakı hallarda işgüzar münasibətlərin yaradılmasından sonra, lakin 5 iş günündən gec olmamaqla tətbiq edilə bilər:",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.4.1",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 3,
+      "text": "yeni texnologiyalardan istifadə etməklə yaradılan işgüzar münasibətlər gedişində;",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.4.2",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 3,
+      "text": "qiymətli kağızlar, habelə törəmə maliyyə alətləri ilə əməliyyatlar zamanı (əməliyyatların sürətli aparılması zamanı);",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.4.3",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 3,
+      "text": "eyni xarakterli digər əqdlər (əməliyyatlar) zamanı.",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "6.5",
+      "part": "6",
+      "part_title_az": "Müştəri uyğunluğu tədbirləri çərçivəsində verifikasiya tədbirləri",
+      "part_title_en": "Verification measures within customer due diligence",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər, həmçinin verifikasiya tədbirlərinin tətbiqindən əvvəl müştəri tərəfindən işgüzar münasibətlərdən müəyyən şərtlər və məhdudiyyətlər daxilində istifadə edilməsi imkanını yaradan risklərin idarə edilməsi proseduruna malik olmalıdırlar. Bu prosedurlar işgüzar münasibətlər çərçivəsində əməliyyatların sayına, növünə, fərdi və ya ümumi məbləğinə, təyinatına məhdudiyyətlərin qoyulması və iri həcmli və yaxud mürəkkəb əməliyyatların nəzərdə tutulan biznes praktikasından kənara çıxması hallarının monitorinq edilməsini əhatə etməlidir.",
+      "topics": [
+        "verification"
+      ]
+    },
+    {
+      "id": "7.1",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 2,
+      "text": "Yeni texnologiyalar vasitəsilə müştəri ilə birbaşa ünsiyyət qurmadan yaradılan işgüzar münasibətlər və aparılan əməliyyatlar zamanı təqdim olunmuş sənədlərin verifikasiyası və müştərinin kimliyinin yoxlanılması üçün əməliyyatın növündən və xarakterindən asılı olaraq öhdəlik daşıyan şəxs tərəfindən aşağıdakı tədbirlərdən biri və ya bir neçəsini görülməlidir:",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.1",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "müştərinin müraciətinin onun gücləndirilmiş elektron imzası ilə təsdiqləməsini tələb etmək;",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.2",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "müştərinin təqdim etdiyi məlumatları elektron məlumat bazalarından və/və ya müstəqil kənar mənbələrdən yoxlamaq;",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.3",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "gücləndirilmiş müştəri autentifikasiyası aparmaq. Burada gücləndirilmiş müştəri autentifikasiyası dedikdə autentifikasiya məlumatlarının məxfiliyini qorumaq üçün hazırlanmış və yalnız müştərinin və ya müraciət edən fiziki şəxsin “bildiyi” (şifrə, pin, suallar toplusu və s.), “sahib olduğu” (mobil telefon tətbiqi, OTP, TOTP, elektron imza, token və s.) və ya ona “məxsus olan” (üz tanınması, səs tanınması, barmaq izi və s.) müstəqil elementlərin iki və ya daha çoxunun istifadəsinə əsaslanan autentifikasiya (şəxsin dürüst müəyyənləşdirilməsi) başa düşülür. Elementlərin müstəqilliyi dedikdə bir elementin ələ keçirilməsi halının digər elementin təhlükəsizliyinə xələl gətirməməsi nəzərdə tutulur;",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.4",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "müştərinin təqdim etdiyi sənədləri onun razılığı ilə sorğu əsasında etibarlı üçüncü şəxsdən və ya dövlət qurumundan əldə etmək;",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.5",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "yazışmanı və sənəd mübadiləsini müştərinin rəsmi qeydiyyat ünvanı üzərindən aparmaq;",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.6",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "müştəridən hesabını və ya virtual kabinetini açdığı zaman ondan poçt, telefon və ya digər etibarlı yollarla təsdiqlənmiş ünvana təqdim olunan təhlükəsizlik kodlardan, elektron imzalardan, tokenlərdən və digər bu tipli şəxsiyyətini təsdiqləyən şifrələrdən istifadə edilməsini tələb etmək;",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.7",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "real vaxt rejimində video zəng və ya sistem üzərindən video çəkiliş ilə müştərinin şəxsiyyətinin verifikasiyasını aparmaq;",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.1.8",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 3,
+      "text": "öhdəlik daşıyan şəxsin daxili prosedurları ilə müəyyən edilmiş digər yoxlama və nəzarət tədbirlərini görmək.",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.2",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 2,
+      "text": "Əgər müştəri ilə ilk dəfə işgüzar münasibətlər qurulursa bu Qaydaların 7.1.1-ci, 7.1.2-ci, 7.1.3-cü və 7.1.7-ci yarımbəndlərində nəzərdə tutulmuş verifikasiya tədbirlərinin aparılması məcburidir.",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.3",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 2,
+      "text": "Mövcud və inkişaf edən texnologiyalar vasitəsilə müştəri ilə birbaşa ünsiyyət qurmadan yaradılan işgüzar münasibətlər və aparılan əməliyyatlar zamanı tətbiq edilən eyniləşdirmə və verifikasiya tədbirləri müştərinin kimliyinin müəyyən edilməsinə imkan vermirsə və ya onun kimliyinin müəyyən edilməsində və təqdim olunmuş sənədlərin həqiqiliyinin yoxlanılmasında aradan qaldırılması mümkün olmayan şübhələr və ya uyğunsuzluqlar varsa əməliyyatın məsafədən həyata keçirilməsindən imtina edilməlidir.",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "7.4",
+      "part": "7",
+      "part_title_az": "Yeni texnologiyaların tətbiqi zamanı verifikasiya tədbirləri",
+      "part_title_en": "Verification measures when applying new technologies",
+      "depth": 2,
+      "text": "Müştərilərə səlahiyyətli nümayəndə (hüquqi şəxsin qanuni təmsilçisi istisna olmaqla) vasitəsilə, habelə qeyri-rezident hüquqi şəxslərə məsafədən işgüzar münasibətlərin yaradılmasına yol verilməməlidir.",
+      "topics": [
+        "new-technology",
+        "remote-onboarding"
+      ]
+    },
+    {
+      "id": "8.1",
+      "part": "8",
+      "part_title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "part_title_en": "Ongoing application of customer due diligence measures",
+      "depth": 2,
+      "text": "Öhdəlik daşıyan şəxslər Qanunun 4.5-ci maddəsini aşağıdakı risk qruplarına uyğun olaraq tətbiq etməlidir:",
+      "topics": [
+        "ongoing-monitoring",
+        "review-cycle"
+      ]
+    },
+    {
+      "id": "8.1.1",
+      "part": "8",
+      "part_title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "part_title_en": "Ongoing application of customer due diligence measures",
+      "depth": 3,
+      "text": "yüksək riskli müştərilərə münasibətdə ən azı ildə bir dəfə;",
+      "topics": [
+        "ongoing-monitoring",
+        "review-cycle"
+      ]
+    },
+    {
+      "id": "8.1.2",
+      "part": "8",
+      "part_title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "part_title_en": "Ongoing application of customer due diligence measures",
+      "depth": 3,
+      "text": "orta riskli müştərilərə münasibətdə ildə ən azı iki ildə bir dəfə;",
+      "topics": [
+        "ongoing-monitoring",
+        "review-cycle"
+      ]
+    },
+    {
+      "id": "8.1.3",
+      "part": "8",
+      "part_title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "part_title_en": "Ongoing application of customer due diligence measures",
+      "depth": 3,
+      "text": "aşağı riskli müştərilərə münasibətdə ən azı üç ildə bir dəfə;",
+      "topics": [
+        "ongoing-monitoring",
+        "review-cycle"
+      ]
+    },
+    {
+      "id": "8.1.4",
+      "part": "8",
+      "part_title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "part_title_en": "Ongoing application of customer due diligence measures",
+      "depth": 3,
+      "text": "siyasi nüfuzlu şəxslərə münasibətdə davamlı olaraq.",
+      "topics": [
+        "ongoing-monitoring",
+        "review-cycle"
+      ]
+    },
+    {
+      "id": "8.2",
+      "part": "8",
+      "part_title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "part_title_en": "Ongoing application of customer due diligence measures",
+      "depth": 2,
+      "text": "bu Qaydaların 8.1.1-8.1.3-cü yarımbəndlərində nəzərdə tutulmuş müddətlər ölkə, sahəvi və institusional risk qiymətləndirməsinin nəticəsindən və digər risk faktorlarının mövcudluğundan asılı olaraq artırıla, azaldıla, aralıq risk kateqoriyaları və müddətləri müəyyən edilə bilər.",
+      "topics": [
+        "ongoing-monitoring",
+        "review-cycle"
+      ]
+    },
+    {
+      "id": "8.3",
+      "part": "8",
+      "part_title_az": "Müştəri uyğunluğu tədbirlərinin davamlı tətbiqi",
+      "part_title_en": "Ongoing application of customer due diligence measures",
+      "depth": 2,
+      "text": "Müştərilərin risk dərəcəsi dəyişdikdə və müştəri daha yüksək risk dərəcəsi aldıqda, gücləndirilmiş müştəri uyğunluğu tədbirləri dərhal bu Qaydaların 8.1-ci bəndinə uyğun qaydada tətbiq edilməlidir.",
+      "topics": [
+        "ongoing-monitoring",
+        "review-cycle"
+      ]
+    }
+  ],
+  "annex_identity_documents": [
+    "Bu Qaydaların məqsədləri üçün şəxsiyyəti təsdiq edən sənədlərə aşağıdakılar aiddir:",
+    "1. Azərbaycan Respublikasının vətəndaşları üçün - şəxsiyyət vəsiqəsi;",
+    "2. əcnəbilər üçün - xarici pasport, Azərbaycan Respublikasının ərazisində müvəqqəti və ya daimi yaşamaq üçün verilən icazə vəsiqəsi və ya Azərbaycan Respublikasının tərəfdaş çıxdığı beynəlxalq müqavilələrdən irəli gələn digər sərhədkeçmə sənədləri;",
+    "3. vətəndaşlığı olmayan şəxslər üçün - Azərbaycan Respublikasının ərazisində daimi yaşayan vətəndaşlığı olmayan şəxslərə verilən şəxsiyyət vəsiqəsi, yaxud Azərbaycan Respublikasının ərazisində müvəqqəti və ya daimi yaşamaq üçün verilən icazə vəsiqəsi;",
+    "4. işgüzar münasibətlərin yaradılması və ya əməliyyatın aparılması anında həqiqi hərbi xidmətdə olan şəxslər üçün - hərbi bilet;",
+    "5. hərbi xidmətə könüllü qəbul edilmiş hərbi qulluqçulara, hərbi vəzifəlilərə və qadınlara (kursantların həqiqi hərbi xidməti hərbi qulluqçularından başqa) onların qəbul olunduğu həqiqi hərbi xidmətin növündən asılı olaraq şəxsiyyəti təsdiq edən müəyyən edilmiş formada verilmiş vəsiqələr;",
+    "6. qaçqın statusu olan şəxslər üçün - qaçqın vəsiqəsi və ya Birləşmiş Millətlər Təşkilatının Qaçqınlar üzrə Ali komissarının Azərbaycan Respublikasındakı Nümayəndəliyi tərəfindən himayəyə götürülmüş şəxslərin himayəyə götürüldüyünü və olduğu yer üzrə qeydiyyatını təsdiqləyən sənəd;",
+    "7. dənizçilər üçün - dənizçinin şəxsiyyət sənədi."
+  ]
+}
