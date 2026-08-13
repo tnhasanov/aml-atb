@@ -39,18 +39,96 @@ officer is asking about. Three design choices follow from that:
 
 ---
 
-## Quick start
+## Run it locally (5 minutes)
 
 ```bash
 npm install
 python3 tools/extract_rules.py     # regenerate data/rules.json from the source .docx
-cp .env.example .env               # then set ANTHROPIC_API_KEY (or run `ant auth login`)
+cp .env.example .env               # set ANTHROPIC_API_KEY, or run `ant auth login`
+echo "AUTH_MODE=none" >> .env      # development only - loopback bind, no login
 npm test
-npm run build && npm start         # http://localhost:3000
+npm run build && npm start         # http://127.0.0.1:3000
 ```
 
-Requires Node ≥ 22.6 and Python 3 (extraction only — no Python at runtime).
+Requires Node >= 22.6 and Python 3 (extraction only - no Python at runtime).
 The only runtime dependency is `@anthropic-ai/sdk`; the server, retrieval and UI are dependency-free.
+
+`AUTH_MODE=none` is refused on any non-loopback bind, so this configuration cannot
+accidentally become the deployed one.
+
+---
+
+## Going live
+
+The tool binds `127.0.0.1` and requires an authenticated caller by default. Production
+means putting an SSO-terminating reverse proxy in front of it.
+
+### 1. Deploy
+
+```bash
+sudo useradd --system --home /opt/aml-atb aml
+sudo mkdir -p /opt/aml-atb /etc/aml-atb /var/lib/aml-atb/audit
+sudo chown -R aml:aml /opt/aml-atb /var/lib/aml-atb/audit
+sudo chmod 700 /var/lib/aml-atb/audit
+
+# build elsewhere, ship dist/ + node_modules/ + data/ + public/
+sudo cp -r dist node_modules data public package.json /opt/aml-atb/
+
+sudo install -m 600 /dev/stdin /etc/aml-atb/aml-atb.env <<'ENV'
+ANTHROPIC_API_KEY=sk-ant-...
+BIND_HOST=127.0.0.1
+AUTH_MODE=proxy
+AUTH_SHARED_SECRET=<openssl rand -hex 32>
+AUDIT_DIR=/var/lib/aml-atb/audit
+ENV
+
+sudo cp deploy/aml-atb.service /etc/systemd/system/
+sudo systemctl daemon-reload && sudo systemctl enable --now aml-atb
+```
+
+### 2. Put a proxy in front
+
+`deploy/nginx.conf` is a working starting point. It must:
+
+- terminate TLS, and be the only route to port 3000 (`ss -lptn` to confirm);
+- authenticate against the institution's IdP (`auth_request` + oauth2-proxy, mTLS client
+  certificates, or LDAP as an interim);
+- **strip any client-supplied `X-Forwarded-User`** and set it from the verified identity -
+  otherwise a user can assert any username and the audit trail is worthless;
+- send the `AUTH_SHARED_SECRET` so the app can tell a proxied request from a direct one;
+- set `proxy_buffering off` - answers stream token by token over SSE.
+
+### 3. Verify before opening it up
+
+```bash
+curl -sf http://127.0.0.1:3000/healthz                     # liveness, public
+curl -sf http://127.0.0.1:3000/readyz                      # audit trail writable
+curl -s -o /dev/null -w '%{http_code}\n' https://aml.internal/api/health   # expect 401/403 unauthenticated
+npm run verify-audit -- /var/lib/aml-atb/audit             # chain intact
+sudo -u aml stat -c '%a' /var/lib/aml-atb/audit            # expect 700
+```
+
+Ship `/var/lib/aml-atb/audit/*.jsonl` off-host (rsyslog, filebeat, plain rsync) - it is
+newline-delimited JSON, which is the canonical SIEM ingest format. Losing the host must not
+lose the record.
+
+### 4. Decisions that are not code
+
+These need a named owner and a written answer before real customer data goes in. Nothing in
+this repository can settle them:
+
+| Question | Owner |
+|---|---|
+| Lawful basis for sending customer data to a third-country processor, and the banking-secrecy analysis | DPO + MLRO |
+| Whether MMX and/or the Central Bank require notification of this outsourcing | MLRO |
+| The API account's data-retention and no-training position, in writing | Commercial owner + DPO |
+| Local retention period for the audit trail, reconciled against the AML record-keeping duty | MLRO + DPO |
+| What staff may paste (reference numbers vs customer names) - there is no redaction stage | DPO writes it, MLRO confirms it does not defeat record-keeping |
+| A user-facing notice that queries are processed by a named third party abroad | DPO + MLRO |
+| Who attests the committed `.docx` is the current text as amended in 2024 | MLRO |
+
+`ANTHROPIC_BASE_URL` lets you route all API traffic through an institutional gateway or DLP
+proxy without a code change, if the transfer analysis calls for one.
 
 ---
 
@@ -128,10 +206,25 @@ An AML advisory tool is itself subject to record-keeping expectations. Every que
 tool result, model answer and token count is appended to `audit/audit-YYYY-MM-DD.jsonl`, one JSON
 record per line, with the clause citations used in each answer.
 
+Every record names the acting officer (`actor.user`, `actor.ip`), taken from the authenticated
+identity — a trail that cannot say *who* asked does not answer the question a supervisor will
+actually ask.
+
 Each record carries the SHA-256 of the previous record, so editing or deleting a past entry breaks
-the chain and is detectable (`test/audit.test.ts` verifies both cases). This is **tamper-evident,
-not tamper-proof** — it does not defend against rewriting the whole file, which needs append-only
-storage or off-host shipping.
+the chain and is detectable. The chain is seeded from what is already on disk and spans day files,
+so restarts and midnight rollovers do not break it; each start writes its own `service_started`
+record, making restarts explainable rather than suspicious.
+
+```bash
+npm run verify-audit -- /var/lib/aml-atb/audit
+```
+
+Exits non-zero and names the offending file and line if the chain is broken. This is
+**tamper-evident, not tamper-proof** — it does not defend against rewriting the whole file, which
+needs append-only storage or off-host shipping.
+
+The trail is **fail-closed**: if it cannot be written the service refuses new questions and reports
+degraded on `/readyz`, rather than quietly giving CDD advice that leaves no record.
 
 ---
 
@@ -172,11 +265,24 @@ test/              53 tests
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | — | Optional if an `ant auth login` profile exists |
+| `ANTHROPIC_API_KEY` | — | Optional if an `ant auth login` profile exists. Rejected if it contains whitespace |
+| `ANTHROPIC_BASE_URL` | Anthropic | Route via an institutional gateway or DLP proxy |
 | `AML_MODEL` | `claude-opus-5` | Model id |
-| `AML_EFFORT` | `high` | Reasoning effort: `low`…`max` |
+| `AML_EFFORT` | `high` | `low`…`max`; validated at startup |
+| `AML_MAX_TOKENS` | `32000` | Must leave room for adaptive thinking as well as the answer |
 | `PORT` | `3000` | HTTP port |
-| `AUDIT_DIR` | `./audit` | Audit trail location |
+| `BIND_HOST` | `127.0.0.1` | Widen only behind a proxy |
+| `AUTH_MODE` | `proxy` | `proxy` or `none`; `none` refused on a non-loopback bind |
+| `AUTH_USER_HEADER` | `x-forwarded-user` | Header carrying the authenticated username |
+| `AUTH_SHARED_SECRET` | — | Proves a request came via the proxy |
+| `AUDIT_DIR` | `./audit` | Resolved absolute; created `0700`, files `0600` |
+| `AUDIT_FAIL_CLOSED` | `true` | Refuse to answer if the trail cannot be written |
+| `AML_RATE_LIMIT_PER_MINUTE` | `12` | Per authenticated user |
+| `AML_MAX_CONCURRENT_TURNS` | `4` | Global ceiling on in-flight model calls |
+| `AML_SESSION_IDLE_MS` | `3600000` | Idle session eviction |
+| `AML_UPSTREAM_TIMEOUT_MS` | `180000` | Anthropic request timeout |
+
+Invalid configuration fails at startup, not on the first user request.
 
 ---
 
@@ -191,7 +297,13 @@ test/              53 tests
 - **English text is a working translation.** The Azerbaijani clause text is authoritative. The
   English labels in `src/factors.ts` are a maintainer's gloss and are never shown to a user.
 - **Sessions are in-memory**, so a restart clears context and a multi-instance deployment needs a
-  shared store. The audit trail is on local disk and should be shipped off-host in production.
+  shared store. This is deliberate: a load balancer would break both the session store and the
+  audit chain. One process, one host. The audit trail is on local disk and should be shipped
+  off-host in production.
+- **No redaction stage.** Whatever an officer pastes is transmitted and written to the trail as
+  typed. Minimisation is a matter of procedure, not a control this tool enforces.
+- **Rate limiting is per-process and in-memory**, so it resets on restart. Adequate as a guard
+  against a runaway script; not a billing control.
 - **Not verified against a live model in this environment** — there were no API credentials in the
   build sandbox. The tool loop, SSE streaming, tool dispatch, citation extraction and audit chain
   are covered by tests against a stub upstream that speaks the Messages API wire format; the

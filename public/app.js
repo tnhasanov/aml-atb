@@ -41,9 +41,16 @@ document.getElementById("examples")?.addEventListener("click", (e) => {
   form.requestSubmit();
 });
 
-resetBtn.addEventListener("click", () => {
+resetBtn.addEventListener("click", async () => {
+  const previous = sessionId;
   sessionId = null;
   transcript.innerHTML = "";
+  if (previous) {
+    // Actually drop the transcript server-side, rather than only visually.
+    await fetch(`/api/session?id=${encodeURIComponent(previous)}`, { method: "DELETE" }).catch(
+      () => {},
+    );
+  }
   addNotice("Yeni sessiya başladıldı. Əvvəlki kontekst silindi.");
 });
 
@@ -73,8 +80,13 @@ async function send(text) {
     });
 
     if (!res.ok || !res.body) {
-      const detail = await res.text().catch(() => "");
-      throw new Error(detail || `HTTP ${res.status}`);
+      let detail = "";
+      try {
+        detail = (await res.json()).error ?? "";
+      } catch {
+        /* non-JSON error body */
+      }
+      throw new Error(detail || `Xəta ${res.status}`);
     }
 
     const reader = res.body.getReader();
@@ -154,6 +166,8 @@ function createAssistantView() {
   scrollToEnd();
 
   let answer = "";
+  let finished = false;
+  let truncated = false;
   const chips = new Map();
 
   return {
@@ -197,12 +211,27 @@ function createAssistantView() {
           bubble.querySelector(".notice").textContent = event.message;
           break;
 
+        // A cut-off answer is not an answer. Keep what arrived, but mark it
+        // so nobody acts on a CDD analysis that stopped mid-sentence.
+        case "truncated":
+          bubble.classList.remove("cursor");
+          truncated = true;
+          {
+            const warn = document.createElement("div");
+            warn.className = "notice";
+            warn.textContent = event.message;
+            bubble.append(warn);
+          }
+          scrollToEnd();
+          break;
+
         case "error":
           this.fail(event.message);
           break;
 
         case "done":
           bubble.classList.remove("cursor");
+          finished = true;
           break;
       }
     },
@@ -211,6 +240,15 @@ function createAssistantView() {
       bubble.classList.remove("cursor");
       if (!answer.trim() && !bubble.querySelector(".notice")) {
         bubble.innerHTML = `<div class="notice">Cavab alınmadı.</div>`;
+        return;
+      }
+      // No terminal event arrived: the connection dropped part-way through.
+      if (!finished && !truncated && !bubble.querySelector(".notice")) {
+        const warn = document.createElement("div");
+        warn.className = "notice";
+        warn.textContent =
+          "Bağlantı kəsildiyi üçün cavab yarımçıq qala bilər. Tam cavab üçün sualı yenidən verin.";
+        bubble.append(warn);
       }
     },
 

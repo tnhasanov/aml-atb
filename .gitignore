@@ -1,5 +1,8 @@
-node_modules/
-dist/
-.env
+!.env.example
+*.jsonl
 *.log
-audit/**/*.jsonl
+.env
+.env.*
+audit/
+dist/
+node_modules/

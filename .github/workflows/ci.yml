@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+      # The corpus is generated from the committed .docx. If what is served
+      # ever stops matching what the source document yields, that is a
+      # correctness failure in a compliance tool, not a stale build artefact.
+      - name: Corpus matches the source document
+        run: |
+          python3 tools/extract_rules.py
+          git diff --exit-code data/rules.json
+          test "$(python3 -c 'import json;print(len(json.load(open("data/rules.json"))["clauses"]))')" = "213"

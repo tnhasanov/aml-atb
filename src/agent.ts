@@ -3,10 +3,16 @@ import { config } from "./config.js";
 import { SYSTEM_PROMPT } from "./prompt.js";
 import { TOOL_DEFINITIONS, runTool } from "./tools/index.js";
 import { audit, extractCitations } from "./audit.js";
+import type { Principal } from "./auth.js";
 
 // Resolves ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, or an `ant auth login`
 // profile - in that order - without us having to plumb credentials through.
-const client = new Anthropic();
+// ANTHROPIC_BASE_URL is honoured by the SDK, which is how an institutional
+// gateway or DLP proxy can be interposed without a code change.
+const client = new Anthropic({
+  timeout: config.upstreamTimeoutMs,
+  maxRetries: config.upstreamMaxRetries,
+});
 
 export type StreamEvent =
   | { type: "thinking"; text: string }
@@ -14,10 +20,17 @@ export type StreamEvent =
   | { type: "tool_start"; tool: string; input: unknown }
   | { type: "tool_end"; tool: string; ok: boolean }
   | { type: "done"; citations: string[] }
+  | { type: "truncated"; message: string }
   | { type: "refusal"; message: string }
   | { type: "error"; message: string };
 
 export type Emit = (event: StreamEvent) => void;
+
+export interface TurnOptions {
+  principal: Principal;
+  /** Aborts the upstream call when the browser goes away mid-stream. */
+  signal?: AbortSignal;
+}
 
 /**
  * Runs one user turn to completion, driving the tool loop and streaming
@@ -34,26 +47,33 @@ export async function runTurn(
   sessionId: string,
   history: Anthropic.MessageParam[],
   emit: Emit,
+  options: TurnOptions,
 ): Promise<void> {
+  const { principal, signal } = options;
   let answerText = "";
 
   for (let iteration = 0; iteration < config.maxToolIterations; iteration++) {
-    const stream = client.messages.stream({
-      model: config.model,
-      max_tokens: config.maxTokens,
-      // Array form so the frozen prompt + tool definitions cache together.
-      system: [
-        {
-          type: "text",
-          text: SYSTEM_PROMPT,
-          cache_control: { type: "ephemeral" },
-        },
-      ],
-      thinking: { type: "adaptive", display: "summarized" },
-      output_config: { effort: config.effort as "low" | "medium" | "high" | "xhigh" | "max" },
-      tools: TOOL_DEFINITIONS,
-      messages: history,
-    });
+    if (signal?.aborted) return;
+
+    const stream = client.messages.stream(
+      {
+        model: config.model,
+        max_tokens: config.maxTokens,
+        // Array form so the frozen prompt + tool definitions cache together.
+        system: [
+          {
+            type: "text",
+            text: SYSTEM_PROMPT,
+            cache_control: { type: "ephemeral" },
+          },
+        ],
+        thinking: { type: "adaptive", display: "summarized" },
+        output_config: { effort: config.effort },
+        tools: TOOL_DEFINITIONS,
+        messages: history,
+      },
+      { signal },
+    );
 
     stream.on("thinking", (delta) => emit({ type: "thinking", text: delta }));
     stream.on("text", (delta) => {
@@ -63,34 +83,55 @@ export async function runTurn(
 
     const message = await stream.finalMessage();
 
-    audit({
-      type: "usage",
-      session_id: sessionId,
-      model: message.model,
-      input_tokens: message.usage.input_tokens,
-      output_tokens: message.usage.output_tokens,
-      cache_read_input_tokens: message.usage.cache_read_input_tokens ?? 0,
-    });
-
-    history.push({ role: "assistant", content: message.content });
+    audit(
+      {
+        type: "usage",
+        session_id: sessionId,
+        model: message.model,
+        input_tokens: message.usage.input_tokens,
+        output_tokens: message.usage.output_tokens,
+        cache_read_input_tokens: message.usage.cache_read_input_tokens ?? 0,
+        cache_creation_input_tokens: message.usage.cache_creation_input_tokens ?? 0,
+      },
+      principal,
+    );
 
     if (message.stop_reason === "refusal") {
       const note =
         "Bu sorğu modelin təhlükəsizlik sistemi tərəfindən rədd edildi. Sualı yenidən " +
         "formalaşdırın və ya konkret iş üzrədirsə, MLRO-ya müraciət edin.";
-      audit({ type: "error", session_id: sessionId, message: "stop_reason=refusal" });
+      audit({ type: "error", session_id: sessionId, message: "stop_reason=refusal" }, principal);
       emit({ type: "refusal", message: note });
       return;
     }
 
+    /**
+     * Truncation is not an answer. Treating it as one would hand a compliance
+     * officer a CDD analysis cut off before "however, enhanced due diligence
+     * applies" and hash-chain it into the record as the advice given.
+     */
+    if (message.stop_reason === "max_tokens") {
+      const note =
+        "Cavab uzunluq həddinə çatdığı üçün yarımçıq kəsildi və tam sayılmamalıdır. " +
+        "Sualı daha dar verin və ya AML_MAX_TOKENS həddini artırın.";
+      audit(
+        { type: "error", session_id: sessionId, message: "stop_reason=max_tokens (truncated)" },
+        principal,
+      );
+      // Do not keep a truncated turn in history: if the cut landed inside a
+      // tool_use block it has no matching tool_result and every later turn 400s.
+      emit({ type: "truncated", message: note });
+      return;
+    }
+
+    history.push({ role: "assistant", content: message.content });
+
     if (message.stop_reason !== "tool_use") {
       const citations = extractCitations(answerText);
-      audit({
-        type: "assistant_message",
-        session_id: sessionId,
-        message: answerText,
-        citations,
-      });
+      audit(
+        { type: "assistant_message", session_id: sessionId, message: answerText, citations },
+        principal,
+      );
       emit({ type: "done", citations });
       return;
     }
@@ -105,17 +146,20 @@ export async function runTurn(
     for (const use of toolUses) {
       const input = (use.input ?? {}) as Record<string, unknown>;
       emit({ type: "tool_start", tool: use.name, input });
-      audit({ type: "tool_call", session_id: sessionId, tool: use.name, input });
+      audit({ type: "tool_call", session_id: sessionId, tool: use.name, input }, principal);
 
       const result = runTool(use.name, input);
 
-      audit({
-        type: "tool_result",
-        session_id: sessionId,
-        tool: use.name,
-        ok: result.ok !== false,
-        summary: summarise(result),
-      });
+      audit(
+        {
+          type: "tool_result",
+          session_id: sessionId,
+          tool: use.name,
+          ok: result.ok !== false,
+          summary: summarise(result),
+        },
+        principal,
+      );
       emit({ type: "tool_end", tool: use.name, ok: result.ok !== false });
 
       results.push({
@@ -132,7 +176,7 @@ export async function runTurn(
   const message =
     `${config.maxToolIterations} alət dövrəsindən sonra cavab formalaşmadı. ` +
     `Sualı daha dəqiq ifadə etməyə çalışın.`;
-  audit({ type: "error", session_id: sessionId, message });
+  audit({ type: "error", session_id: sessionId, message }, principal);
   emit({ type: "error", message });
 }
 

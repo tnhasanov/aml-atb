@@ -23,6 +23,8 @@ let upstream: Server;
 let received: any[] = [];
 let script: Turn[] = [];
 
+const PRINCIPAL = { user: "test.officer", ip: "127.0.0.1" };
+
 function sse(res: any, event: string, data: unknown): void {
   res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
 }
@@ -110,6 +112,7 @@ before(async () => {
   process.env.ANTHROPIC_BASE_URL = `http://127.0.0.1:${port}`;
   process.env.ANTHROPIC_API_KEY = "test-key-not-real";
   process.env.AUDIT_DIR = "./audit/test";
+  process.env.AUTH_MODE = "none";
 });
 
 after(() => {
@@ -128,7 +131,7 @@ test("a tool-using turn calls the tool, feeds the result back, and streams the a
   const events: any[] = [];
   const history: Anthropic.MessageParam[] = [{ role: "user", content: "What applies to PEPs?" }];
 
-  await runTurn("test-session", history, (e) => events.push(e));
+  await runTurn("test-session", history, (e) => events.push(e), { principal: PRINCIPAL });
 
   const types = events.map((e) => e.type);
   assert.ok(types.includes("tool_start"), "tool_start should be emitted");
@@ -168,7 +171,7 @@ test("request carries the cached system prompt, tools, adaptive thinking and eff
 
   received = [];
   script = [{ text: "ok" }];
-  await runTurn("test-session-2", [{ role: "user", content: "hello" }], () => {});
+  await runTurn("test-session-2", [{ role: "user", content: "hello" }], () => {}, { principal: PRINCIPAL });
 
   const req = received[0];
   assert.equal(req.stream, true);
@@ -218,7 +221,7 @@ test("a refusal stop_reason surfaces as a refusal event, not a silent empty answ
   });
 
   const events: any[] = [];
-  await runTurn("test-session-3", [{ role: "user", content: "x" }], (e) => events.push(e));
+  await runTurn("test-session-3", [{ role: "user", content: "x" }], (e) => events.push(e), { principal: PRINCIPAL });
 
   assert.equal(events.at(-1).type, "refusal");
   assert.match(events.at(-1).message, /MLRO/);

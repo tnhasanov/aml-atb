@@ -1,212 +1,46 @@
-import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
-import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname, join, extname, normalize } from "node:path";
-import { randomUUID } from "node:crypto";
-import type Anthropic from "@anthropic-ai/sdk";
-
-import { config } from "./config.js";
-import { corpus, getClauseTree } from "./rules.js";
-import { runTurn, type StreamEvent } from "./agent.js";
-import { audit } from "./audit.js";
-import { listToolNames } from "./tools/index.js";
-
-const here = dirname(fileURLToPath(import.meta.url));
-const PUBLIC_DIR = join(here, "..", "..", "public");
-
 /**
- * In-memory session store. Fine for a single-process internal tool; a
- * multi-instance deployment needs a shared store, and any deployment holding
- * real customer data needs to weigh retention against the audit trail.
+ * Process entrypoint.
+ *
+ * Kept separate from src/server.ts so the request handling and its helpers can
+ * be imported by tests without binding a port or writing an audit record as a
+ * side effect of the import.
  */
-const sessions = new Map<string, Anthropic.MessageParam[]>();
+import { config } from "./config.js";
+import { corpus } from "./rules.js";
+import { initAudit } from "./audit.js";
+import { server, VERSION } from "./server.js";
 
-function getHistory(sessionId: string): Anthropic.MessageParam[] {
-  let history = sessions.get(sessionId);
-  if (!history) {
-    history = [];
-    sessions.set(sessionId, history);
-    audit({ type: "session_started", session_id: sessionId });
-  }
-  return history;
-}
-
-/** Trim oldest turns, but never leave a dangling tool_use without its result. */
-function trimHistory(history: Anthropic.MessageParam[]): void {
-  while (history.length > config.maxHistoryMessages) {
-    history.shift();
-    while (history.length && startsWithToolResult(history[0]!)) {
-      history.shift();
-    }
-  }
-}
-
-function startsWithToolResult(message: Anthropic.MessageParam): boolean {
-  return (
-    Array.isArray(message.content) &&
-    message.content.some((block: any) => block?.type === "tool_result")
-  );
-}
-
-const MIME: Record<string, string> = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".svg": "image/svg+xml",
-  ".json": "application/json; charset=utf-8",
-};
-
-const server = createServer(async (req, res) => {
-  try {
-    const url = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
-
-    if (req.method === "GET" && url.pathname === "/api/health") {
-      return json(res, 200, {
-        status: "ok",
-        model: config.model,
-        effort: config.effort,
-        tools: listToolNames(),
-        source: {
-          id: corpus.document.id,
-          title_en: corpus.document.title_en,
-          date: corpus.document.date,
-          clauses: corpus.clauses.length,
-        },
-      });
-    }
-
-    if (req.method === "GET" && url.pathname === "/api/source") {
-      return json(res, 200, { document: corpus.document, parts: corpus.parts });
-    }
-
-    // Backs the clickable clause references in the transcript.
-    if (req.method === "GET" && url.pathname === "/api/clause") {
-      const id = url.searchParams.get("id")?.trim() ?? "";
-      const tree = getClauseTree(id);
-      if (!tree.length) {
-        return json(res, 404, {
-          error:
-            `Bu sənəddə ${id} nömrəli bənd yoxdur. Bəndlər 1.1-dən 8.3-ə qədərdir; ` +
-            `göstərilən nömrə Qanuna və ya digər normativ sənədə istinad ola bilər.`,
-        });
-      }
-      return json(res, 200, {
-        clause_id: id,
-        part_title_az: tree[0]!.part_title_az,
-        clauses: tree.map((c) => ({ clause_id: c.id, text: c.text })),
-      });
-    }
-
-    if (req.method === "POST" && url.pathname === "/api/chat") {
-      return void (await handleChat(req, res));
-    }
-
-    if (req.method === "GET") {
-      return void (await serveStatic(url.pathname, res));
-    }
-
-    json(res, 405, { error: "Method not allowed" });
-  } catch (err) {
-    console.error("[server]", err);
-    if (!res.headersSent) json(res, 500, { error: "Internal server error" });
-    else res.end();
-  }
+process.on("unhandledRejection", (reason) => {
+  console.error("[fatal] unhandled rejection:", reason);
 });
 
-async function handleChat(req: IncomingMessage, res: ServerResponse): Promise<void> {
-  const body = await readBody(req);
-  let payload: { message?: string; session_id?: string };
-  try {
-    payload = JSON.parse(body);
-  } catch {
-    return json(res, 400, { error: "Sorğunun məzmunu JSON formatında olmalıdır" });
-  }
+function shutdown(signal: string): void {
+  console.log(`[server] ${signal} received, closing`);
+  server.close(() => process.exit(0));
+  // Do not wait forever on long-lived SSE connections.
+  setTimeout(() => process.exit(0), 10_000).unref();
+}
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
 
-  const message = (payload.message ?? "").trim();
-  if (!message) return json(res, 400, { error: "Mesaj mətni tələb olunur" });
-  if (message.length > 20000) return json(res, 413, { error: "Mesaj həddindən artıq uzundur" });
-
-  const sessionId = payload.session_id?.trim() || randomUUID();
-  const history = getHistory(sessionId);
-
-  audit({ type: "user_message", session_id: sessionId, message });
-  history.push({ role: "user", content: message });
-
-  res.writeHead(200, {
-    "Content-Type": "text/event-stream; charset=utf-8",
-    "Cache-Control": "no-cache, no-transform",
-    Connection: "keep-alive",
-    "X-Accel-Buffering": "no",
-  });
-
-  const send = (event: StreamEvent | { type: "session"; session_id: string }) => {
-    res.write(`data: ${JSON.stringify(event)}\n\n`);
-  };
-
-  send({ type: "session", session_id: sessionId });
-
-  try {
-    await runTurn(sessionId, history, send);
-  } catch (err) {
-    const detail = err instanceof Error ? err.message : String(err);
-    console.error("[chat]", err);
-    audit({ type: "error", session_id: sessionId, message: detail });
-    send({ type: "error", message: friendlyError(detail) });
-  } finally {
-    trimHistory(history);
-    res.end();
-  }
+try {
+  initAudit(VERSION);
+} catch (err) {
+  console.error(`[fatal] ${err instanceof Error ? err.message : String(err)}`);
+  process.exit(1);
 }
 
-function friendlyError(detail: string): string {
-  if (/api[-_ ]?key|authentication|401/i.test(detail)) {
-    return "Anthropic API-yə autentifikasiya alınmadı. .env faylında ANTHROPIC_API_KEY təyin edin və ya `ant auth login` icra edin.";
-  }
-  if (/rate.?limit|429/i.test(detail)) {
-    return "API sorğu həddi aşılıb. Bir qədər gözləyib yenidən cəhd edin.";
-  }
-  return `Sorğu alınmadı: ${detail}`;
-}
-
-async function serveStatic(pathname: string, res: ServerResponse): Promise<void> {
-  const rel = pathname === "/" ? "index.html" : normalize(pathname).replace(/^(\.\.[/\\])+/, "").replace(/^[/\\]+/, "");
-  const filePath = join(PUBLIC_DIR, rel);
-
-  // Confine reads to the public directory.
-  if (!filePath.startsWith(PUBLIC_DIR)) return json(res, 403, { error: "Forbidden" });
-
-  try {
-    const data = await readFile(filePath);
-    res.writeHead(200, { "Content-Type": MIME[extname(filePath)] ?? "application/octet-stream" });
-    res.end(data);
-  } catch {
-    json(res, 404, { error: "Not found" });
-  }
-}
-
-function readBody(req: IncomingMessage): Promise<string> {
-  return new Promise((resolve, reject) => {
-    let data = "";
-    req.on("data", (chunk) => {
-      data += chunk;
-      if (data.length > 1_000_000) reject(new Error("payload too large"));
-    });
-    req.on("end", () => resolve(data));
-    req.on("error", reject);
-  });
-}
-
-function json(res: ServerResponse, status: number, payload: unknown): void {
-  const body = JSON.stringify(payload);
-  res.writeHead(status, { "Content-Type": "application/json; charset=utf-8" });
-  res.end(body);
-}
-
-server.listen(config.port, () => {
-  console.log(`AML compliance assistant on http://localhost:${config.port}`);
-  console.log(`  source : ${corpus.document.id} (${corpus.clauses.length} clauses)`);
+server.listen(config.port, config.bindHost, () => {
+  const address = server.address();
+  const bound = typeof address === "string" ? address : `${address?.address}:${address?.port}`;
+  console.log(`AML Uygunluq Komekcisi listening on ${bound}`);
+  console.log(`  source : ${corpus.document.id} (${corpus.clauses.length} bend)`);
   console.log(`  model  : ${config.model} (effort: ${config.effort})`);
   console.log(`  audit  : ${config.auditDir}`);
+  console.log(`  auth   : ${config.authMode}${config.authSharedSecret ? " + shared secret" : ""}`);
+  if (config.authMode === "none") {
+    console.log("  WARNING: authentication disabled - loopback only, development use");
+  }
   if (!process.env.ANTHROPIC_API_KEY) {
     console.log("  note   : ANTHROPIC_API_KEY not set - falling back to `ant auth login` profile");
   }
