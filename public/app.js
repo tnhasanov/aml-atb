@@ -15,10 +15,10 @@ fetch("/api/health")
   .then((r) => r.json())
   .then((h) => {
     document.getElementById("source-line").textContent =
-      `${h.source.id} · ${h.source.clauses} clauses · ${h.model}`;
+      `${h.source.id} · ${h.source.clauses} bənd · ${h.model}`;
   })
   .catch(() => {
-    document.getElementById("source-line").textContent = "Source unavailable";
+    document.getElementById("source-line").textContent = "Mənbə əlçatan deyil";
   });
 
 // ---------------------------------------------------------------- composition
@@ -44,7 +44,7 @@ document.getElementById("examples")?.addEventListener("click", (e) => {
 resetBtn.addEventListener("click", () => {
   sessionId = null;
   transcript.innerHTML = "";
-  addNotice("New session started. Previous context cleared.");
+  addNotice("Yeni sessiya başladıldı. Əvvəlki kontekst silindi.");
 });
 
 form.addEventListener("submit", (e) => {
@@ -113,7 +113,7 @@ async function send(text) {
 function addMessage(role, text) {
   const wrap = document.createElement("div");
   wrap.className = `msg ${role}`;
-  wrap.innerHTML = `<div class="role">${role === "user" ? "You" : "Assistant"}</div>`;
+  wrap.innerHTML = `<div class="role">${role === "user" ? "Siz" : "Köməkçi"}</div>`;
   const bubble = document.createElement("div");
   bubble.className = "bubble";
   bubble.textContent = text;
@@ -135,7 +135,7 @@ function addNotice(text) {
 function createAssistantView() {
   const wrap = document.createElement("div");
   wrap.className = "msg assistant";
-  wrap.innerHTML = `<div class="role">Assistant</div>`;
+  wrap.innerHTML = `<div class="role">Köməkçi</div>`;
 
   const activity = document.createElement("div");
   activity.className = "activity";
@@ -143,7 +143,7 @@ function createAssistantView() {
   const thinkingBox = document.createElement("details");
   thinkingBox.className = "thinking";
   thinkingBox.hidden = true;
-  thinkingBox.innerHTML = `<summary>Reasoning</summary><div class="thought"></div>`;
+  thinkingBox.innerHTML = `<summary>Təhlil</summary><div class="thought"></div>`;
   const thought = thinkingBox.querySelector(".thought");
 
   const bubble = document.createElement("div");
@@ -210,7 +210,7 @@ function createAssistantView() {
     finish() {
       bubble.classList.remove("cursor");
       if (!answer.trim() && !bubble.querySelector(".notice")) {
-        bubble.innerHTML = `<div class="notice">No response received.</div>`;
+        bubble.innerHTML = `<div class="notice">Cavab alınmadı.</div>`;
       }
     },
 
@@ -228,15 +228,15 @@ function createAssistantView() {
 function describeTool(tool, input) {
   switch (tool) {
     case "search_rules":
-      return `search: ${truncate(input?.query ?? "", 44)}`;
+      return `axtarış: ${truncate(input?.query ?? "", 40)}`;
     case "get_clause":
-      return `clause ${input?.clause_id ?? "?"}`;
+      return `${input?.clause_id ?? "?"} bəndi`;
     case "assess_customer_risk":
-      return "risk assessment (Part 3)";
+      return "risk qiymətləndirməsi (3-cü hissə)";
     case "determine_cdd_level":
-      return "CDD level (Parts 4–5)";
+      return "uyğunluq səviyyəsi (4-5-ci hissələr)";
     case "check_remote_onboarding":
-      return "remote onboarding (Part 7)";
+      return "məsafədən eyniləşdirmə (7-ci hissə)";
     default:
       return tool;
   }
@@ -310,15 +310,31 @@ function renderMarkdown(src) {
   return out.join("");
 }
 
+// Azerbaijani cites a clause as "3.9.1-ci bənd" (number first, ordinal suffix
+// agreeing with the final digit); English puts the word first. Both forms are
+// made clickable, and the suffix is preserved so the sentence still reads
+// correctly.
+//
+// "maddə" is deliberately excluded: it denotes an article of the parent Law,
+// which is not in this corpus, so linking it would only ever 404.
+const CITATION_PATTERN =
+  /(?:\b(clauses?)\s+((?:\d+\.)+\d+))|(((?:\d+\.)+\d+)(-(?:ci|cı|cu|cü))?\s+(bənd\w*|yarımbənd\w*))/gi;
+
 function inline(text) {
   return text
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    // Turn "clause 3.9.1" / "bənd 8.1.1" into a clickable reference.
     .replace(
-      /\b(clause|clauses|bənd|bəndi|maddə|yarımbənd)\s+((?:\d+\.)+\d+)/gi,
-      (_m, word, id) => `${word} <button class="cite" data-clause="${id}">${id}</button>`,
+      CITATION_PATTERN,
+      (_match, enWord, enId, _azWhole, azId, azSuffix, azWord) =>
+        enId
+          ? `${enWord} ${button(enId)}`
+          : `${button(azId)}${azSuffix ?? ""} ${azWord}`,
     );
+}
+
+function button(id) {
+  return `<button class="cite" data-clause="${id}">${id}</button>`;
 }
 
 // ---------------------------------------------------------------- clause view
@@ -327,15 +343,15 @@ transcript.addEventListener("click", async (e) => {
   if (!btn) return;
   const id = btn.dataset.clause;
 
-  clauseTitle.textContent = `Clause ${id}`;
-  clauseBody.innerHTML = "<p>Loading…</p>";
+  clauseTitle.textContent = `${id} bəndi`;
+  clauseBody.innerHTML = "<p>Yüklənir…</p>";
   dialog.showModal();
 
   try {
     const res = await fetch(`/api/clause?id=${encodeURIComponent(id)}`);
-    if (!res.ok) throw new Error(`Clause ${id} not found`);
+    if (!res.ok) throw new Error(`${id} bəndi tapılmadı`);
     const data = await res.json();
-    clauseTitle.textContent = `Clause ${id} — ${data.part_title_en}`;
+    clauseTitle.textContent = `${id} bəndi — ${data.part_title_az}`;
     clauseBody.innerHTML = "";
     for (const c of data.clauses) {
       const row = document.createElement("div");

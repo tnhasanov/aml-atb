@@ -160,7 +160,7 @@ test("a tool-using turn calls the tool, feeds the result back, and streams the a
   const toolResult = (history[2]!.content as any[])[0];
   assert.equal(toolResult.type, "tool_result");
   assert.equal(toolResult.tool_use_id, "toolu_stub_1");
-  assert.match(toolResult.content, /clause_id/);
+  assert.match(toolResult.content, /"bend"/);
 });
 
 test("request carries the cached system prompt, tools, adaptive thinking and effort", async () => {

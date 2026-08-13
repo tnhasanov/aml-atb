@@ -3,8 +3,9 @@
 A chatbot for compliance officers, MLROs and onboarding staff at an obliged entity
 (*öhdəlik daşıyan şəxs*) supervised in Azerbaijan.
 
-It answers from **one regulation, with clause citations** — not from the model's general
-recollection of AML practice:
+The interface, the assistant's answers and the tool output are all in **Azerbaijani**. It answers
+from **one regulation, with clause citations** — not from the model's general recollection of AML
+practice:
 
 > **Financial Monitoring Service of the Republic of Azerbaijan** (Azərbaycan Respublikası
 > Maliyyə Monitorinqi Xidməti), Decision **№ 3-21-28/3-6-4/2023** of 21 February 2023 —
@@ -53,19 +54,33 @@ The only runtime dependency is `@anthropic-ai/sdk`; the server, retrieval and UI
 
 ---
 
-## What it can do
+## Language
 
-Ask in **English or Azerbaijani** — questions are rewritten into the regulation's own Azerbaijani
-wording before retrieval, so the corpus stays in the original language and no clause is answered
-through a machine translation.
+**Azerbaijani throughout** — UI chrome, the assistant's answers, and everything the tools return.
+
+- **Clause text** is the original Azerbaijani, never translated. Tool output quotes it verbatim
+  (measure lists come straight from clauses 4.3, 5.3 and 7.1) rather than shipping a paraphrase, so
+  the wording cannot drift from the regulation as the code changes.
+- **Answers default to Azerbaijani.** If a user writes in another language the assistant follows
+  them, so an English-speaking auditor is not locked out.
+- **English questions still retrieve correctly**: they are rewritten into the regulation's own
+  Azerbaijani wording before search, so the corpus stays monolingual.
+- **Citations render the Azerbaijani way** — "3.9.1-ci bənd" — with the ordinal suffix preserved so
+  the sentence reads properly, and the number clickable. `maddə` references are deliberately not
+  linked: they point at the parent Law, which is not in this corpus.
+
+Only the developer-facing surfaces stay in English: this README, code comments, and the tool
+*schema* descriptions that steer the model's tool choice (never shown to a user).
+
+## What it can do
 
 | Ask | It uses |
 |---|---|
-| "When can I apply simplified due diligence?" | Part 4, thresholds AZN 20,000 / 100,000 |
-| "Spouse of a minister, non-resident, onboarding via our app — risk group and CDD level?" | Parts 3, 5, 7, 8 |
-| "How often must I review a medium-risk customer?" | clause 8.1.2 |
-| "What are the high-risk geographic factors?" | clauses 3.12.1–3.12.7 |
-| "Siyasi nüfuzlu şəxslər üçün hansı tədbirlər tələb olunur?" | clauses 2.1.2, 3.9.1, 5.2, 8.1.4 |
+| "Sadələşdirilmiş müştəri uyğunluğu tədbirlərini nə vaxt tətbiq edə bilərəm?" | Part 4, thresholds 20 000 / 100 000 AZN |
+| "Nazirin həyat yoldaşı, qeyri-rezident, mobil tətbiqlə məsafədən — risk qrupu və uyğunluq səviyyəsi?" | Parts 3, 5, 7, 8 |
+| "Orta riskli müştərini nə qədər müddətdən bir yoxlamalıyam?" | 8.1.2-ci bənd |
+| "Yüksək riskli coğrafi yerləşmə faktorları hansılardır?" | 3.12.1–3.12.7-ci bəndlər |
+| "Siyasi nüfuzlu şəxslər üçün hansı tədbirlər tələb olunur?" | 2.1.2, 3.9.1, 5.2, 8.1.4-cü bəndlər |
 
 ### Tools
 
@@ -76,6 +91,8 @@ through a machine translation.
 | `assess_customer_risk` | Risk factors of clauses 3.4–3.13; review cycle from clause 8.1 |
 | `determine_cdd_level` | Simplified measures (Part 4) vs mandatory enhanced measures (Part 5) |
 | `check_remote_onboarding` | Non-face-to-face verification, clause 7.2 mandatory set, clause 7.4 prohibitions |
+
+All five return Azerbaijani, with clause numbers and the regulation's own text.
 
 Some rules the tools encode directly:
 
@@ -145,6 +162,9 @@ test/              53 tests
   plural surface forms. Missing this returned zero hits against an all-Azerbaijani corpus.
 - **Prompt caching** — the system prompt is frozen (no interpolated timestamps or session ids) and
   marked `cache_control: ephemeral`, so tools plus system prompt cache together across requests.
+- **Tool output keys are Azerbaijani** (`bend`, `metn`, `risk_qrupu`, `qadagalar`), keeping the
+  payload the model reads consistent with the language it answers in. Factor *keys* stay ASCII
+  identifiers (`pep_or_relative_or_associate`) because they are code, not prose.
 
 ---
 
@@ -168,7 +188,8 @@ test/              53 tests
 - **No screening data.** There is no sanctions, PEP or watchlist connection; the assistant reasons
   about screening obligations, it does not screen. Clause 3.12 designations (UN sanctions, FATF
   call-for-action, MMX high-risk lists) must be supplied by the user or wired to a live feed.
-- **English text is a working translation.** The Azerbaijani clause text is authoritative.
+- **English text is a working translation.** The Azerbaijani clause text is authoritative. The
+  English labels in `src/factors.ts` are a maintainer's gloss and are never shown to a user.
 - **Sessions are in-memory**, so a restart clears context and a multi-instance deployment needs a
   shared store. The audit trail is on local disk and should be shipped off-host in production.
 - **Not verified against a live model in this environment** — there were no API credentials in the

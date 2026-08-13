@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="az">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AML Compliance Assistant</title>
+    <title>AML Uyğunluq Köməkçisi</title>
     <link rel="stylesheet" href="/styles.css" />
     <link
       rel="icon"
@@ -15,32 +15,37 @@
       <div class="brand">
         <span class="mark" aria-hidden="true">⚖</span>
         <div>
-          <h1>AML Compliance Assistant</h1>
-          <p class="sub" id="source-line">Loading source regulation…</p>
+          <h1>AML Uyğunluq Köməkçisi</h1>
+          <p class="sub" id="source-line">Normativ sənəd yüklənir…</p>
         </div>
       </div>
-      <button id="reset" class="ghost" type="button">New session</button>
+      <button id="reset" class="ghost" type="button">Yeni sessiya</button>
     </header>
 
     <main id="transcript" class="transcript" aria-live="polite">
       <section class="welcome">
-        <h2>Grounded in one regulation</h2>
+        <h2>Bir normativ sənədə əsaslanır</h2>
         <p>
-          Every answer is drawn from the Financial Monitoring Service Decision
-          <strong>№&nbsp;3-21-28/3-6-4/2023</strong> on customer due diligence, verification with
-          new technologies, risk factors and customer risk groups — with clause citations you can
-          click to read the original Azerbaijani text.
+          Bütün cavablar Maliyyə Monitorinqi Xidmətinin
+          <strong>№&nbsp;3-21-28/3-6-4/2023</strong> nömrəli Qərarı — müştəri uyğunluğu, yeni
+          texnologiyaların tətbiqi zamanı verifikasiya, risk faktorları və müştəri profilinin risk
+          qrupları haqqında Qaydalar — əsasında verilir. Bənd nömrələrinə klikləyərək orijinal
+          mətni oxuya bilərsiniz.
         </p>
-        <p class="hint">Ask in English or Azerbaijani.</p>
+        <p class="hint">Sualınızı Azərbaycan dilində və ya ingiliscə verə bilərsiniz.</p>
         <div class="examples" id="examples">
-          <button type="button">When can I apply simplified due diligence?</button>
           <button type="button">
-            A non-resident customer, PEP's spouse, opening an account remotely via a mobile app.
-            How should I rate and onboard them?
+            Sadələşdirilmiş müştəri uyğunluğu tədbirlərini nə vaxt tətbiq edə bilərəm?
           </button>
-          <button type="button">How often must I review a medium-risk customer?</button>
-          <button type="button">Siyasi nüfuzlu şəxslər üçün hansı tədbirlər tələb olunur?</button>
-          <button type="button">What are the high-risk geographic factors?</button>
+          <button type="button">
+            Müştəri naziri̇n həyat yoldaşıdır, qeyri-rezidentdir və mobil tətbiq vasitəsilə
+            məsafədən hesab açmaq istəyir. Risk qrupu və uyğunluq səviyyəsi necə olmalıdır?
+          </button>
+          <button type="button">Orta riskli müştərini nə qədər müddətdən bir yoxlamalıyam?</button>
+          <button type="button">Yüksək riskli coğrafi yerləşmə faktorları hansılardır?</button>
+          <button type="button">
+            Siyasi nüfuzlu şəxslər üçün hansı tədbirlər tələb olunur?
+          </button>
         </div>
       </section>
     </main>
@@ -49,22 +54,22 @@
       <textarea
         id="input"
         rows="1"
-        placeholder="Ask about CDD, risk factors, thresholds, remote onboarding…"
+        placeholder="Müştəri uyğunluğu, risk faktorları, hədlər, məsafədən eyniləşdirmə barədə soruşun…"
         autocomplete="off"
       ></textarea>
-      <button id="send" type="submit" aria-label="Send">Send</button>
+      <button id="send" type="submit" aria-label="Göndər">Göndər</button>
     </form>
 
     <footer class="disclaimer">
-      Decision support only — not legal advice and not a compliance decision. Escalate suspicious
-      activity, sanctions hits and reporting decisions to your MLRO. All interactions are written to
-      an audit trail.
+      Yalnız qərar dəstəyi məqsədi daşıyır — hüquqi məsləhət və uyğunluq qərarı deyil. Şübhəli
+      əməliyyatlar, sanksiya uyğunluqları və hesabat qərarları üzrə MLRO-ya müraciət edin. Bütün
+      müraciətlər audit jurnalına yazılır.
     </footer>
 
     <dialog id="clause-dialog">
       <div class="dialog-head">
-        <h3 id="clause-title">Clause</h3>
-        <button type="button" id="clause-close" class="ghost">Close</button>
+        <h3 id="clause-title">Bənd</h3>
+        <button type="button" id="clause-close" class="ghost">Bağla</button>
       </div>
       <div id="clause-body" class="clause-body"></div>
     </dialog>

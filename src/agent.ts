@@ -76,8 +76,8 @@ export async function runTurn(
 
     if (message.stop_reason === "refusal") {
       const note =
-        "This request was declined by the model's safety system. Rephrase it, or route it " +
-        "to your MLRO if it concerns a live case.";
+        "Bu sorğu modelin təhlükəsizlik sistemi tərəfindən rədd edildi. Sualı yenidən " +
+        "formalaşdırın və ya konkret iş üzrədirsə, MLRO-ya müraciət edin.";
       audit({ type: "error", session_id: sessionId, message: "stop_reason=refusal" });
       emit({ type: "refusal", message: note });
       return;
@@ -130,8 +130,8 @@ export async function runTurn(
   }
 
   const message =
-    `Stopped after ${config.maxToolIterations} tool rounds without settling on an answer. ` +
-    `Try narrowing the question.`;
+    `${config.maxToolIterations} alət dövrəsindən sonra cavab formalaşmadı. ` +
+    `Sualı daha dəqiq ifadə etməyə çalışın.`;
   audit({ type: "error", session_id: sessionId, message });
   emit({ type: "error", message });
 }
@@ -140,10 +140,8 @@ export async function runTurn(
 function summarise(result: Record<string, unknown>): unknown {
   const out: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(result)) {
-    if (key === "results" && Array.isArray(value)) {
-      out.result_clause_ids = value.map((r: any) => r?.clause_id).filter(Boolean);
-    } else if (key === "clauses" && Array.isArray(value)) {
-      out.clause_ids = value.map((c: any) => c?.clause_id).filter(Boolean);
+    if ((key === "neticeler" || key === "bendler") && Array.isArray(value)) {
+      out[`${key}_bendleri`] = value.map((r: any) => r?.bend).filter(Boolean);
     } else if (typeof value === "string" && value.length > 300) {
       out[key] = `${value.slice(0, 300)}...`;
     } else {

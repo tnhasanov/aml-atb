@@ -77,5 +77,32 @@ export function clausesByTopic(...topics: string[]): Clause[] {
 }
 
 export function citation(id: string): string {
-  return `${corpus.document.id} clause ${id}`;
+  return `${corpus.document.id}, ${id}-ci bənd`;
+}
+
+/**
+ * A clause reference carrying the regulation's own wording.
+ *
+ * Tool output quotes the Rules verbatim rather than an English paraphrase, so
+ * the assistant relays official terminology instead of re-translating it on
+ * every run - and the wording cannot drift from the text as the code changes.
+ */
+export interface ClauseRef {
+  bend: string;
+  metn: string;
+}
+
+export function clauseRef(id: string): ClauseRef {
+  return { bend: id, metn: getClause(id)?.text ?? "" };
+}
+
+export function clauseRefs(...ids: string[]): ClauseRef[] {
+  return ids.map(clauseRef);
+}
+
+/** Verbatim text of every child of a clause, e.g. all of 5.3.1-5.3.7. */
+export function childRefs(parentId: string): ClauseRef[] {
+  return getClauseTree(parentId)
+    .filter((c) => c.id !== parentId)
+    .map((c) => ({ bend: c.id, metn: c.text }));
 }

@@ -1,6 +1,13 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { searchRules } from "../search.js";
-import { corpus, getClause, getClauseTree, citation } from "../rules.js";
+import {
+  corpus,
+  getClause,
+  getClauseTree,
+  citation,
+  clauseRef,
+  childRefs,
+} from "../rules.js";
 import {
   FACTORS,
   getFactor,
@@ -19,9 +26,10 @@ type Handler = (input: Record<string, any>) => ToolResult;
 /**
  * Tool definitions handed to the model.
  *
- * Descriptions are prescriptive about *when* to call each tool, not just what
- * it does - the model reaches for tools more reliably when the trigger
- * condition is part of the description.
+ * The schema descriptions stay in English: they steer the model's tool choice
+ * and are never shown to a user. Everything the tools *return* is Azerbaijani,
+ * quoted from the Rules, because that text does reach the user through the
+ * assistant's answer.
  */
 export const TOOL_DEFINITIONS: Anthropic.Tool[] = [
   {
@@ -76,7 +84,7 @@ export const TOOL_DEFINITIONS: Anthropic.Tool[] = [
       "cycle from clause 8.1. Call this whenever the user describes a customer, " +
       "prospect or scenario and asks how to risk-rate it, what CDD level applies, or " +
       "how often to review it. Pass every factor you can identify from the " +
-      "conversation; omit those you cannot determine.",
+      "conversation; omit those you cannot determine. Returns Azerbaijani clause text.",
     input_schema: {
       type: "object",
       properties: {
@@ -102,10 +110,10 @@ export const TOOL_DEFINITIONS: Anthropic.Tool[] = [
     name: "determine_cdd_level",
     description:
       "Determine whether simplified CDD is permitted (Part 4) or enhanced CDD is " +
-      "mandatory (Part 5), and list the specific measures available in each case. " +
-      "Call this after assessing risk, or whenever the user asks whether they can " +
-      "apply simplified measures, what enhanced measures to apply, or what to do " +
-      "about a PEP or a customer from a FATF call-for-action country.",
+      "mandatory (Part 5), and list the specific measures available in each case, " +
+      "quoted verbatim from the Rules. Call this after assessing risk, or whenever the " +
+      "user asks whether they can apply simplified measures, what enhanced measures to " +
+      "apply, or what to do about a PEP or a customer from a FATF call-for-action country.",
     input_schema: {
       type: "object",
       properties: {
@@ -218,115 +226,143 @@ export const TOOL_DEFINITIONS: Anthropic.Tool[] = [
 
 const DOC = corpus.document.id;
 
+/** Maps a clause 7.1.x measure onto the key the model passes in. */
+const REMOTE_MEASURES: Record<string, string> = {
+  enhanced_electronic_signature: "7.1.1",
+  check_electronic_databases: "7.1.2",
+  strong_customer_authentication: "7.1.3",
+  obtain_documents_from_trusted_third_party: "7.1.4",
+  correspondence_via_registered_address: "7.1.5",
+  security_codes_tokens_to_verified_address: "7.1.6",
+  live_video_verification: "7.1.7",
+  other_internal_controls: "7.1.8",
+};
+
+/** Clause 7.2 - mandatory for a first-time remote relationship. */
+const MANDATORY_REMOTE = [
+  "enhanced_electronic_signature",
+  "check_electronic_databases",
+  "strong_customer_authentication",
+  "live_video_verification",
+];
+
 const handlers: Record<string, Handler> = {
   search_rules(input) {
     const query = String(input.query ?? "").trim();
-    if (!query) return { ok: false, error: "query is required" };
+    if (!query) return { ok: false, xeta: "Sorğu mətni tələb olunur." };
     const limit = clamp(Number(input.limit) || 8, 1, 20);
     const hits = searchRules(query, limit);
     return {
       ok: true,
-      source: DOC,
-      query,
-      result_count: hits.length,
-      results: hits,
-      note:
+      menbe: DOC,
+      sorgu: query,
+      netice_sayi: hits.length,
+      neticeler: hits.map((h) => ({
+        bend: h.clause_id,
+        hisse: h.part,
+        hisse_adi: getClause(h.clause_id)?.part_title_az ?? "",
+        metn: h.text,
+        uygunluq: h.score,
+      })),
+      qeyd:
         hits.length === 0
-          ? "No clause matched. Say so plainly rather than answering from general AML knowledge."
-          : "Cite clause numbers in your answer. Clause text is Azerbaijani; translate when answering in another language.",
+          ? "Heç bir bənd uyğun gəlmədi. Ümumi AML biliyinə əsaslanmaq əvəzinə bunu açıq şəkildə bildirin."
+          : "Cavabda bənd nömrələrini göstərin.",
     };
   },
 
   get_clause(input) {
     const id = String(input.clause_id ?? "").trim();
-    if (!id) return { ok: false, error: "clause_id is required" };
+    if (!id) return { ok: false, xeta: "Bənd nömrəsi tələb olunur." };
 
     const tree = getClauseTree(id);
     if (!tree.length) {
       return {
         ok: false,
-        error: `No clause ${id} in ${DOC}.`,
-        hint: "Clause numbers run 1.1 to 8.3. Use search_rules to locate the right one.",
+        xeta: `${DOC} sənədində ${id} nömrəli bənd yoxdur.`,
+        ipucu: "Bəndlər 1.1-dən 8.3-ə qədərdir. Düzgün bəndi tapmaq üçün search_rules çağırın.",
       };
     }
     const head = getClause(id) ?? tree[0]!;
     return {
       ok: true,
-      source: DOC,
-      clause_id: id,
-      part: head.part,
-      part_title_en: head.part_title_en,
-      clauses: tree.map((c) => ({ clause_id: c.id, text: c.text })),
+      menbe: DOC,
+      bend: id,
+      hisse: head.part,
+      hisse_adi: head.part_title_az,
+      bendler: tree.map((c) => ({ bend: c.id, metn: c.text })),
     };
   },
 
   assess_customer_risk(input) {
-    const highKeys = uniqueStrings(input.high_risk_factors);
-    const lowKeys = uniqueStrings(input.low_risk_factors);
-
     const unknown: string[] = [];
-    const high = resolve(highKeys, "high", unknown);
-    const low = resolve(lowKeys, "low", unknown);
+    const high = resolve(uniqueStrings(input.high_risk_factors), "high", unknown);
+    const low = resolve(uniqueStrings(input.low_risk_factors), "low", unknown);
 
     // Clause 3.1: the risk group follows from the risk factors across the five
     // categories. The Rules let any listed factor "be classified as" high or
     // low, so a single high-risk factor drives the profile to high risk unless
     // the obliged entity's own assessment says otherwise (3.2, 3.3).
     let group: "high" | "medium" | "low";
-    let rationale: string;
+    let esaslandirma: string;
     if (high.length > 0) {
       group = "high";
-      rationale =
-        `${high.length} high-risk factor(s) from clauses 3.9-3.13 are present. Under clause 5.1 ` +
-        `enhanced customer due diligence must be applied, and clause 4.4 excludes simplified measures.`;
+      esaslandirma =
+        `3.9-3.13-cü bəndlərdə nəzərdə tutulmuş ${high.length} yüksək risk faktoru mövcuddur. ` +
+        `5.1-ci bəndə əsasən gücləndirilmiş müştəri uyğunluğu tədbirləri tətbiq edilməlidir; ` +
+        `4.4-cü bənd isə sadələşdirilmiş tədbirlərin tətbiqini istisna edir.`;
     } else if (low.length > 0) {
       group = "low";
-      rationale =
-        `No high-risk factor identified and ${low.length} low-risk factor(s) from clauses 3.4-3.8 ` +
-        `are present.`;
+      esaslandirma =
+        `Yüksək risk faktoru müəyyən edilməyib. 3.4-3.8-ci bəndlərdə nəzərdə tutulmuş ` +
+        `${low.length} aşağı risk faktoru mövcuddur.`;
     } else {
       group = "medium";
-      rationale =
-        "No high-risk factor from clauses 3.9-3.13 and no low-risk factor from clauses 3.4-3.8 " +
-        "was identified, so the profile defaults to the medium group.";
+      esaslandirma =
+        "3.9-3.13-cü bəndlər üzrə yüksək risk faktoru və 3.4-3.8-ci bəndlər üzrə aşağı risk " +
+        "faktoru müəyyən edilmədiyi üçün profil orta risk qrupuna aid edilir.";
     }
 
     const isPep = high.some((x) => x.key === "pep_or_relative_or_associate");
 
-    const review = isPep
-      ? {
-          clause: "8.1.4",
-          cycle: "continuous",
-          text_en: "For politically exposed persons - on a continuous basis.",
-        }
+    // Clause 8.1 - PEPs are monitored continuously (8.1.4), which overrides the
+    // annual cycle other high-risk customers fall under.
+    const reviewClause = isPep
+      ? "8.1.4"
       : group === "high"
-        ? { clause: "8.1.1", cycle: "at least annually", text_en: "For high-risk customers - at least once a year." }
+        ? "8.1.1"
         : group === "medium"
-          ? { clause: "8.1.2", cycle: "at least once every 2 years", text_en: "For medium-risk customers - at least once every two years." }
-          : { clause: "8.1.3", cycle: "at least once every 3 years", text_en: "For low-risk customers - at least once every three years." };
+          ? "8.1.2"
+          : "8.1.3";
 
     return {
       ok: true,
-      source: DOC,
-      risk_group: group,
-      rationale,
-      matched_high_risk_factors: high.map(describe),
-      matched_low_risk_factors: low.map(describe),
-      unknown_factor_keys: unknown,
-      categories_triggered: summariseCategories(high),
-      required_cdd_level: group === "high" ? "enhanced (Part 5)" : group === "low" ? "simplified permitted if Part 4 conditions are met" : "standard",
-      ongoing_review: review,
-      caveats: [
-        `Clause 3.3: the obliged entity must also take account of national, sectoral and ` +
-          `institutional risk assessment results, which this tool does not hold.`,
-        `Clause 3.2: the risk group must be changed if any of the underlying risks change.`,
-        `Clause 8.2: the 8.1 intervals may be lengthened or shortened, and intermediate risk ` +
-          `categories set, depending on risk assessment results.`,
-        `Clause 8.3: if the customer moves to a higher risk degree, enhanced measures apply immediately.`,
-        "This is a decision-support output, not a compliance decision. The obliged entity's " +
-          "MLRO/compliance function owns the final classification.",
+      menbe: DOC,
+      risk_qrupu: { kod: group, ad: RISK_GROUP_AZ[group] },
+      esaslandirma,
+      uygun_yuksek_risk_faktorlari: high.map(describe),
+      uygun_asagi_risk_faktorlari: low.map(describe),
+      taninmayan_faktorlar: unknown,
+      teqsirlenen_kateqoriyalar: summariseCategories(high).map((c) => CATEGORY_AZ[c]),
+      teleb_olunan_uygunluq_seviyyesi:
+        group === "high"
+          ? "gücləndirilmiş müştəri uyğunluğu tədbirləri (5-ci hissə)"
+          : group === "low"
+            ? "4-cü hissənin şərtləri ödənildikdə sadələşdirilmiş tədbirlər tətbiq edilə bilər"
+            : "standart müştəri uyğunluğu tədbirləri",
+      davamli_nezaret: clauseRef(reviewClause),
+      qeydler: [
+        clauseRef("3.3"),
+        clauseRef("3.2"),
+        clauseRef("8.2"),
+        clauseRef("8.3"),
       ],
-      customer_description: input.customer_description ?? null,
+      xeberdarliq:
+        "Bu nəticə qərar dəstəyi məqsədi daşıyır və uyğunluq qərarı deyil. Yekun təsnifat " +
+        "öhdəlik daşıyan şəxsin uyğunluq bölməsinə (MLRO) aiddir. 3.3-cü bəndə əsasən milli, " +
+        "sahəvi və institusional risk qiymətləndirməsinin nəticələri də nəzərə alınmalıdır; " +
+        "bu alət həmin məlumatlara malik deyil.",
+      musteri_tesviri: input.customer_description ?? null,
     };
   },
 
@@ -339,36 +375,30 @@ const handlers: Record<string, Handler> = {
     const amount = numberOrNull(input.one_off_amount_azn);
     const turnover = numberOrNull(input.annual_turnover_azn);
 
-    const eddTriggers: { clause: string; reason: string }[] = [];
+    const eddTriggers: { bend: string; sebeb: string; metn: string }[] = [];
+    const trigger = (bend: string, sebeb: string) =>
+      eddTriggers.push({ bend, sebeb, metn: getClause(bend)?.text ?? "" });
+
     if (isPep) {
-      eddTriggers.push({
-        clause: "5.2",
-        reason:
-          "Enhanced measures are mandatory for politically exposed persons and their close " +
-          "relatives or close associates.",
-      });
+      trigger(
+        "5.2",
+        "Müştəri siyasi nüfuzlu şəxs, onun yaxın qohumu və ya yaxın münasibətdə olduğu şəxsdir.",
+      );
     }
     if (fatfCall) {
-      eddTriggers.push({
-        clause: "5.2",
-        reason:
-          "Enhanced measures are mandatory for persons, financial institutions and legal " +
-          "arrangements from states FATF has called for action on.",
-      });
+      trigger(
+        "5.2",
+        "Şəxs FATF-ın çağırış etdiyi dövlətdəndir (ərazidəndir).",
+      );
     }
     if (complexTx) {
-      eddTriggers.push({
-        clause: "5.1",
-        reason:
-          "Transactions that are complex, unusually large, or without evident economic or " +
-          "lawful purpose and carry a high risk degree require enhanced measures.",
-      });
+      trigger(
+        "5.1",
+        "Əməliyyat mürəkkəb, qeyri-adi olaraq irihəcmlidir və ya açıq-aşkar iqtisadi/qanuni məqsədi yoxdur.",
+      );
     }
     if (riskGroup === "high") {
-      eddTriggers.push({
-        clause: "5.1",
-        reason: "The risk assessment determined the risk to be high.",
-      });
+      trigger("5.1", "Risk qiymətləndirməsi nəticəsində risk yüksək müəyyən edilib.");
     }
 
     const eddRequired = eddTriggers.length > 0;
@@ -383,95 +413,84 @@ const handlers: Record<string, Handler> = {
     };
     const occasionClause = occasion ? sddOccasions[occasion] : undefined;
 
-    const sddBlockers: string[] = [];
+    const sddBlockers: { bend: string; sebeb: string }[] = [];
     if (eddRequired) {
-      sddBlockers.push(
-        "Clause 4.4: the presence of circumstances requiring enhanced measures excludes the " +
-          "application of simplified measures.",
-      );
+      sddBlockers.push({
+        bend: "4.4",
+        sebeb:
+          "Gücləndirilmiş müştəri uyğunluğu tədbirlərinin tətbiqini tələb edən halların " +
+          "mövcudluğu sadələşdirilmiş tədbirlərin tətbiqini istisna edir.",
+      });
     }
     if (riskGroup && riskGroup !== "low") {
-      sddBlockers.push(
-        `Clause 4.1: simplified measures are available only for low risk degrees; this profile ` +
-          `is ${riskGroup} risk.`,
-      );
+      sddBlockers.push({
+        bend: "4.1",
+        sebeb:
+          `Sadələşdirilmiş tədbirlər yalnız aşağı risk dərəcələri üçün tətbiq edilə bilər; ` +
+          `bu profil ${RISK_GROUP_AZ[riskGroup]} qrupundadır.`,
+      });
     }
     if (occasion === "ongoing_due_diligence") {
-      sddBlockers.push(
-        "Clause 4.2: simplified measures applied when establishing a relationship or carrying " +
-          "out a one-off transaction cannot be used for ongoing due diligence.",
-      );
+      sddBlockers.push({
+        bend: "4.2",
+        sebeb:
+          "İşgüzar münasibətlərin yaradılması və ya birdəfəlik əməliyyat zamanı tətbiq edilən " +
+          "sadələşdirilmiş tədbirlər davamlı müştəri uyğunluğu tədbirləri üçün tətbiq edilə bilməz.",
+      });
     }
     if (occasion && !occasionClause && occasion !== "ongoing_due_diligence") {
-      sddBlockers.push("Clause 4.1: the stated occasion is not one on which simplified measures may be applied.");
+      sddBlockers.push({
+        bend: "4.1",
+        sebeb: "Göstərilən hal sadələşdirilmiş tədbirlərin tətbiq edilə biləcəyi hallardan deyil.",
+      });
     }
 
     const sddPermitted = sddBlockers.length === 0 && riskGroup === "low";
 
-    const thresholds: { clause: string; note: string }[] = [];
+    const hedler: { bend: string; qeyd: string }[] = [];
     if (amount !== null) {
-      thresholds.push(
-        amount >= 20000
-          ? {
-              clause: "4.1.2",
-              note:
-                `AZN ${amount.toLocaleString("en-US")} meets or exceeds the AZN 20,000 one-off ` +
-                `transaction threshold. Linked transactions carried out within a limit whose ` +
-                `combined value exceeds AZN 20,000 are treated the same way.`,
-            }
-          : {
-              clause: "4.1.2",
-              note:
-                `AZN ${amount.toLocaleString("en-US")} is below the AZN 20,000 one-off threshold, ` +
-                `but linked transactions exceeding AZN 20,000 in aggregate still fall within it.`,
-            },
-      );
+      hedler.push({
+        bend: "4.1.2",
+        qeyd:
+          amount >= 20000
+            ? `${formatAzn(amount)} məbləği iyirmi min manat həddinə çatır və ya onu aşır. ` +
+              `Bir-biri ilə əlaqəli olan və ümumi məbləği iyirmi min manatdan artıq olan bir neçə ` +
+              `əməliyyat da bu hala aiddir.`
+            : `${formatAzn(amount)} məbləği iyirmi min manat həddindən aşağıdır. Lakin bir-biri ilə ` +
+              `əlaqəli olub ümumi məbləği iyirmi min manatı aşan əməliyyatlar bu həddə daxildir.`,
+      });
     }
     if (turnover !== null && turnover < 100000) {
-      thresholds.push({
-        clause: "4.3.2",
-        note:
-          `Annual turnover of AZN ${turnover.toLocaleString("en-US")} is below AZN 100,000, so ` +
-          `identification data may be updated at longer intervals than clause 8.1 requires - ` +
-          `available only if simplified measures are otherwise permitted.`,
+      hedler.push({
+        bend: "4.3.2",
+        qeyd:
+          `İllik dövriyyə ${formatAzn(turnover)} yüz min manatdan aşağıdır: eyniləşdirmə ` +
+          `məlumatlarının yenilənməsi 8.1-ci bənddə nəzərdə tutulandan daha uzun vaxt ` +
+          `intervalında həyata keçirilə bilər. Bu, yalnız sadələşdirilmiş tədbirlərə icazə ` +
+          `verildiyi halda mümkündür.`,
       });
     }
 
     return {
       ok: true,
-      source: DOC,
-      enhanced_due_diligence_required: eddRequired,
-      enhanced_due_diligence_triggers: eddTriggers,
-      enhanced_measures_available: eddRequired
-        ? [
-            { clause: "5.3.1", measure: "Obtain additional information and documents on the customer (employment and activity, size of assets, open-source information, additional income sources) and update and verify customer and beneficial owner identification data more intensively." },
-            { clause: "5.3.2", measure: "Obtain additional information and documents on the nature of the business relationship." },
-            { clause: "5.3.3", measure: "Obtain additional information and documents on the source of the customer's funds and wealth." },
-            { clause: "5.3.4", measure: "Obtain additional information on the purpose of the executed or intended transaction." },
-            { clause: "5.3.5", measure: "Establish or continue the business relationship only with senior management approval." },
-            { clause: "5.3.6", measure: "Conduct ongoing monitoring of the relationship with increased duration and frequency of controls, and analyse transaction patterns further." },
-            { clause: "5.3.7", measure: "Require the first payment to be made through an account in the customer's name at a bank with equivalent CDD requirements." },
-          ]
+      menbe: DOC,
+      guclendirilmis_tedbirler_mecburidir: eddRequired,
+      guclendirilmis_tedbir_esaslari: eddTriggers,
+      // Verbatim 5.3.1-5.3.7 rather than a paraphrase.
+      guclendirilmis_tedbirler: eddRequired ? childRefs("5.3") : [],
+      guclendirilmis_tedbirler_qeydi: eddRequired
+        ? [clauseRef("5.4"), clauseRef("5.2")]
         : [],
-      enhanced_measures_note: eddRequired
-        ? "Clause 5.4: clause 5.3 does not preclude applying further enhanced measures. Clause 5.2 requires enhanced measures to be effective and proportionate to the risks."
-        : null,
-      simplified_due_diligence_permitted: sddPermitted,
-      simplified_blockers: sddBlockers,
-      simplified_occasion_clause: occasionClause ?? null,
-      simplified_measures_available: sddPermitted
-        ? [
-            { clause: "4.3.1", measure: "Verify the customer and beneficial owner after the business relationship has been established." },
-            { clause: "4.3.2", measure: "Where annual turnover under the relationship is below AZN 100,000, update identification data at longer intervals than clause 8.1 requires." },
-            { clause: "4.3.3", measure: "Determine the purpose and nature of the business relationship from the type of transaction or relationship itself, without obtaining further information or conducting enquiries." },
-          ]
-        : [],
-      thresholds,
-      caveats: [
-        "Clause 4.1 applies simplified measures only in accordance with Article 4.18 of the Law.",
-        "This output supports a decision; the obliged entity remains responsible for applying " +
-          "measures proportionate to the risk it has assessed.",
-      ],
+      sadelesdirilmis_tedbirlere_icaze: sddPermitted,
+      sadelesdirilmis_tedbirlerin_maneeleri: sddBlockers,
+      sadelesdirilmis_tedbir_hali: occasionClause ? clauseRef(occasionClause) : null,
+      // Verbatim 4.3.1-4.3.3.
+      sadelesdirilmis_tedbirler: sddPermitted ? childRefs("4.3") : [],
+      hedler,
+      xeberdarliq:
+        "4.1-ci bəndə əsasən sadələşdirilmiş tədbirlər yalnız Qanunun 4.18-ci maddəsinə uyğun " +
+        "tətbiq edilir. Bu nəticə qərar dəstəyi məqsədi daşıyır; risklərə mütənasib tədbirlərin " +
+        "tətbiqinə görə məsuliyyət öhdəlik daşıyan şəxsin üzərindədir.",
     };
   },
 
@@ -479,80 +498,81 @@ const handlers: Record<string, Handler> = {
     const firstTime = Boolean(input.first_time_relationship);
     const applied = new Set(uniqueStrings(input.measures_applied));
 
-    const MEASURES: Record<string, { clause: string; label: string }> = {
-      enhanced_electronic_signature: { clause: "7.1.1", label: "Require the customer's application to be confirmed with their enhanced electronic signature" },
-      check_electronic_databases: { clause: "7.1.2", label: "Check the information submitted against electronic databases and/or independent external sources" },
-      strong_customer_authentication: { clause: "7.1.3", label: "Carry out strong customer authentication (knowledge, possession and inherence factors designed to protect the confidentiality of authentication data)" },
-      obtain_documents_from_trusted_third_party: { clause: "7.1.4", label: "Obtain the customer's documents, with their consent, on request from a trusted third party or state body" },
-      correspondence_via_registered_address: { clause: "7.1.5", label: "Conduct correspondence and document exchange via the customer's official registered address" },
-      security_codes_tokens_to_verified_address: { clause: "7.1.6", label: "Require use of security codes, electronic signatures, tokens or similar credentials delivered to an address verified by post, telephone or other reliable means" },
-      live_video_verification: { clause: "7.1.7", label: "Verify the customer's identity by real-time video call or in-system video recording" },
-      other_internal_controls: { clause: "7.1.8", label: "Apply other checks and controls set out in the obliged entity's internal procedures" },
-    };
-
-    // Clause 7.2 - mandatory set for a first-time remote relationship.
-    const MANDATORY = [
-      "enhanced_electronic_signature",
-      "check_electronic_databases",
-      "strong_customer_authentication",
-      "live_video_verification",
-    ];
-
-    const prohibitions: { clause: string; reason: string }[] = [];
-    if (input.via_authorised_representative && !input.representative_is_legal_representative_of_legal_person) {
-      prohibitions.push({
-        clause: "7.4",
-        reason:
-          "Establishing a business relationship remotely through an authorised representative is " +
-          "not permitted. The only exception is the legal representative of a legal person.",
+    const qadagalar: { bend: string; sebeb: string; metn: string }[] = [];
+    if (
+      input.via_authorised_representative &&
+      !input.representative_is_legal_representative_of_legal_person
+    ) {
+      qadagalar.push({
+        bend: "7.4",
+        sebeb:
+          "Müştərilərə səlahiyyətli nümayəndə vasitəsilə məsafədən işgüzar münasibətlərin " +
+          "yaradılmasına yol verilmir. Yeganə istisna hüquqi şəxsin qanuni təmsilçisidir.",
+        metn: getClause("7.4")?.text ?? "",
       });
     }
     if (input.customer_is_non_resident_legal_person) {
-      prohibitions.push({
-        clause: "7.4",
-        reason: "Remote establishment of a business relationship with a non-resident legal person is not permitted.",
+      qadagalar.push({
+        bend: "7.4",
+        sebeb:
+          "Qeyri-rezident hüquqi şəxslərə məsafədən işgüzar münasibətlərin yaradılmasına yol verilmir.",
+        metn: getClause("7.4")?.text ?? "",
       });
     }
 
-    const missing = firstTime ? MANDATORY.filter((m) => !applied.has(m)) : [];
+    const missing = firstTime ? MANDATORY_REMOTE.filter((m) => !applied.has(m)) : [];
 
-    const findings: { clause: string; issue: string }[] = [];
+    const elaveTapintilar: { bend: string; mesele: string }[] = [];
     if (input.identity_cannot_be_established_or_doubtful) {
-      findings.push({
-        clause: "7.3",
-        issue:
-          "Where the identification and verification measures do not allow the customer's " +
-          "identity to be established, or the authenticity of the submitted documents is in " +
-          "doubt, the clause 7.3 restriction applies - retrieve its full text with get_clause " +
-          "before advising.",
+      elaveTapintilar.push({
+        bend: "7.3",
+        mesele:
+          "Eyniləşdirmə və verifikasiya tədbirləri müştərinin kimliyinin müəyyən edilməsinə " +
+          "imkan vermədikdə və ya təqdim olunmuş sənədlərin həqiqiliyi şübhə doğurduqda 7.3-cü " +
+          "bəndin tələbi tətbiq olunur. Məsləhət verməzdən əvvəl get_clause ilə tam mətni oxuyun.",
       });
     }
+
+    const measureRef = (key: string) => ({
+      acar: key,
+      ...clauseRef(REMOTE_MEASURES[key]!),
+      tetbiq_edilib: applied.has(key),
+    });
 
     return {
       ok: true,
-      source: DOC,
-      prohibited: prohibitions.length > 0,
-      prohibitions,
-      first_time_relationship: firstTime,
-      mandatory_measures: firstTime
-        ? MANDATORY.map((k) => ({ ...MEASURES[k]!, key: k, applied: applied.has(k) }))
-        : [],
-      missing_mandatory_measures: missing.map((k) => ({ ...MEASURES[k]!, key: k })),
-      compliant_with_7_2: firstTime ? missing.length === 0 : null,
-      all_available_measures: Object.entries(MEASURES).map(([key, v]) => ({ key, ...v })),
-      additional_findings: findings,
-      caveats: [
-        "Clause 7.2 makes measures 7.1.1, 7.1.2, 7.1.3 and 7.1.7 mandatory when a business " +
-          "relationship is established with the customer for the first time.",
-        "Clause 6.4: verification may be completed after the relationship is established - but " +
-          "no later than 5 business days - including for relationships created using new " +
-          "technologies (6.4.1), provided the clause 6.5 risk management procedures are in place.",
-      ],
+      menbe: DOC,
+      qadagandir: qadagalar.length > 0,
+      qadagalar,
+      ilk_defe_isguzar_munasibet: firstTime,
+      mecburi_tedbirler: firstTime ? MANDATORY_REMOTE.map(measureRef) : [],
+      catismayan_mecburi_tedbirler: missing.map((k) => ({
+        acar: k,
+        ...clauseRef(REMOTE_MEASURES[k]!),
+      })),
+      bend_7_2_uygunlugu: firstTime ? missing.length === 0 : null,
+      butun_movcud_tedbirler: Object.keys(REMOTE_MEASURES).map(measureRef),
+      elave_tapintilar: elaveTapintilar,
+      qeydler: [clauseRef("7.2"), clauseRef("6.4"), clauseRef("6.4.1"), clauseRef("6.5")],
     };
   },
 };
 
 // ---------------------------------------------------------------------------
+
+const RISK_GROUP_AZ: Record<"high" | "medium" | "low", string> = {
+  high: "yüksək riskli",
+  medium: "orta riskli",
+  low: "aşağı riskli",
+};
+
+const CATEGORY_AZ: Record<Category, string> = {
+  customer: "müştəri riski",
+  product: "məhsul (və ya xidmət) riski",
+  channel: "çatdırılma kanalı riski",
+  geography: "coğrafi yerləşmə riski",
+  transaction: "əməliyyat riski",
+};
 
 export function listToolNames(): string[] {
   return TOOL_DEFINITIONS.map((t) => t.name);
@@ -561,14 +581,14 @@ export function listToolNames(): string[] {
 export function runTool(name: string, input: Record<string, unknown>): ToolResult {
   const handler = handlers[name];
   if (!handler) {
-    return { ok: false, error: `Unknown tool: ${name}`, available: listToolNames() };
+    return { ok: false, xeta: `Naməlum alət: ${name}`, movcud: listToolNames() };
   }
   try {
     return handler(input as Record<string, any>);
   } catch (err) {
     return {
       ok: false,
-      error: `Tool ${name} failed: ${err instanceof Error ? err.message : String(err)}`,
+      xeta: `${name} aləti xəta verdi: ${err instanceof Error ? err.message : String(err)}`,
     };
   }
 }
@@ -582,6 +602,10 @@ function clamp(n: number, lo: number, hi: number): number {
 function numberOrNull(v: unknown): number | null {
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
+}
+
+function formatAzn(amount: number): string {
+  return `${amount.toLocaleString("az-AZ")} AZN`;
 }
 
 function uniqueStrings(v: unknown): string[] {
@@ -602,14 +626,14 @@ function resolve(keys: string[], polarity: "high" | "low", unknown: string[]) {
   return out;
 }
 
+/** The label is the clause's own wording, so nothing is paraphrased. */
 function describe(factor: (typeof FACTORS)[number]) {
   return {
-    key: factor.key,
-    clause: factor.clause,
-    citation: citation(factor.clause),
-    category: factor.category,
-    label_en: factor.label_en,
-    clause_text_az: getClause(factor.clause)?.text ?? null,
+    acar: factor.key,
+    bend: factor.clause,
+    istinad: citation(factor.clause),
+    kateqoriya: CATEGORY_AZ[factor.category],
+    metn: getClause(factor.clause)?.text ?? "",
   };
 }
 

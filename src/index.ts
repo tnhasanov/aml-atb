@@ -83,10 +83,16 @@ const server = createServer(async (req, res) => {
     if (req.method === "GET" && url.pathname === "/api/clause") {
       const id = url.searchParams.get("id")?.trim() ?? "";
       const tree = getClauseTree(id);
-      if (!tree.length) return json(res, 404, { error: `No clause ${id}` });
+      if (!tree.length) {
+        return json(res, 404, {
+          error:
+            `Bu sənəddə ${id} nömrəli bənd yoxdur. Bəndlər 1.1-dən 8.3-ə qədərdir; ` +
+            `göstərilən nömrə Qanuna və ya digər normativ sənədə istinad ola bilər.`,
+        });
+      }
       return json(res, 200, {
         clause_id: id,
-        part_title_en: tree[0]!.part_title_en,
+        part_title_az: tree[0]!.part_title_az,
         clauses: tree.map((c) => ({ clause_id: c.id, text: c.text })),
       });
     }
@@ -113,12 +119,12 @@ async function handleChat(req: IncomingMessage, res: ServerResponse): Promise<vo
   try {
     payload = JSON.parse(body);
   } catch {
-    return json(res, 400, { error: "Body must be JSON" });
+    return json(res, 400, { error: "Sorğunun məzmunu JSON formatında olmalıdır" });
   }
 
   const message = (payload.message ?? "").trim();
-  if (!message) return json(res, 400, { error: "message is required" });
-  if (message.length > 20000) return json(res, 413, { error: "message too long" });
+  if (!message) return json(res, 400, { error: "Mesaj mətni tələb olunur" });
+  if (message.length > 20000) return json(res, 413, { error: "Mesaj həddindən artıq uzundur" });
 
   const sessionId = payload.session_id?.trim() || randomUUID();
   const history = getHistory(sessionId);
@@ -154,12 +160,12 @@ async function handleChat(req: IncomingMessage, res: ServerResponse): Promise<vo
 
 function friendlyError(detail: string): string {
   if (/api[-_ ]?key|authentication|401/i.test(detail)) {
-    return "Not authenticated to the Anthropic API. Set ANTHROPIC_API_KEY in .env, or run `ant auth login`.";
+    return "Anthropic API-yə autentifikasiya alınmadı. .env faylında ANTHROPIC_API_KEY təyin edin və ya `ant auth login` icra edin.";
   }
   if (/rate.?limit|429/i.test(detail)) {
-    return "Rate limited by the API. Wait a moment and retry.";
+    return "API sorğu həddi aşılıb. Bir qədər gözləyib yenidən cəhd edin.";
   }
-  return `Request failed: ${detail}`;
+  return `Sorğu alınmadı: ${detail}`;
 }
 
 async function serveStatic(pathname: string, res: ServerResponse): Promise<void> {
