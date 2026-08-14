@@ -58,6 +58,23 @@ accidentally become the deployed one.
 
 ---
 
+## Just want a URL you can open?
+
+That is a different question from production, and it has a different answer:
+**`docs/HOSTING.md`** and the `render.yaml` in the repository root. Push the branch, point
+Render at it, paste two values, and colleagues can try it over TLS with named logins
+(`AUTH_MODE=basic`). Use it with synthetic cases — the hosted pilot exists to judge whether
+the answers and the citations are any good, which has never been tested against a live model.
+
+That document also explains why **Vercel, Netlify, Lambda and Cloudflare Workers cannot host
+this**: the audit trail is an append-only hash chain on local disk with a single writer, and on
+a serverless platform it would be silently discarded while the chat appeared to work normally.
+`src/config.ts` detects those platforms and refuses to start rather than let that happen.
+
+Real customer data waits for the deployment below.
+
+---
+
 ## Putting it into production
 
 > **Handing this to someone else?** `docs/HANDOVER.md` is a fill-in-the-blanks packet:
@@ -304,15 +321,22 @@ degraded on `/readyz`, rather than quietly giving CDD advice that leaves no reco
 data/source/       source Decision (.docx, as supplied)
 data/rules.json    generated corpus: 213 clauses, 8 parts, annex
 tools/             extract_rules.py — resolves Word list numbering into clause ids
+                   hash-password.mjs — mints AUTH_USERS entries for basic auth
+                   verify-audit.mjs — re-walks the hash chain
 src/rules.ts       corpus loading and clause lookup
 src/search.ts      BM25 with Azerbaijani-aware folding and prefix stemming
 src/glossary.ts    English→Azerbaijani query expansion
 src/factors.ts     risk factor catalogue, one entry per clause in 3.4–3.13
 src/tools/         the five tool implementations
 src/agent.ts       streaming tool loop
-src/index.ts       HTTP server, SSE, static hosting
+src/auth.ts        identity: proxy header, HTTP Basic, or none
+src/password.ts    scrypt hashing for AUTH_MODE=basic
+src/server.ts      HTTP routing, SSE, static hosting
+src/index.ts       process entrypoint (kept separate so tests import without binding a port)
 public/            chat UI (no build step, no framework)
-test/              53 tests
+deploy/            nginx, oauth2-proxy and systemd for the production VM
+render.yaml        hosted-pilot blueprint (see docs/HOSTING.md)
+test/              72 tests
 ```
 
 ### Notes on the implementation
@@ -342,9 +366,12 @@ test/              53 tests
 | `AML_MAX_TOKENS` | `32000` | Must leave room for adaptive thinking as well as the answer |
 | `PORT` | `3000` | HTTP port |
 | `BIND_HOST` | `127.0.0.1` | Widen only behind a proxy |
-| `AUTH_MODE` | `proxy` | `proxy` or `none`; `none` refused on a non-loopback bind |
-| `AUTH_USER_HEADER` | `x-forwarded-user` | Header carrying the authenticated username |
-| `AUTH_SHARED_SECRET` | — | Proves a request came via the proxy |
+| `AUTH_MODE` | `proxy` | `proxy`, `basic` or `none`; `none` refused on a non-loopback bind |
+| `AUTH_USER_HEADER` | `x-forwarded-user` | `proxy` mode: header carrying the authenticated username |
+| `AUTH_SHARED_SECRET` | — | `proxy` mode: proves a request came via the proxy |
+| `AUTH_USERS` | — | `basic` mode: `user:scrypt$…` entries, comma-separated. Mint with `node tools/hash-password.mjs <user>` |
+| `AUTH_REALM` | `AML Uygunluq Komekcisi` | `basic` mode: name shown in the browser sign-in dialog |
+| `AML_ALLOW_EPHEMERAL_AUDIT` | `false` | Override the refusal to run on serverless platforms. Demo only — the audit trail is lost |
 | `AUDIT_DIR` | `./audit` | Resolved absolute; created `0700`, files `0600` |
 | `AUDIT_FAIL_CLOSED` | `true` | Refuse to answer if the trail cannot be written |
 | `AML_RATE_LIMIT_PER_MINUTE` | `12` | Per authenticated user |

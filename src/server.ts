@@ -130,7 +130,9 @@ export const server = createServer(async (req, res) => {
     const auth = authenticate(req);
     if (!auth.ok) {
       status = auth.status;
-      return json(res, auth.status, { error: auth.message });
+      // Basic mode returns a WWW-Authenticate challenge here; without it the
+      // browser shows a bare JSON error and offers no way to sign in.
+      return json(res, auth.status, { error: auth.message }, auth.headers);
     }
     const principal = auth.principal;
 
@@ -426,11 +428,17 @@ function readBody(req: IncomingMessage): Promise<string> {
   });
 }
 
-function json(res: ServerResponse, status: number, payload: unknown): void {
+function json(
+  res: ServerResponse,
+  status: number,
+  payload: unknown,
+  headers?: Record<string, string>,
+): void {
   if (res.headersSent) return;
   res.writeHead(status, {
     "Content-Type": "application/json; charset=utf-8",
     "X-Content-Type-Options": "nosniff",
+    ...headers,
   });
   res.end(JSON.stringify(payload));
 }

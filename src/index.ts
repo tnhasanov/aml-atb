@@ -41,6 +41,15 @@ server.listen(config.port, config.bindHost, () => {
   if (config.authMode === "none") {
     console.log("  WARNING: authentication disabled - loopback only, development use");
   }
+  if (config.authMode === "basic") {
+    console.log(`  users  : ${config.authAccounts.map((a) => a.user).join(", ")}`);
+    console.log("  note   : Basic auth sends the password on every request - the platform in");
+    console.log("           front MUST terminate TLS. Production behind the bank's IdP is AUTH_MODE=proxy.");
+  }
+  if (config.ephemeralHost) {
+    console.log(`  WARNING: ${config.ephemeralHost} detected with AML_ALLOW_EPHEMERAL_AUDIT set.`);
+    console.log("           The audit trail will not survive. Demo use only - no customer data.");
+  }
   if (!process.env.ANTHROPIC_API_KEY) {
     console.log("  note   : ANTHROPIC_API_KEY not set - falling back to `ant auth login` profile");
   }

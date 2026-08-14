@@ -1,6 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 import type { IncomingMessage } from "node:http";
 import { config } from "./config.js";
+import { verifyPassword } from "./password.js";
 
 /**
  * Who is asking.
@@ -16,7 +17,8 @@ export interface Principal {
 
 export type AuthResult =
   | { ok: true; principal: Principal }
-  | { ok: false; status: 401 | 403; message: string };
+  /** `headers` carries the Basic challenge, so the browser offers a sign-in box. */
+  | { ok: false; status: 401 | 403; message: string; headers?: Record<string, string> };
 
 /**
  * Identity is terminated at the reverse proxy (SSO/OIDC/client certs) and
@@ -31,6 +33,8 @@ export function authenticate(req: IncomingMessage): AuthResult {
     // Only reachable on a loopback bind; buildConfig() refuses otherwise.
     return { ok: true, principal: { user: "dev@localhost", ip } };
   }
+
+  if (config.authMode === "basic") return basic(req, ip);
 
   if (config.authSharedSecret) {
     const presented = header(req, config.authSecretHeader);
@@ -59,6 +63,55 @@ export function authenticate(req: IncomingMessage): AuthResult {
   }
 
   return { ok: true, principal: { user, ip } };
+}
+
+/**
+ * HTTP Basic against the configured accounts.
+ *
+ * Wrong username and wrong password give the same 401 and the same text: the
+ * account list is the compliance team, and telling an outsider which names are
+ * on it is itself a small disclosure.
+ */
+function basic(req: IncomingMessage, ip: string): AuthResult {
+  const challenge = {
+    "WWW-Authenticate": `Basic realm="${config.authRealm.replace(/"/g, "")}", charset="UTF-8"`,
+  };
+  const refuse = (message: string): AuthResult => ({ ok: false, status: 401, message, headers: challenge });
+
+  const presented = header(req, "authorization");
+  if (!presented) return refuse("Autentifikasiya tələb olunur. İstifadəçi adı və şifrə ilə daxil olun.");
+
+  const [scheme, encoded] = presented.split(/\s+/, 2);
+  if (scheme?.toLowerCase() !== "basic" || !encoded) {
+    return refuse("Autentifikasiya üsulu dəstəklənmir.");
+  }
+
+  let decoded: string;
+  try {
+    decoded = Buffer.from(encoded, "base64").toString("utf8");
+  } catch {
+    return refuse("Autentifikasiya məlumatları oxunmadı.");
+  }
+
+  // The password may itself contain a colon; the username may not.
+  const split = decoded.indexOf(":");
+  if (split < 1) return refuse("Autentifikasiya məlumatları oxunmadı.");
+  const user = decoded.slice(0, split);
+  const password = decoded.slice(split + 1);
+
+  const account = config.authAccounts.find((a) => a.user === user);
+  // Verify even when there is no such account, so a nonexistent username costs
+  // the same wall-clock time as a wrong password.
+  const decoy = config.authAccounts[0]?.hash;
+  const okPassword = account
+    ? verifyPassword(password, account.hash)
+    : (decoy ? verifyPassword(password, decoy) : false) && false;
+
+  if (!account || !okPassword) {
+    return refuse("İstifadəçi adı və ya şifrə yanlışdır.");
+  }
+
+  return { ok: true, principal: { user: account.user, ip } };
 }
 
 function header(req: IncomingMessage, name: string): string | undefined {

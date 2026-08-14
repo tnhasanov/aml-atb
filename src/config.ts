@@ -1,4 +1,5 @@
 import { isAbsolute, resolve } from "node:path";
+import { parseAuthUsers, type Account } from "./password.js";
 
 const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const;
 export type Effort = (typeof EFFORTS)[number];
@@ -29,10 +30,32 @@ export class ConfigError extends Error {}
 /**
  * `proxy`  - a reverse proxy in front terminates TLS and SSO and passes a
  *            verified user in a header. This is the intended deployment.
+ * `basic`  - HTTP Basic against a short list of named accounts in AUTH_USERS.
+ *            For hosted pilots (Render/Railway/Fly) where the platform
+ *            terminates TLS but there is no IdP integration. See docs/HOSTING.md.
  * `none`   - no authentication. Development only; refuses to run on a
  *            non-loopback bind so it cannot be reached from the network.
  */
-export type AuthMode = "proxy" | "none";
+export type AuthMode = "proxy" | "basic" | "none";
+const AUTH_MODES: AuthMode[] = ["proxy", "basic", "none"];
+
+/**
+ * Platforms whose filesystem does not survive the request that wrote to it.
+ *
+ * The audit trail is an append-only hash chain on local disk with a single
+ * writer. On a serverless platform each invocation may get a fresh container,
+ * several may run at once, and anything written is discarded - so the tool
+ * would appear to work while keeping no usable record at all, and the chain
+ * would fail verification. That is a worse outcome than refusing to start,
+ * because nobody notices until a supervisor asks for the records.
+ */
+function detectEphemeralHost(): string | null {
+  if (process.env.VERCEL) return "Vercel";
+  if (process.env.AWS_LAMBDA_FUNCTION_NAME) return "AWS Lambda";
+  if (process.env.NETLIFY) return "Netlify";
+  if (process.env.FUNCTION_TARGET || process.env.K_SERVICE) return "Cloud Functions / Cloud Run";
+  return null;
+}
 
 function buildConfig() {
   const model = env("AML_MODEL") ?? "claude-opus-5";
@@ -50,8 +73,8 @@ function buildConfig() {
   const bindHost = env("BIND_HOST") ?? "127.0.0.1";
 
   const authMode = (env("AUTH_MODE") ?? "proxy") as AuthMode;
-  if (authMode !== "proxy" && authMode !== "none") {
-    throw new ConfigError(`AUTH_MODE must be "proxy" or "none", got "${authMode}"`);
+  if (!AUTH_MODES.includes(authMode)) {
+    throw new ConfigError(`AUTH_MODE must be one of ${AUTH_MODES.join(", ")}, got "${authMode}"`);
   }
 
   const loopback = bindHost === "127.0.0.1" || bindHost === "::1" || bindHost === "localhost";
@@ -62,8 +85,36 @@ function buildConfig() {
     );
   }
 
+  let authAccounts: Account[] = [];
+  if (authMode === "basic") {
+    const spec = env("AUTH_USERS");
+    if (!spec) {
+      throw new ConfigError(
+        "AUTH_MODE=basic requires AUTH_USERS. Generate an entry with: node tools/hash-password.mjs <username>",
+      );
+    }
+    try {
+      authAccounts = parseAuthUsers(spec);
+    } catch (err) {
+      throw new ConfigError(err instanceof Error ? err.message : String(err));
+    }
+    if (!authAccounts.length) throw new ConfigError("AUTH_USERS is set but lists no accounts");
+  }
+
   const auditDirRaw = env("AUDIT_DIR") ?? "./audit";
   const auditDir = isAbsolute(auditDirRaw) ? auditDirRaw : resolve(process.cwd(), auditDirRaw);
+
+  const ephemeralHost = detectEphemeralHost();
+  if (ephemeralHost && !bool("AML_ALLOW_EPHEMERAL_AUDIT", false)) {
+    throw new ConfigError(
+      `This looks like ${ephemeralHost}, where the filesystem is discarded between ` +
+        `invocations and several instances may run at once. The audit trail at ${auditDir} ` +
+        `is an append-only hash chain that needs one writer and a durable disk, so it would ` +
+        `be silently lost and would fail verification. Deploy on a platform with a persistent ` +
+        `volume instead - see docs/HOSTING.md. Set AML_ALLOW_EPHEMERAL_AUDIT=1 only for a ` +
+        `throwaway demo where no real customer data is entered.`,
+    );
+  }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (apiKey && /\s/.test(apiKey)) {
@@ -89,6 +140,13 @@ function buildConfig() {
      */
     authSharedSecret: env("AUTH_SHARED_SECRET"),
     authSecretHeader: (env("AUTH_SECRET_HEADER") ?? "x-auth-secret").toLowerCase(),
+    /** Named accounts for AUTH_MODE=basic; empty in every other mode. */
+    authAccounts,
+    /** Shown in the browser's sign-in dialog. */
+    authRealm: env("AUTH_REALM") ?? "AML Uygunluq Komekcisi",
+
+    /** Non-null when running somewhere the audit trail cannot be trusted. */
+    ephemeralHost,
 
     auditDir,
     /** Refuse to answer if the audit trail cannot be written. */
