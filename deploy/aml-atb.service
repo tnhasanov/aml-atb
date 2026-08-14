@@ -6,6 +6,8 @@
 Description=AML Uygunluq Komekcisi (AML compliance assistant)
 After=network-online.target
 Wants=network-online.target
+# Refuse to start rather than restart-loop if the artefact is missing.
+ConditionPathExists=/opt/aml-atb/dist/src/index.js
 
 [Service]
 Type=simple
@@ -16,6 +18,9 @@ WorkingDirectory=/opt/aml-atb
 # Secrets live here, not in the unit file. Must be chmod 600, owned by root.
 EnvironmentFile=/etc/aml-atb/aml-atb.env
 
+# Confirm the interpreter path on the target host: `command -v node`.
+# Distro packages put it at /usr/bin/node; a nodejs.org tarball or nvm install
+# is usually /usr/local/bin/node. A wrong path fails at start with status 203.
 ExecStart=/usr/bin/node /opt/aml-atb/dist/src/index.js
 Restart=on-failure
 RestartSec=5s

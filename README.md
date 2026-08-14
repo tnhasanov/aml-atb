@@ -58,64 +58,127 @@ accidentally become the deployed one.
 
 ---
 
-## Going live
+## Putting it into production
 
-The tool binds `127.0.0.1` and requires an authenticated caller by default. Production
-means putting an SSO-terminating reverse proxy in front of it.
+Topology: **nginx** terminates TLS and authenticates against the institution's IdP, then proxies to
+the app on `127.0.0.1:3000`. The app never faces the network directly and trusts only the identity
+nginx injects.
 
-### 1. Deploy
+```
+  officer ──TLS──▶ nginx ──auth_request──▶ oauth2-proxy ──▶ bank IdP
+                     │
+                     └──127.0.0.1:3000──▶ aml-atb ──▶ api.anthropic.com
+                                             │
+                                             └──▶ /var/lib/aml-atb/audit
+```
+
+Everything below was validated against a live nginx + app + stub-IdP stack, not written from
+memory: the config passes `nginx -t`, the unit passes `systemd-analyze verify`, the release tarball
+runs unpacked with no toolchain, and `scripts/smoke-test.sh` passes all ten checks against it.
+
+### 1. Build a release artefact
+
+```bash
+scripts/release.sh
+```
+
+Regenerates the corpus and fails if it no longer matches the source `.docx`, runs typecheck and
+tests, compiles, installs production-only dependencies, and emits
+`release/aml-atb-<version>-<sha>.tar.gz` plus a checksum. It contains `dist/`, `node_modules/`,
+`data/`, `public/`, `tools/verify-audit.mjs` and `deploy/` — the target host needs no compiler, no
+registry access and no network, which is usually what a change process requires. `VERSION` inside
+records the git sha, Node version, and SHA-256 of both the corpus and the source document.
+
+### 2. Install on the host
 
 ```bash
 sudo useradd --system --home /opt/aml-atb aml
 sudo mkdir -p /opt/aml-atb /etc/aml-atb /var/lib/aml-atb/audit
+
+cd release && sha256sum -c aml-atb-*.tar.gz.sha256   # verify before unpacking
+sudo tar -xzf aml-atb-*.tar.gz --strip-components=1 -C /opt/aml-atb
+
 sudo chown -R aml:aml /opt/aml-atb /var/lib/aml-atb/audit
 sudo chmod 700 /var/lib/aml-atb/audit
 
-# build elsewhere, ship dist/ + node_modules/ + data/ + public/
-sudo cp -r dist node_modules data public package.json /opt/aml-atb/
-
-sudo install -m 600 /dev/stdin /etc/aml-atb/aml-atb.env <<'ENV'
+sudo install -m 600 /dev/stdin /etc/aml-atb/aml-atb.env <<ENV
 ANTHROPIC_API_KEY=sk-ant-...
 BIND_HOST=127.0.0.1
 AUTH_MODE=proxy
-AUTH_SHARED_SECRET=<openssl rand -hex 32>
+AUTH_SHARED_SECRET=$(openssl rand -hex 32)
 AUDIT_DIR=/var/lib/aml-atb/audit
 ENV
 
-sudo cp deploy/aml-atb.service /etc/systemd/system/
+# Confirm the interpreter path matches the unit before starting.
+command -v node                      # expect /usr/bin/node
+sudo cp /opt/aml-atb/deploy/aml-atb.service /etc/systemd/system/
 sudo systemctl daemon-reload && sudo systemctl enable --now aml-atb
+sudo systemctl status aml-atb
 ```
 
-### 2. Put a proxy in front
+The unit runs as a dedicated account under `ProtectSystem=strict` with `/var/lib/aml-atb/audit` as
+its only writable path, and `UMask=0077`.
 
-`deploy/nginx.conf` is a working starting point. It must:
-
-- terminate TLS, and be the only route to port 3000 (`ss -lptn` to confirm);
-- authenticate against the institution's IdP (`auth_request` + oauth2-proxy, mTLS client
-  certificates, or LDAP as an interim);
-- **strip any client-supplied `X-Forwarded-User`** and set it from the verified identity -
-  otherwise a user can assert any username and the audit trail is worthless;
-- send the `AUTH_SHARED_SECRET` so the app can tell a proxied request from a direct one;
-- set `proxy_buffering off` - answers stream token by token over SSE.
-
-### 3. Verify before opening it up
+### 3. Identity and TLS
 
 ```bash
-curl -sf http://127.0.0.1:3000/healthz                     # liveness, public
-curl -sf http://127.0.0.1:3000/readyz                      # audit trail writable
-curl -s -o /dev/null -w '%{http_code}\n' https://aml.internal/api/health   # expect 401/403 unauthenticated
-npm run verify-audit -- /var/lib/aml-atb/audit             # chain intact
-sudo -u aml stat -c '%a' /var/lib/aml-atb/audit            # expect 700
+sudo cp /opt/aml-atb/deploy/oauth2-proxy.cfg /etc/oauth2-proxy.cfg
+sudo chmod 600 /etc/oauth2-proxy.cfg        # holds the client secret
+# fill in oidc_issuer_url, client_id, client_secret, cookie_secret
+sudo systemctl enable --now oauth2-proxy
+
+sudo cp /opt/aml-atb/deploy/nginx.conf /etc/nginx/conf.d/aml-atb.conf
+# set server_name, certificate paths, and AUTH_SHARED_SECRET to match the .env
+sudo nginx -t && sudo systemctl reload nginx
 ```
 
-Ship `/var/lib/aml-atb/audit/*.jsonl` off-host (rsyslog, filebeat, plain rsync) - it is
-newline-delimited JSON, which is the canonical SIEM ingest format. Losing the host must not
-lose the record.
+`deploy/nginx.conf` is a **site** config for `conf.d/` — it contains `server` blocks, so it must sit
+inside nginx's `http{}`. Dropped in as `nginx.conf` it fails with *"upstream directive is not allowed
+here"*. It uses `listen 443 ssl http2` for nginx ≤ 1.24 (what Ubuntu 24.04 ships); on ≥ 1.25.1
+switch to `listen 443 ssl;` + `http2 on;`.
 
-### 4. Decisions that are not code
+Three lines carry the security of the whole deployment:
 
-These need a named owner and a written answer before real customer data goes in. Nothing in
-this repository can settle them:
+- `proxy_set_header X-Forwarded-User $auth_user;` — set unconditionally, which **overwrites**
+  anything the client sent. Without it a user can name themselves and the audit trail is worthless.
+- `proxy_set_header X-Auth-Secret "…";` — proves the request came through nginx. Without it, anyone
+  who reaches port 3000 directly can assert an identity.
+- `proxy_buffering off;` — answers stream token by token over SSE. With buffering on, the officer
+  stares at a blank panel until the whole answer is ready.
+
+An mTLS alternative is included commented out, if the bank issues client certificates.
+
+### 4. Verify before telling anyone
+
+```bash
+scripts/smoke-test.sh https://aml.internal.example.az /var/lib/aml-atb/audit
+```
+
+Ten checks: liveness, readiness, that all four authenticated routes refuse an anonymous caller, that
+a spoofed `X-Forwarded-User` is rejected, that the app port is loopback-only, that the audit chain
+verifies, and that the audit directory is `0700`. It exits non-zero on any failure. Run it after
+every deploy — it is what catches a proxy that was reloaded with the wrong config.
+
+### 5. Operate it
+
+```bash
+journalctl -u aml-atb -f                                  # one JSON line per request
+npm run verify-audit -- /var/lib/aml-atb/audit            # chain integrity
+systemctl restart aml-atb                                 # safe: chain survives restarts
+```
+
+Ship `/var/lib/aml-atb/audit/*.jsonl` off-host (rsyslog, filebeat, rsync) — it is newline-delimited
+JSON, the canonical SIEM ingest format. Losing the host must not lose the record. Do **not** rotate
+or truncate the files: whole-file retention is compatible with the hash chain, per-record deletion
+is not.
+
+Rollback is unpacking the previous tarball and restarting; the audit trail is append-only across
+versions and each start records its own `service_started` event.
+
+### 6. Decisions that are not code
+
+These need a named owner and a written answer before real customer data goes in. Nothing in this
+repository can settle them:
 
 | Question | Owner |
 |---|---|
@@ -123,12 +186,12 @@ this repository can settle them:
 | Whether MMX and/or the Central Bank require notification of this outsourcing | MLRO |
 | The API account's data-retention and no-training position, in writing | Commercial owner + DPO |
 | Local retention period for the audit trail, reconciled against the AML record-keeping duty | MLRO + DPO |
-| What staff may paste (reference numbers vs customer names) - there is no redaction stage | DPO writes it, MLRO confirms it does not defeat record-keeping |
+| What staff may paste (reference numbers vs customer names) — there is no redaction stage | DPO writes it, MLRO confirms it does not defeat record-keeping |
 | A user-facing notice that queries are processed by a named third party abroad | DPO + MLRO |
 | Who attests the committed `.docx` is the current text as amended in 2024 | MLRO |
 
-`ANTHROPIC_BASE_URL` lets you route all API traffic through an institutional gateway or DLP
-proxy without a code change, if the transfer analysis calls for one.
+`ANTHROPIC_BASE_URL` routes all API traffic through an institutional gateway or DLP proxy with no
+code change, if the transfer analysis calls for one.
 
 ---
 
