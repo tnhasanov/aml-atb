@@ -57,12 +57,31 @@ function detectEphemeralHost(): string | null {
   return null;
 }
 
+/**
+ * Fast mode runs the same model at a higher output rate for premium pricing.
+ * It is a research preview limited to these models on the Anthropic API - a
+ * gateway set through ANTHROPIC_BASE_URL may not offer it at all.
+ */
+const FAST_CAPABLE_MODELS = ["claude-opus-5", "claude-opus-4-8"];
+
 function buildConfig() {
   const model = env("AML_MODEL") ?? "claude-opus-5";
 
   const effort = (env("AML_EFFORT") ?? "high") as Effort;
   if (!EFFORTS.includes(effort)) {
     throw new ConfigError(`AML_EFFORT must be one of ${EFFORTS.join(", ")}, got "${effort}"`);
+  }
+
+  const speed = (env("AML_SPEED") ?? "standard") as "standard" | "fast";
+  if (speed !== "standard" && speed !== "fast") {
+    throw new ConfigError(`AML_SPEED must be "standard" or "fast", got "${speed}"`);
+  }
+  if (speed === "fast" && !FAST_CAPABLE_MODELS.includes(model)) {
+    throw new ConfigError(
+      `AML_SPEED=fast is only available on ${FAST_CAPABLE_MODELS.join(" or ")}, but ` +
+        `AML_MODEL is "${model}". Fast mode roughly doubles the token price; lowering ` +
+        `AML_EFFORT is the cheaper way to get a faster answer.`,
+    );
   }
 
   const port = int("PORT", 3000);
@@ -142,6 +161,7 @@ function buildConfig() {
   return {
     model,
     effort,
+    speed,
     port,
     bindHost,
     isLoopback: loopback,

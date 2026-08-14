@@ -14,6 +14,9 @@ const client = new Anthropic({
   maxRetries: config.upstreamMaxRetries,
 });
 
+/** Required alongside `speed: "fast"`; fast mode is still a research preview. */
+const FAST_MODE_BETA = "fast-mode-2026-02-01";
+
 export type StreamEvent =
   | { type: "thinking"; text: string }
   | { type: "text"; text: string }
@@ -55,39 +58,80 @@ export async function runTurn(
   for (let iteration = 0; iteration < config.maxToolIterations; iteration++) {
     if (signal?.aborted) return;
 
-    const stream = client.messages.stream(
-      {
-        model: config.model,
-        max_tokens: config.maxTokens,
-        // Array form so the frozen prompt + tool definitions cache together.
-        system: [
-          {
-            type: "text",
-            text: SYSTEM_PROMPT,
-            cache_control: { type: "ephemeral" },
-          },
-        ],
-        thinking: { type: "adaptive", display: "summarized" },
-        output_config: { effort: config.effort },
-        tools: TOOL_DEFINITIONS,
-        messages: history,
-      },
-      { signal },
-    );
+    const request = {
+      model: config.model,
+      max_tokens: config.maxTokens,
+      // Array form so the frozen prompt + tool definitions cache together.
+      system: [
+        {
+          type: "text" as const,
+          text: SYSTEM_PROMPT,
+          cache_control: { type: "ephemeral" as const },
+        },
+      ],
+      thinking: { type: "adaptive" as const, display: "summarized" as const },
+      output_config: { effort: config.effort },
+      tools: TOOL_DEFINITIONS,
+      messages: history,
+    };
 
-    stream.on("thinking", (delta) => emit({ type: "thinking", text: delta }));
-    stream.on("text", (delta) => {
-      answerText += delta;
-      emit({ type: "text", text: delta });
-    });
+    // Set once either handler fires. A retry is only safe before the officer
+    // has seen anything; re-running afterwards would duplicate the answer
+    // mid-sentence in the browser.
+    let produced = false;
 
-    const message = await stream.finalMessage();
+    const attempt = async (fast: boolean): Promise<Anthropic.Message> => {
+      const stream = fast
+        ? client.beta.messages.stream(
+            { ...request, speed: "fast", betas: [FAST_MODE_BETA] },
+            { signal },
+          )
+        : client.messages.stream(request, { signal });
+
+      // The beta and non-beta stream classes emit identical `thinking` and
+      // `text` events but share no supertype, so bind through a narrow
+      // structural view rather than duplicating both handlers per branch.
+      const events = stream as {
+        on(event: "thinking" | "text", listener: (delta: string) => void): unknown;
+      };
+      events.on("thinking", (delta) => {
+        produced = true;
+        emit({ type: "thinking", text: delta });
+      });
+      events.on("text", (delta) => {
+        produced = true;
+        answerText += delta;
+        emit({ type: "text", text: delta });
+      });
+
+      return (await stream.finalMessage()) as Anthropic.Message;
+    };
+
+    let message: Anthropic.Message;
+    try {
+      message = await attempt(config.speed === "fast");
+    } catch (err) {
+      // Fast mode draws on a separate, smaller rate-limit pool. Standard
+      // capacity is usually still there, and a slower answer beats none.
+      if (config.speed === "fast" && !produced && err instanceof Anthropic.RateLimitError) {
+        audit(
+          { type: "error", session_id: sessionId, message: "fast mode rate-limited, retrying at standard speed" },
+          principal,
+        );
+        message = await attempt(false);
+      } else {
+        throw err;
+      }
+    }
 
     audit(
       {
         type: "usage",
         session_id: sessionId,
         model: message.model,
+        // Reported by the API rather than assumed, so the record shows which
+        // speed actually served the turn after any fallback.
+        speed: (message.usage as { speed?: string }).speed ?? "standard",
         input_tokens: message.usage.input_tokens,
         output_tokens: message.usage.output_tokens,
         cache_read_input_tokens: message.usage.cache_read_input_tokens ?? 0,

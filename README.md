@@ -364,7 +364,8 @@ test/              72 tests
 | `ANTHROPIC_API_KEY` | — | Optional if an `ant auth login` profile exists. Rejected if it contains whitespace |
 | `ANTHROPIC_BASE_URL` | Anthropic | Route via an institutional gateway or DLP proxy |
 | `AML_MODEL` | `claude-opus-5` | Model id |
-| `AML_EFFORT` | `high` | `low`…`max`; validated at startup |
+| `AML_EFFORT` | `high` | `low`…`max`; validated at startup. The main lever on both latency and cost — lower means less thinking |
+| `AML_SPEED` | `standard` | `fast` runs the same model at a higher output rate for roughly double the token price. Opus-tier only; falls back to standard on a fast-pool rate limit |
 | `AML_MAX_TOKENS` | `32000` | Must leave room for adaptive thinking as well as the answer |
 | `PORT` | `3000` | HTTP port |
 | `BIND_HOST` | `127.0.0.1` | Widen only behind a proxy |

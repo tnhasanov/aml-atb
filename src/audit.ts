@@ -35,6 +35,8 @@ export type AuditEvent =
       type: "usage";
       session_id: string;
       model: string;
+      /** Which speed served the turn - "fast" is billed at a premium rate. */
+      speed?: string;
       input_tokens: number;
       output_tokens: number;
       cache_read_input_tokens?: number;

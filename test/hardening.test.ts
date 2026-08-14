@@ -176,6 +176,46 @@ test("an unrecognised AUDIT_MODE is refused, not treated as off", () => {
   );
 });
 
+// ---------------------------------------------------------------- speed
+
+test("AML_SPEED=fast is refused on a model that does not offer it", () => {
+  // Fast mode exists only on the Opus tier. Accepting it silently on Sonnet
+  // would bill nothing extra but also do nothing, and the first anyone would
+  // know is that answers never got faster.
+  assert.throws(
+    () =>
+      execFileSync("node", ["-e", 'import("./dist/src/config.js")'], {
+        env: { ...process.env, AML_SPEED: "fast", AML_MODEL: "claude-sonnet-5", AUTH_MODE: "none" },
+        stdio: "pipe",
+      }),
+    /Command failed|status 1/,
+  );
+});
+
+test("AML_SPEED=fast is accepted on a fast-capable model", () => {
+  const out = run(
+    "node",
+    ["-e", 'import("./dist/src/config.js").then(m=>console.log(m.config.speed+" "+m.config.model))'],
+    {
+      env: { ...process.env, AML_SPEED: "fast", AML_MODEL: "claude-opus-5", AUTH_MODE: "none" },
+      encoding: "utf8",
+      stdio: "pipe",
+    },
+  );
+  assert.match(out, /fast claude-opus-5/);
+});
+
+test("an unrecognised AML_SPEED is refused rather than ignored", () => {
+  assert.throws(
+    () =>
+      execFileSync("node", ["-e", 'import("./dist/src/config.js")'], {
+        env: { ...process.env, AML_SPEED: "quick", AUTH_MODE: "none" },
+        stdio: "pipe",
+      }),
+    /Command failed|status 1/,
+  );
+});
+
 // ---------------------------------------------------------------- history
 
 test("trimming never leaves an assistant message first, or an orphaned tool_result", async () => {
