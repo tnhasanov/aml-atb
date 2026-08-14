@@ -76,109 +76,11 @@ Everything below was validated against a live nginx + app + stub-IdP stack, not 
 memory: the config passes `nginx -t`, the unit passes `systemd-analyze verify`, the release tarball
 runs unpacked with no toolchain, and `scripts/smoke-test.sh` passes all ten checks against it.
 
-### 1. Build a release artefact
+### Step 0 — Decisions that are not code
 
-```bash
-scripts/release.sh
-```
-
-Regenerates the corpus and fails if it no longer matches the source `.docx`, runs typecheck and
-tests, compiles, installs production-only dependencies, and emits
-`release/aml-atb-<version>-<sha>.tar.gz` plus a checksum. It contains `dist/`, `node_modules/`,
-`data/`, `public/`, `tools/verify-audit.mjs` and `deploy/` — the target host needs no compiler, no
-registry access and no network, which is usually what a change process requires. `VERSION` inside
-records the git sha, Node version, and SHA-256 of both the corpus and the source document.
-
-### 2. Install on the host
-
-```bash
-sudo useradd --system --home /opt/aml-atb aml
-sudo mkdir -p /opt/aml-atb /etc/aml-atb /var/lib/aml-atb/audit
-
-cd release && sha256sum -c aml-atb-*.tar.gz.sha256   # verify before unpacking
-sudo tar -xzf aml-atb-*.tar.gz --strip-components=1 -C /opt/aml-atb
-
-sudo chown -R aml:aml /opt/aml-atb /var/lib/aml-atb/audit
-sudo chmod 700 /var/lib/aml-atb/audit
-
-sudo install -m 600 /dev/stdin /etc/aml-atb/aml-atb.env <<ENV
-ANTHROPIC_API_KEY=sk-ant-...
-BIND_HOST=127.0.0.1
-AUTH_MODE=proxy
-AUTH_SHARED_SECRET=$(openssl rand -hex 32)
-AUDIT_DIR=/var/lib/aml-atb/audit
-ENV
-
-# Confirm the interpreter path matches the unit before starting.
-command -v node                      # expect /usr/bin/node
-sudo cp /opt/aml-atb/deploy/aml-atb.service /etc/systemd/system/
-sudo systemctl daemon-reload && sudo systemctl enable --now aml-atb
-sudo systemctl status aml-atb
-```
-
-The unit runs as a dedicated account under `ProtectSystem=strict` with `/var/lib/aml-atb/audit` as
-its only writable path, and `UMask=0077`.
-
-### 3. Identity and TLS
-
-```bash
-sudo cp /opt/aml-atb/deploy/oauth2-proxy.cfg /etc/oauth2-proxy.cfg
-sudo chmod 600 /etc/oauth2-proxy.cfg        # holds the client secret
-# fill in oidc_issuer_url, client_id, client_secret, cookie_secret
-sudo systemctl enable --now oauth2-proxy
-
-sudo cp /opt/aml-atb/deploy/nginx.conf /etc/nginx/conf.d/aml-atb.conf
-# set server_name, certificate paths, and AUTH_SHARED_SECRET to match the .env
-sudo nginx -t && sudo systemctl reload nginx
-```
-
-`deploy/nginx.conf` is a **site** config for `conf.d/` — it contains `server` blocks, so it must sit
-inside nginx's `http{}`. Dropped in as `nginx.conf` it fails with *"upstream directive is not allowed
-here"*. It uses `listen 443 ssl http2` for nginx ≤ 1.24 (what Ubuntu 24.04 ships); on ≥ 1.25.1
-switch to `listen 443 ssl;` + `http2 on;`.
-
-Three lines carry the security of the whole deployment:
-
-- `proxy_set_header X-Forwarded-User $auth_user;` — set unconditionally, which **overwrites**
-  anything the client sent. Without it a user can name themselves and the audit trail is worthless.
-- `proxy_set_header X-Auth-Secret "…";` — proves the request came through nginx. Without it, anyone
-  who reaches port 3000 directly can assert an identity.
-- `proxy_buffering off;` — answers stream token by token over SSE. With buffering on, the officer
-  stares at a blank panel until the whole answer is ready.
-
-An mTLS alternative is included commented out, if the bank issues client certificates.
-
-### 4. Verify before telling anyone
-
-```bash
-scripts/smoke-test.sh https://aml.internal.example.az /var/lib/aml-atb/audit
-```
-
-Ten checks: liveness, readiness, that all four authenticated routes refuse an anonymous caller, that
-a spoofed `X-Forwarded-User` is rejected, that the app port is loopback-only, that the audit chain
-verifies, and that the audit directory is `0700`. It exits non-zero on any failure. Run it after
-every deploy — it is what catches a proxy that was reloaded with the wrong config.
-
-### 5. Operate it
-
-```bash
-journalctl -u aml-atb -f                                  # one JSON line per request
-npm run verify-audit -- /var/lib/aml-atb/audit            # chain integrity
-systemctl restart aml-atb                                 # safe: chain survives restarts
-```
-
-Ship `/var/lib/aml-atb/audit/*.jsonl` off-host (rsyslog, filebeat, rsync) — it is newline-delimited
-JSON, the canonical SIEM ingest format. Losing the host must not lose the record. Do **not** rotate
-or truncate the files: whole-file retention is compatible with the hash chain, per-record deletion
-is not.
-
-Rollback is unpacking the previous tarball and restarting; the audit trail is append-only across
-versions and each start records its own `service_started` event.
-
-### 6. Decisions that are not code
-
-These need a named owner and a written answer before real customer data goes in. Nothing in this
-repository can settle them:
+Numbered zero because none of the steps above matter if these are unresolved. Each needs a named
+owner and a written answer **before real customer data goes in**. Nothing in this repository can
+settle them:
 
 | Question | Owner |
 |---|---|
@@ -192,6 +94,106 @@ repository can settle them:
 
 `ANTHROPIC_BASE_URL` routes all API traffic through an institutional gateway or DLP proxy with no
 code change, if the transfer analysis calls for one.
+
+### Step 1 — Build the artefact (on a build machine)
+
+```bash
+scripts/release.sh
+```
+
+Regenerates the corpus and **fails if it no longer matches the source `.docx`**, runs typecheck and
+the 60 tests, compiles, installs production-only dependencies, and emits
+`release/aml-atb-<version>-<sha>.tar.gz` + `.sha256`. It carries `dist/`, `node_modules/`, `data/`,
+`public/`, `deploy/`, `scripts/` and `tools/` — the target host needs no compiler, no npm registry
+and no network. `VERSION` inside records the git sha, Node version, and SHA-256 of both the corpus
+and the source regulation.
+
+### Step 2 — Check the host is ready (before changing anything)
+
+```bash
+scp release/aml-atb-*.tar.gz* aml-host:/tmp/
+ssh aml-host
+tar -xzf /tmp/aml-atb-*.tar.gz -C /tmp && sudo /tmp/aml-atb-*/scripts/preflight.sh
+```
+
+Checks Node version and path, ports, nginx version (and whether your version needs the `http2 on;`
+form), oauth2-proxy, disk, file permissions, and that the API is actually reachable from that host
+with that key. Exits non-zero if not ready. **Egress policy blocking `api.anthropic.com` is the most
+common first-request failure** — this catches it before install rather than in front of a user.
+
+### Step 3 — Install
+
+```bash
+sudo /tmp/aml-atb-*/scripts/install.sh /tmp/aml-atb-*.tar.gz
+```
+
+Verifies the checksum, creates the `aml` service account, unpacks to
+`/opt/aml-atb/releases/<version>/`, points `/opt/aml-atb/current` at it, writes the systemd unit
+with this host's real Node path, and creates `/etc/aml-atb/aml-atb.env` (mode 600) with a generated
+`AUTH_SHARED_SECRET`.
+
+It is idempotent — safe to re-run — and **never overwrites an existing env file**, so an upgrade
+cannot clobber your credentials. It refuses to start the service while `ANTHROPIC_API_KEY` is empty.
+
+### Step 4 — Add the key, start it
+
+```bash
+sudo vi /etc/aml-atb/aml-atb.env        # set ANTHROPIC_API_KEY
+sudo systemctl enable --now aml-atb
+systemctl status aml-atb
+```
+
+### Step 5 — Identity and TLS (the part that actually gates access)
+
+```bash
+sudo cp /opt/aml-atb/current/deploy/oauth2-proxy.cfg /etc/oauth2-proxy.cfg
+sudo chmod 600 /etc/oauth2-proxy.cfg
+# fill in oidc_issuer_url, client_id, client_secret, cookie_secret
+sudo systemctl enable --now oauth2-proxy
+
+sudo cp /opt/aml-atb/current/deploy/nginx.conf /etc/nginx/conf.d/aml-atb.conf
+# set server_name, ssl_certificate paths, and X-Auth-Secret to match the env file
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+`deploy/nginx.conf` is a **site** config for `conf.d/` — it holds `server` blocks, so it must sit
+inside nginx's `http{}`. Dropped in as `nginx.conf` it fails with *"upstream directive is not allowed
+here"*. It targets nginx ≤ 1.24 (`listen 443 ssl http2`); on ≥ 1.25.1 switch to `listen 443 ssl;` +
+`http2 on;` — preflight tells you which you have.
+
+Three lines carry the security of the whole deployment:
+
+| Line | Without it |
+|---|---|
+| `proxy_set_header X-Forwarded-User $auth_user;` | A user names themselves; the audit trail is worthless |
+| `proxy_set_header X-Auth-Secret "…";` | Anyone reaching port 3000 directly can assert an identity |
+| `proxy_buffering off;` | The officer stares at a blank panel until the whole answer is ready |
+
+An mTLS alternative is included, commented, if the bank issues client certificates.
+
+### Step 6 — Verify before telling anyone it exists
+
+```bash
+/opt/aml-atb/current/scripts/smoke-test.sh https://aml.internal.example.az /var/lib/aml-atb/audit
+```
+
+Ten checks: liveness, readiness, that all four authenticated routes refuse an anonymous caller, that
+a spoofed `X-Forwarded-User` is rejected, that the app port is loopback-only, that the audit chain
+verifies, and that the audit directory is `0700`. Non-zero exit on any failure. **Run it after every
+deploy** — it is what catches a proxy reloaded with the wrong config.
+
+### Step 7 — Operate
+
+```bash
+journalctl -u aml-atb -f                                   # one JSON line per request
+/opt/aml-atb/current/tools/verify-audit.mjs /var/lib/aml-atb/audit
+sudo /opt/aml-atb/current/scripts/install.sh --rollback    # previous release + restart
+```
+
+Ship `/var/lib/aml-atb/audit/*.jsonl` off-host (rsyslog, filebeat, rsync) — newline-delimited JSON is
+the canonical SIEM ingest format, and losing the host must not lose the record. Do **not** rotate or
+truncate them: whole-file retention is compatible with the hash chain, per-record deletion is not.
+
 
 ---
 

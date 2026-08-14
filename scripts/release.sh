@@ -42,6 +42,11 @@ cp -r dist data public "$OUT/"
 cp package.json package-lock.json "$OUT/"
 mkdir -p "$OUT/tools" && cp tools/verify-audit.mjs "$OUT/tools/"
 cp -r deploy "$OUT/"
+# Ship the operational scripts with the release: verifying and rolling back a
+# deploy must not require a git checkout on the target host.
+mkdir -p "$OUT/scripts"
+cp scripts/smoke-test.sh scripts/preflight.sh scripts/install.sh "$OUT/scripts/"
+chmod +x "$OUT"/scripts/*.sh
 
 cat > "$OUT/VERSION" <<META
 version=${VERSION}
