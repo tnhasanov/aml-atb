@@ -60,6 +60,11 @@ accidentally become the deployed one.
 
 ## Putting it into production
 
+> **Handing this to someone else?** `docs/HANDOVER.md` is a fill-in-the-blanks packet:
+> Part A for infrastructure (the values to obtain, the commands to run), Part B for the MLRO
+> and DPO (the seven questions that must be answered first). The completed document is the
+> deployment record.
+
 Topology: **nginx** terminates TLS and authenticates against the institution's IdP, then proxies to
 the app on `127.0.0.1:3000`. The app never faces the network directly and trusts only the identity
 nginx injects.
