@@ -63,8 +63,10 @@ accidentally become the deployed one.
 That is a different question from production, and it has a different answer:
 **`docs/HOSTING.md`** and the `render.yaml` in the repository root. Push the branch, point
 Render at it, paste two values, and colleagues can try it over TLS with named logins
-(`AUTH_MODE=basic`). Use it with synthetic cases — the hosted pilot exists to judge whether
-the answers and the citations are any good, which has never been tested against a live model.
+(`AUTH_MODE=basic`). It runs free, because the pilot keeps no audit trail (`AUDIT_MODE=off`)
+and so needs no persistent disk — which is also why it takes **synthetic cases only**, and says
+so in a banner. The pilot exists to judge whether the answers and the citations are any good,
+which has never been tested against a live model.
 
 That document also explains why **Vercel, Netlify, Lambda and Cloudflare Workers cannot host
 this**: the audit trail is an append-only hash chain on local disk with a single writer, and on
@@ -372,6 +374,7 @@ test/              72 tests
 | `AUTH_USERS` | — | `basic` mode: `user:scrypt$…` entries, comma-separated. Mint with `node tools/hash-password.mjs <user>` |
 | `AUTH_REALM` | `AML Uygunluq Komekcisi` | `basic` mode: name shown in the browser sign-in dialog |
 | `AML_ALLOW_EPHEMERAL_AUDIT` | `false` | Override the refusal to run on serverless platforms. Demo only — the audit trail is lost |
+| `AUDIT_MODE` | `file` | `file` keeps the hash-chained trail; `off` keeps no record at all and shows a banner saying so. Required wherever real customer data is entered |
 | `AUDIT_DIR` | `./audit` | Resolved absolute; created `0700`, files `0600` |
 | `AUDIT_FAIL_CLOSED` | `true` | Refuse to answer if the trail cannot be written |
 | `AML_RATE_LIMIT_PER_MINUTE` | `12` | Per authenticated user |

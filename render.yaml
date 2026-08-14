@@ -1,34 +1,29 @@
-# Render blueprint - hosted pilot deployment.
-#
-# Render is used here because this service needs three things a serverless
-# platform cannot give it: one long-lived process (in-memory sessions), a
-# durable disk with a single writer (the append-only audit chain), and
-# unbuffered responses held open for minutes (SSE streaming). See docs/HOSTING.md.
+# Render blueprint - hosted pilot.
 #
 # To deploy: New > Blueprint on dashboard.render.com, point it at this repo.
 # Render reads this file and asks for the two values marked `sync: false`.
 #
-# This is a PILOT posture, not the production one. Production is the
-# nginx + oauth2-proxy + systemd deployment in docs/HANDOVER.md, on a host the
-# bank controls. Read the "Before real customer data" section of docs/HOSTING.md
-# before anyone types a customer name into this.
+# ---------------------------------------------------------------------------
+# THIS IS A PILOT CONFIGURATION. It keeps no record of questions or answers
+# (AUDIT_MODE=off), so it is for SYNTHETIC cases only - invented names, real
+# scenarios. That is enough to judge whether the clause citations are right and
+# whether the Azerbaijani reads naturally, which is the only thing a pilot is
+# for. The UI shows a notice saying so.
+#
+# Before anyone types a real customer name, switch to the durable configuration
+# at the bottom of this file, and read docs/HANDOVER.md.
+# ---------------------------------------------------------------------------
 
 services:
   - type: web
     name: aml-atb
     runtime: node
-    plan: starter # the free plan has no persistent disk, so the audit trail would be lost
-    region: frankfurt # closest Render region to Baku; see docs/HOSTING.md on data residency
+    plan: free # spins down when idle; the first request after that is slow
+    region: frankfurt # closest Render region to Baku
     buildCommand: npm ci && npm run build
     startCommand: node dist/src/index.js
-    healthCheckPath: /readyz # returns 503 when the audit trail stops being writable
-    numInstances: 1 # the audit chain has exactly one writer - do not scale this out
+    healthCheckPath: /readyz
     autoDeploy: false # a compliance tool should not redeploy itself on every push
-
-    disk:
-      name: audit
-      mountPath: /var/data
-      sizeGB: 1 # ~1 million audit records; monitor and grow before it fills
 
     envVars:
       - key: NODE_VERSION
@@ -40,15 +35,45 @@ services:
         value: 0.0.0.0
 
       # No IdP in front here, so identity is earned with a password rather than
-      # asserted in a header. Entries are minted by tools/hash-password.mjs.
+      # asserted in a header. Mint entries with tools/hash-password.mjs.
       - key: AUTH_MODE
         value: basic
 
-      - key: AUDIT_DIR
-        value: /var/data/audit
+      # No persistent disk on the free plan, so keep no trail rather than write
+      # one that is discarded on every deploy and would fail verification.
+      - key: AUDIT_MODE
+        value: "off"
 
       # Prompted for at deploy time and never written into the repository.
       - key: ANTHROPIC_API_KEY
         sync: false
       - key: AUTH_USERS
         sync: false
+
+# ---------------------------------------------------------------------------
+# Durable configuration - for real customer data on Render
+#
+# Costs about $7/month for the instance plus $0.25/month for the disk. Replace
+# the three marked lines above with:
+#
+#     plan: starter          # the free plan has no persistent disk
+#     numInstances: 1        # the audit chain has exactly one writer
+#
+# add the disk:
+#
+#     disk:
+#       name: audit
+#       mountPath: /var/data
+#       sizeGB: 1            # ~1 million records; grow it before it fills
+#
+# and change the audit env vars to:
+#
+#     - key: AUDIT_MODE
+#       value: file
+#     - key: AUDIT_DIR
+#       value: /var/data/audit
+#
+# Note that this still puts the audit trail on a hosting provider's disk in
+# Germany, which changes the answers to questions 1 and 4 in docs/HANDOVER.md
+# Part B. The bank's own VM is the deployment those questions were written for.
+# ---------------------------------------------------------------------------

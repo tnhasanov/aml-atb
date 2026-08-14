@@ -121,7 +121,10 @@ export const server = createServer(async (req, res) => {
       status = failure ? 503 : 200;
       return json(res, status, {
         status: failure ? "degraded" : "ready",
-        audit_writable: !failure,
+        audit: config.auditMode,
+        // Only meaningful when a trail is being kept; reporting `true` for a
+        // deployment that writes nothing would read as a false assurance.
+        ...(config.auditMode === "file" ? { audit_writable: !failure } : {}),
         clauses: corpus.clauses.length,
       });
     }
@@ -145,6 +148,9 @@ export const server = createServer(async (req, res) => {
         effort: config.effort,
         tools: listToolNames(),
         user: principal.user,
+        // Drives the pilot banner in the UI: if nothing is being recorded, the
+        // person typing needs to know before they paste a customer name.
+        audit: config.auditMode,
         source: {
           id: corpus.document.id,
           title_az: corpus.document.title_az,

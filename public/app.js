@@ -16,6 +16,9 @@ fetch("/api/health")
   .then((h) => {
     document.getElementById("source-line").textContent =
       `${h.source.id} · ${h.source.clauses} bənd · ${h.model}`;
+    // Nothing is being recorded in this deployment. Whoever is about to type
+    // has to know that before they paste a customer name, not afterwards.
+    if (h.audit === "off") document.getElementById("pilot-notice").hidden = false;
   })
   .catch(() => {
     document.getElementById("source-line").textContent = "Mənbə əlçatan deyil";

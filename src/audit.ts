@@ -98,6 +98,13 @@ function seedChain(day: string): string {
  * than one that will not start.
  */
 export function initAudit(version: string): void {
+  // AUDIT_MODE=off keeps no record at all. Nothing is created, so a read-only
+  // or ephemeral filesystem is not an error - see docs/HOSTING.md.
+  if (config.auditMode === "off") {
+    lastError = null;
+    return;
+  }
+
   mkdirSync(config.auditDir, { recursive: true, mode: 0o700 });
   // recursive:true will not tighten a directory that already exists.
   try {
@@ -114,6 +121,7 @@ export function initAudit(version: string): void {
 }
 
 export function audit(event: AuditEvent, actor?: Principal): void {
+  if (config.auditMode === "off") return;
   try {
     const day = today();
     if (day !== currentDay) {

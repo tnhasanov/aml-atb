@@ -1,7 +1,7 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync, execFileSync as run } from "node:child_process";
-import { rmSync, readFileSync, readdirSync, statSync, mkdirSync, writeFileSync } from "node:fs";
+import { rmSync, readFileSync, readdirSync, statSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import type Anthropic from "@anthropic-ai/sdk";
@@ -123,6 +123,57 @@ test("an API key is redacted before it can reach the audit file", async () => {
   assert.ok(!contents.includes("SECRETVALUE123456"), "the key must never be written to disk");
   assert.ok(contents.includes("[REDACTED]"));
   delete process.env.ANTHROPIC_API_KEY;
+});
+
+// ---------------------------------------------------------------- audit off
+
+test("AUDIT_MODE=off writes nothing at all, and does not create a directory", () => {
+  // The pilot deployment on Render's free plan runs this way. "Off" has to mean
+  // off: a half-written trail on an ephemeral disk is worse than none, because
+  // it looks like a record until someone tries to verify it.
+  const dir = "./audit/off-test";
+  rmSync(dir, { recursive: true, force: true });
+
+  const script =
+    `import("./dist/src/audit.js").then(m=>{m.initAudit("t");` +
+    `m.audit({type:"user_message",session_id:"s",message:"müştəri adı"},{user:"u",ip:"1"});` +
+    `console.log("failure:"+m.auditFailure())});`;
+
+  const out = run("node", ["-e", script], {
+    env: { ...process.env, AUDIT_DIR: dir, AUDIT_MODE: "off", AUTH_MODE: "none" },
+    encoding: "utf8",
+    stdio: "pipe",
+  });
+
+  assert.match(out, /failure:null/, "an absent trail is not a failure state in this mode");
+  assert.equal(existsSync(dir), false, `AUDIT_MODE=off created ${dir}`);
+});
+
+test("AUDIT_MODE=off still starts where a durable trail could not", () => {
+  // No disk to write to is the whole reason this mode exists, so the
+  // serverless guard must not fire and initAudit must not throw.
+  const out = run(
+    "node",
+    ["-e", 'import("./dist/src/config.js").then(m=>console.log("mode:"+m.config.auditMode))'],
+    {
+      env: { ...process.env, AUDIT_MODE: "off", AUTH_MODE: "none", VERCEL: "1" },
+      encoding: "utf8",
+      stdio: "pipe",
+    },
+  );
+  assert.match(out, /mode:off/);
+});
+
+test("an unrecognised AUDIT_MODE is refused, not treated as off", () => {
+  // A typo like AUDIT_MODE=false must not silently disable the trail.
+  assert.throws(
+    () =>
+      execFileSync("node", ["-e", 'import("./dist/src/config.js")'], {
+        env: { ...process.env, AUDIT_MODE: "false", AUTH_MODE: "none" },
+        stdio: "pipe",
+      }),
+    /Command failed|status 1/,
+  );
 });
 
 // ---------------------------------------------------------------- history

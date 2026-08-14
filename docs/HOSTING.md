@@ -60,21 +60,33 @@ Container Apps and a plain VM all work.
 
 ## Render — the recommended pilot
 
-**Cost:** about $7/month for the instance plus $0.25/month for the 1 GB disk.
-The free plan has no persistent disk, so it is not an option here.
+**Cost:** free. `render.yaml` ships the pilot configuration, which keeps no
+audit trail (`AUDIT_MODE=off`) and therefore needs no persistent disk — and a
+disk is the only thing the free plan cannot give you. A free service spins down
+after a spell of inactivity, so the first request after a quiet period takes
+some seconds to wake up.
+
+The trade is deliberate, and it is the reason this deployment is for
+**synthetic cases only**. See "Before real customer data" below, and the
+durable configuration at the bottom of `render.yaml` for the version that costs
+about $7/month and does keep records.
 
 ### What you do
 
 1. Push this branch (already done) and go to
    [dashboard.render.com](https://dashboard.render.com) → **New** → **Blueprint**.
-2. Connect the `aml-atb` repository. Render finds `render.yaml` and shows one
-   web service with a disk attached.
+2. Connect the `aml-atb` repository, and pick the branch the code is on. Render
+   finds `render.yaml` and shows one web service.
 3. It asks for two values:
    - `ANTHROPIC_API_KEY` — from console.anthropic.com
    - `AUTH_USERS` — see below
 4. **Apply**. First build is a few minutes. You get a
    `https://aml-atb-*.onrender.com` URL, and the browser asks for a username and
    password.
+
+The app shows an Azerbaijani banner at the top saying nothing is being recorded
+and not to enter real customer data. That banner is driven by `AUDIT_MODE`, so
+it disappears by itself when you switch to the durable configuration.
 
 ### Making AUTH_USERS
 
@@ -105,14 +117,15 @@ bank's IdP (`AUTH_MODE=proxy` behind oauth2-proxy).
 curl https://<your-app>.onrender.com/readyz
 ```
 
-`{"status":"ready","audit_writable":true,"clauses":213}` means the corpus loaded
-and the audit disk is writable. A 503 means the disk is not writable and the
-tool has stopped answering — which is the intended behaviour, not a bug.
+`{"status":"ready","audit":"off","clauses":213}` means all 213 clauses loaded and
+the service is answering.
 
-To read the audit trail, use Render's shell on the service:
+On the durable configuration you get `"audit":"file"` and an `audit_writable`
+field as well, and a 503 when the disk has stopped being writable — at which
+point the tool refuses to answer rather than advise with no record. That is
+intended behaviour, not a bug. To read the trail, use Render's shell:
 
 ```bash
-ls -l /var/data/audit
 node tools/verify-audit.mjs /var/data/audit
 ```
 
@@ -138,20 +151,25 @@ scripts in `scripts/` and the configs in `deploy/` target exactly this.
 
 ## Before real customer data goes into the hosted pilot
 
-A Render deployment is a third party holding your audit trail, on top of the
-third party already processing the queries. That changes the answers to two of
-the HANDOVER.md Part B questions:
+Two things are true of the pilot configuration, and both point the same way.
 
-- **Question 1** (lawful basis, banking secrecy) now covers Render as well as
-  Anthropic, and the disk sits in Germany.
-- **Question 4** (audit retention) now depends on a hosting provider's disk
-  rather than the bank's own storage.
+**It keeps no record.** `AUDIT_MODE=off` means questions and answers are not
+written anywhere. If a customer name goes in, there is afterwards no way to say
+who asked what about whom — which is exactly the situation the audit trail
+exists to prevent.
 
-So: run the pilot with **synthetic or anonymised cases** — reference numbers,
-invented names, real scenarios. That is enough to judge whether the citations
-are right and the Azerbaijani reads naturally, which is the only thing the pilot
-is for. Real customer data waits for the deployment in HANDOVER.md.
+**Hosting adds a second processor.** Even with the durable configuration, the
+trail would sit on a hosting provider's disk in Germany, on top of the
+processor already handling the queries. That changes the answers to two
+HANDOVER.md Part B questions: **Q1** (lawful basis, banking secrecy) would cover
+Render as well as Anthropic, and **Q4** (audit retention) would depend on a
+hosting provider's storage rather than the bank's.
 
-If you want the pilot on the bank's own infrastructure instead, skip this
-document entirely: `scripts/preflight.sh` and `scripts/install.sh` will put it
-on an internal VM, and that deployment can take real data once Part B is signed.
+So run the pilot on **invented names and real scenarios**. That is enough to
+judge whether the clause citations are correct and whether the Azerbaijani reads
+naturally, which is the only thing a pilot is for.
+
+For real customer data, the answer is not a bigger Render plan — it is the
+deployment in [HANDOVER.md](HANDOVER.md), on a host the bank controls, with
+`AUDIT_MODE=file` and Part B signed. `scripts/preflight.sh` and
+`scripts/install.sh` do that in three commands.

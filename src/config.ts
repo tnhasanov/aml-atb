@@ -104,7 +104,22 @@ function buildConfig() {
   const auditDirRaw = env("AUDIT_DIR") ?? "./audit";
   const auditDir = isAbsolute(auditDirRaw) ? auditDirRaw : resolve(process.cwd(), auditDirRaw);
 
-  const ephemeralHost = detectEphemeralHost();
+  /**
+   * `file` - the append-only hash-chained trail. Required wherever real
+   *          customer data is entered.
+   * `off`  - keep no record of questions or answers at all. For a pilot on
+   *          synthetic cases, where a durable disk is a cost with no benefit.
+   *          The UI says so, because the risk of this mode is that someone
+   *          pastes a real customer name into a tool that keeps no record of it.
+   */
+  const auditMode = (env("AUDIT_MODE") ?? "file") as "file" | "off";
+  if (auditMode !== "file" && auditMode !== "off") {
+    throw new ConfigError(`AUDIT_MODE must be "file" or "off", got "${auditMode}"`);
+  }
+
+  // Only a durable trail cares where it is running; with AUDIT_MODE=off there
+  // is nothing to lose to an ephemeral filesystem.
+  const ephemeralHost = auditMode === "off" ? null : detectEphemeralHost();
   if (ephemeralHost && !bool("AML_ALLOW_EPHEMERAL_AUDIT", false)) {
     throw new ConfigError(
       `This looks like ${ephemeralHost}, where the filesystem is discarded between ` +
@@ -149,6 +164,7 @@ function buildConfig() {
     ephemeralHost,
 
     auditDir,
+    auditMode,
     /** Refuse to answer if the audit trail cannot be written. */
     auditFailClosed: bool("AUDIT_FAIL_CLOSED", true),
 

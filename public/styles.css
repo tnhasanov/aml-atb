@@ -96,6 +96,25 @@ body {
   text-overflow: ellipsis;
 }
 
+/* ---------- pilot notice ---------- */
+/* Shown only when AUDIT_MODE=off, i.e. nothing is being recorded. It sits
+   above the transcript rather than inside it so it stays visible as the
+   conversation scrolls. */
+.pilot-notice {
+  margin: 0;
+  padding: 0.6rem 1.25rem;
+  background: var(--warn-soft);
+  color: var(--warn);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.pilot-notice[hidden] {
+  display: none;
+}
+
 .ghost {
   background: transparent;
   border: 1px solid var(--border);

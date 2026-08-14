@@ -36,7 +36,11 @@ server.listen(config.port, config.bindHost, () => {
   console.log(`AML Uygunluq Komekcisi listening on ${bound}`);
   console.log(`  source : ${corpus.document.id} (${corpus.clauses.length} bend)`);
   console.log(`  model  : ${config.model} (effort: ${config.effort})`);
-  console.log(`  audit  : ${config.auditDir}`);
+  console.log(
+    config.auditMode === "off"
+      ? "  audit  : OFF - no record of questions or answers is being kept (pilot use only)"
+      : `  audit  : ${config.auditDir}`,
+  );
   console.log(`  auth   : ${config.authMode}${config.authSharedSecret ? " + shared secret" : ""}`);
   if (config.authMode === "none") {
     console.log("  WARNING: authentication disabled - loopback only, development use");
